@@ -1,0 +1,954 @@
+{
+  "openai.com/index/samsung-electronics-chatgpt-codex-deployment": {
+    "title": "Samsung Electronics deploys ChatGPT Enterprise and Codex to employees worldwide",
+    "url": "https://openai.com/index/samsung-electronics-chatgpt-codex-deployment",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-23"
+  },
+  "martinfowler.com/articles/reliable-llm-bayer.html": {
+    "title": "Building Reliable Agentic AI Systems (Bayer Case Study)",
+    "url": "https://martinfowler.com/articles/reliable-llm-bayer.html",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-22"
+  },
+  "hbr.org/2026/06/how-gen-ai-is-disrupting-b2b-buying-decisions": {
+    "title": "How Gen AI Is Disrupting B2B Buying Decisions",
+    "url": "https://hbr.org/2026/06/how-gen-ai-is-disrupting-b2b-buying-decisions",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-22"
+  },
+  "arstechnica.com/ai/2026/06/pentagon-boasts-of-using-ai-to-write-reports-mandated-by-congress": {
+    "title": "Pentagon Boasts 1.5 Million Users of AI for Writing Congressional Reports",
+    "url": "https://arstechnica.com/ai/2026/06/pentagon-boasts-of-using-ai-to-write-reports-mandated-by-congress/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-18"
+  },
+  "techcrunch.com/2026/06/10/ai-pilled-firms-spend-7500-per-employee-each-month-on-ai": {
+    "title": "'AI-pilled' firms spend $7,500 per employee each month on AI",
+    "url": "https://techcrunch.com/2026/06/10/ai-pilled-firms-spend-7500-per-employee-each-month-on-ai/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-11"
+  },
+  "openai.com/business/guides-and-resources/how-enterprises-are-scaling-ai": {
+    "title": "How enterprises are scaling AI: from experiments to compounding impact",
+    "url": "https://openai.com/business/guides-and-resources/how-enterprises-are-scaling-ai",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-05-12"
+  },
+  "openai.com/index/introducing-b2b-signals": {
+    "title": "How frontier firms are pulling ahead",
+    "url": "https://openai.com/index/introducing-b2b-signals",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-07"
+  },
+  "terminal-x.ai/research/ai-roi-in-2026-why-most-enterprise-ai-fails-and-what-actually-works": {
+    "title": "AI ROI in 2026: Why Enterprise AI Fails & Works | Terminal X",
+    "url": "https://www.terminal-x.ai/research/ai-roi-in-2026-why-most-enterprise-ai-fails-and-what-actually-works",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-04-22"
+  },
+  "galileo.ai/blog/regulatory-compliance-multi-agent-ai": {
+    "title": "A Guide to Multi-Agent Regulatory Compliance Frameworks | Galileo",
+    "url": "https://galileo.ai/blog/regulatory-compliance-multi-agent-ai",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2025-06-26"
+  },
+  "trintech.com/blog/ai_financial_close_overview": {
+    "title": "AI Financial Close: AI Revolutionizes the Close",
+    "url": "https://www.trintech.com/blog/ai_financial_close_overview/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2025-06-10"
+  },
+  "hbr.org/2026/06/the-strongest-teams-of-ai-agents-will-be-built-using-different-models": {
+    "title": "The Strongest Teams of AI Agents Will Be Built Using Different Models",
+    "url": "https://hbr.org/2026/06/the-strongest-teams-of-ai-agents-will-be-built-using-different-models",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-22"
+  },
+  "openai.com/index/chatgpt-enterprise-spend-controls": {
+    "title": "OpenAI Introduces Enterprise Spend Controls and Usage Analytics for ChatGPT Enterprise",
+    "url": "https://openai.com/index/chatgpt-enterprise-spend-controls/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-18"
+  },
+  "arxiv.org/abs/2606.13731": {
+    "title": "TwinBI: Agentic Digital Twin for Business Intelligence Dashboards",
+    "url": "https://arxiv.org/abs/2606.13731",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-15"
+  },
+  "openai.com/index/bbva": {
+    "title": "BBVA puts AI at the core of banking with OpenAI — scales ChatGPT Enterprise to 100,000 employees",
+    "url": "https://openai.com/index/bbva",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-12"
+  },
+  "technologyreview.com/2026/06/09/1137830/learning-to-lead-in-a-hybrid-human-ai-enterprise": {
+    "title": "AI agent adoption set to surge 300% in two years; leaders weigh hybrid human-AI workforce",
+    "url": "https://www.technologyreview.com/2026/06/09/1137830/learning-to-lead-in-a-hybrid-human-ai-enterprise/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-10"
+  },
+  "techcrunch.com/2026/06/05/the-token-bill-comes-due-inside-the-industry-scramble-to-manage-ais-runaway-costs": {
+    "title": "The token bill comes due: Inside the industry scramble to manage AI's runaway costs",
+    "url": "https://techcrunch.com/2026/06/05/the-token-bill-comes-due-inside-the-industry-scramble-to-manage-ais-runaway-costs/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-06"
+  },
+  "fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents": {
+    "title": "Microsoft reports AI is more expensive than paying human employees",
+    "url": "https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-24"
+  },
+  "technologyreview.com/2026/05/11/1136786/implementing-advanced-ai-technologies-in-finance": {
+    "title": "Implementing advanced AI technologies in finance",
+    "url": "https://www.technologyreview.com/2026/05/11/1136786/implementing-advanced-ai-technologies-in-finance/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-05-12"
+  },
+  "technologyreview.com/2026/05/11/1136967/fostering-breakthrough-ai-innovation-through-customer-back-engineering": {
+    "title": "Organizations capture less than one-third of expected value from digital investments",
+    "url": "https://www.technologyreview.com/2026/05/11/1136967/fostering-breakthrough-ai-innovation-through-customer-back-engineering/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-12"
+  },
+  "openai.com/index/openai-pwc-finance-collaboration": {
+    "title": "OpenAI and PwC collaborate to reimagine the office of the CFO",
+    "url": "https://openai.com/index/openai-pwc-finance-collaboration/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-05-06"
+  },
+  "news.google.com/rss/articles/cbmia0fvx3lxte9zwddltglpdxpuzuvuztb2u0pdmfc3qnzyb01isddpnzizztlvuwjjce5ab1bxnle4cxv1tgvobs0wm2zsx0xfche5offfvuprruj2mkyttzvic3zrufvlmnp0x2m2z210aw1z": {
+    "title": "Google News",
+    "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9ZWDdLTGlpdXpuZUVUZTB2U0pDMFc3QnZYb01iSDdpNzIzZTlvUWJJcE5ab1BXNlE4cXV1TGVobS0wM2ZsX0xFcHE5OFFFVUpRRUJ2MkYtTzVIc3ZRUFVlMnp0X2M2Z210aW1z?oc=5&hl=en-IN&gl=IN&ceid=IN:en",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "larridin.com/blog/ai-cost-management-control-cloud-api-spend": {
+    "title": "larridin.com",
+    "url": "https://larridin.com/blog/ai-cost-management-control-cloud-api-spend/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "gartner.com/en/newsroom/press-releases/2026-07-20-gartner-survey-shows-45-percent-of-cfos-say-their-ai-investments-lean-toward-productivity": {
+    "title": "Just a moment... | Gartner",
+    "url": "https://www.gartner.com/en/newsroom/press-releases/2026-07-20-gartner-survey-shows-45-percent-of-cfos-say-their-ai-investments-lean-toward-productivity",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "folio3.ai/blog/ai-project-failure-rate-stats": {
+    "title": "AI Project Failure Rate in 2026: What the Data Shows",
+    "url": "https://www.folio3.ai/blog/ai-project-failure-rate-stats",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-04-24"
+  },
+  "cfoconnect.eu/resources/reports/state-of-ai-in-finance-2026": {
+    "title": "State of AI in Finance 2026: Adoption Trends, Tools, and CFO Roadmap",
+    "url": "https://www.cfoconnect.eu/resources/reports/state-of-ai-in-finance-2026/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-03-12"
+  },
+  "blockeden.xyz/blog/2026/03/06/ai-circular-financing-loop-vendor-financing": {
+    "title": "The Great AI Circular Financing Loop: When Vendors Fund Their Own Customers - BlockEden.xyz",
+    "url": "https://blockeden.xyz/blog/2026/03/06/ai-circular-financing-loop-vendor-financing/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-03-06"
+  },
+  "prnewswire.com/news-releases/avalara-survey-finance-leaders-are-racing-to-deploy-ai-agents-before-governance-is-ready-302196614.html": {
+    "title": "prnewswire.com",
+    "url": "https://www.prnewswire.com/news-releases/avalara-survey-finance-leaders-are-racing-to-deploy-ai-agents-before-governance-is-ready-302196614.html",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "claimsjournal.com/news/national/2026/07/06/331309.htm": {
+    "title": "claimsjournal.com",
+    "url": "https://www.claimsjournal.com/news/national/2026/07/06/331309.htm",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "trezy.com/blog/ai-cash-flow-us-small-businesses-automate-2026": {
+    "title": "Error: 404 - Not Found | Trezy.com",
+    "url": "https://trezy.com/blog/ai-cash-flow-us-small-businesses-automate-2026",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "openai.com/index/prc-linked-influence-operations-ai-debates": {
+    "title": "PRC-linked influence operations are targeting AI debates in the US",
+    "url": "https://openai.com/index/prc-linked-influence-operations-ai-debates",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-11"
+  },
+  "thenextweb.com/news/ai-pilled-firms-7500-per-employee-spending": {
+    "title": "The most AI-obsessed companies spend $7,500 per employee per month. The median spends $11.",
+    "url": "https://thenextweb.com/news/ai-pilled-firms-7500-per-employee-spending",
+    "campaigns": [
+      "ai-value-finder-campaign",
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-10"
+  },
+  "arxiv.org/abs/2606.06545": {
+    "title": "Queen-Bee Agents: Enterprise MCP Orchestration Architecture for Governed Multi-Agent Systems",
+    "url": "https://arxiv.org/abs/2606.06545",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-08"
+  },
+  "techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks": {
+    "title": "OpenAI Unveils Lockdown Mode to Protect Sensitive Data from Prompt Injection Attacks",
+    "url": "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-06"
+  },
+  "theverge.com/column/935545/hackers-ai-chatbots": {
+    "title": "Hackers are learning to exploit chatbot 'personalities'",
+    "url": "https://www.theverge.com/column/935545/hackers-ai-chatbots",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-24"
+  },
+  "arxiv.org/abs/2605.19192": {
+    "title": "Hallucination as Exploit: Evidence-Carrying Multimodal Agents",
+    "url": "https://arxiv.org/abs/2605.19192",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-20"
+  },
+  "theverge.com/ai-artificial-intelligence/925338/openai-musk-v-altman-mira-murati": {
+    "title": "Mira Murati tells the court that she couldn't trust Sam Altman's words",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/925338/openai-musk-v-altman-mira-murati",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-06"
+  },
+  "fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo": {
+    "title": "MIT report: 95% of generative AI pilots at companies are failing | Fortune",
+    "url": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2025-08-18"
+  },
+  "gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027": {
+    "title": "Just a moment... | Gartner",
+    "url": "https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027",
+    "campaigns": [
+      "ai-value-finder-campaign",
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "medium.com/@s_v_j/building-an-ai-governance-practice-in-a-fortune-500-healthcare-company-6a4a6e30026e": {
+    "title": "Just a moment...",
+    "url": "https://medium.com/@s_v_j/building-an-ai-governance-practice-in-a-fortune-500-healthcare-company-6a4a6e30026e",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "ensorahealth.com/blog/ai-in-healthcare-efficiency": {
+    "title": "Just a moment...",
+    "url": "https://ensorahealth.com/blog/ai-in-healthcare-efficiency/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "forbes.com/sites/tiriasresearch/2026/07/21/if-agents-become-the-new-application-microsoft-suddenly-matters-again": {
+    "title": "Microsoft’s Next AI Bet Isn’t Better Models - It’s The Platform",
+    "url": "https://www.forbes.com/sites/tiriasresearch/2026/07/21/if-agents-become-the-new-application-microsoft-suddenly-matters-again/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-21"
+  },
+  "sennovate.com/blog/shadow-ai-in-2026": {
+    "title": "Enterprise AI Risk: The 2026 Guide to Shadow AI Detection",
+    "url": "https://sennovate.com/blog/shadow-ai-in-2026/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-14"
+  },
+  "arxiv.org/abs/2606.20662": {
+    "title": "Confidence Laundering in Agent Systems: Why Uncertainty Needs a Latent Carrier",
+    "url": "https://arxiv.org/abs/2606.20662",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-24"
+  },
+  "technologyreview.com/2026/05/26/1137584/rethinking-organizational-design-in-the-age-of-agentic-ai": {
+    "title": "Rethinking organizational design in the age of agentic AI",
+    "url": "https://www.technologyreview.com/2026/05/26/1137584/rethinking-organizational-design-in-the-age-of-agentic-ai/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-26"
+  },
+  "heeya.fr/en/blog/generative-ai-enterprise-roi-use-cases-2026": {
+    "title": "Generative AI Enterprise ROI 2026: Use Cases & Numbers",
+    "url": "https://heeya.fr/en/blog/generative-ai-enterprise-roi-use-cases-2026",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-16"
+  },
+  "writer.com/blog/enterprise-ai-adoption-2026": {
+    "title": "Enterprise AI adoption in 2026: Why 79% face challenges despite high investment",
+    "url": "https://writer.com/blog/enterprise-ai-adoption-2026/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-04-07"
+  },
+  "redwood.com/article/ai-automation-trends": {
+    "title": "AI and Automation Trends 2026: From Efficiency to Enterprise Resilience",
+    "url": "https://www.redwood.com/article/ai-automation-trends/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-01-29"
+  },
+  "nqc.com/blog/how-ai-is-changing-supply-chains-a-2026-executive-roadmap": {
+    "title": "How AI is Changing Supply Chains: A 2026 Executive Roadmap",
+    "url": "https://nqc.com/blog/how-ai-is-changing-supply-chains-a-2026-executive-roadmap",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-01-23"
+  },
+  "vertexaisearch.cloud.google.com/grounding-api-redirect/auziyqhik_ju8hguazzjf33nseuj8uszclb3ocjybc_8e6b4bjmp1pvvvypb_87mofikm2vfzuaym-ps-vegsau_tcwst6poq9bafsqijsrcyvocrwqympwmjnampl5agxwzgb2hek2by932qch3k0naap2ttiszt7pgsjzld0bdpc_w7y1p7vm=": {
+    "title": "Error 404 (Not Found)!!1",
+    "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHiK_Ju8hGUAzZJf33NSeuj8uSZCLB3OCjYbc_8E6B4Bjmp1pvVvYPb_87MofiKm2vfZuaYM-ps-vegsaU_TCwst6Poq9BAfSqIjsrCYVoCRWQymPwmjnAmPl5agXwZGb2heK2by932qCh3k0NAAP2TtisZT7pgSJZLd0BDPc_W7Y1P7vM=",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "vertexaisearch.cloud.google.com/grounding-api-redirect/auziyqesbyyabta73jhwimiosi4ewzxs1z264hszpzcfd7vdufxrzmpm8yeyijvzf0ezalgritlsqbgeqio7yfi_mij67jy-x-9fiej3yfgi4ypwyhyd39maiwivr6xxdlpp0a_8g2sckhsneo-kthev9saign3ca7jcnw=": {
+    "title": "Error 404 (Not Found)!!1",
+    "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEsBYYABTA73JhwimIoSi4EWZxS1z264HszPzCfd7vduFXrZMpM8yEYIJvzf0eZaLGritLSqBGeqIo7Yfi_MIj67Jy-X-9fiej3yfgi4ypWYHYD39MaIwIVR6XxDLpp0A_8G2SCkHsNEo-KTheV9SAiGn3CA7jCNw=",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "truefoundry.com/blog/ai-cost-optimization-strategies": {
+    "title": "AI Cost Optimization Strategies for 2026: A Practical Guide",
+    "url": "https://www.truefoundry.com/blog/ai-cost-optimization-strategies",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "vertexaisearch.cloud.google.com/grounding-api-redirect/auziyqeyilxjctf12rkh6evb4ddhvabbzjf1wqa5vs1bnsa5ezggm43mz9zdpfigphiygm4sjylksvh6efke97msde43bdgngzwocbgoauo9lppumo9v-j_0vufj4yurpedfwektjvwocq=": {
+    "title": "Error 404 (Not Found)!!1",
+    "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYIlXJcTf12rKH6eVB4ddHvAbbZJf1wQA5Vs1bnsA5EZGgM43Mz9zdPFIGpHiyGm4SjyLKSVH6EfKE97MSdE43BdgNgZwocBgOaUO9LPpUmO9V-J_0vufJ4yuRpEdFWEKtJVWocQ=",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "vertexaisearch.cloud.google.com/grounding-api-redirect/auziyqgndfenzl-tjl_9zz3fvb4jb6oy8kop7haz6w1lxzohspjx4tze6ezwxz61euzqire9w-h-oihu6agu-gm8hp6nkilhokqejk7cuuvmvnsjyemdisrgkwm3j9k3ss4wuhxigptfcjo7g53nafni4oh_3encwktus21yhh1bjur71yywirvi_3wnhmrgacj-d0jpc3msw1_pej09wbmhax47pefoyy3d2_0=": {
+    "title": "Error 404 (Not Found)!!1",
+    "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNDfeNzL-tjL_9zZ3fvb4jB6oy8KOP7HAZ6W1lxzohSPjx4TzE6EZWXZ61euzQIRE9W-H-oIhU6AGU-gM8hP6nKilHoKqejk7cUuvMVNsJYemDIsRgKWM3J9K3ss4wUHxIGptFCjo7G53nAFnI4Oh_3enCWKtus21Yhh1BJur71yywiRvi_3WNhmrGaCj-D0Jpc3MSW1_PeJ09WBmHAx47pEfoyy3d2_0=",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "vertexaisearch.cloud.google.com/grounding-api-redirect/auziyqfmw2o147pfkfrzdir_rme0dwzecjx-wnicgisefrem5twljbgoc-phgretynxw6xuueewt_z0izbxbqd9zejwsuews81x4inaysq2xi5vzjclvajtghbaxbx5tn7d9z_-ra3hyctyncrkrgqisp7ja6dgaskbpzb4_vz8b-feg2p98qcawsb48h-yuqtagjslx5dxeamewnkcrw==": {
+    "title": "Error 404 (Not Found)!!1",
+    "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMW2o147PFKfrzDiR_rmE0DwzEcJx-WnIcgIsefReM5TwLjbgOC-phgRETyNxw6xuueEwT_z0izbXbQD9zeJWsUEWs81X4iNaYsq2Xi5vzjclvAjTghbaXbX5tN7d9z_-rA3hyctynCRkrgQISp7JA6dgasKbPZb4_VZ8b-FEg2p98qCawSB48h-yuqTAGJsLx5DxeAmEWNKcRw==",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "cabotsolutions.com/blog/beyond-chatbots-the-ai-trends-that-will-reshape-workflows-in-2026": {
+    "title": "Beyond Chatbots: The AI Trends That Will Reshape Workflows in 2026",
+    "url": "https://www.cabotsolutions.com/blog/beyond-chatbots-the-ai-trends-that-will-reshape-workflows-in-2026",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "vertexaisearch.cloud.google.com/grounding-api-redirect/auziyqeepll_ln43ahdglzifipgxdvbx3gdryi7xrjvxcf93_pfic2zqhyua4u_jmsmsx8ccr7m70dyqnte8tdwwib_tkvsav_fkn8qgmia8-nbeyelbad2f34hklj1hkosrydutljcwxt3dorigdl8c8lbjgzhojdtubpbiekp2ks8krpric0ausdaxwbn-qp9w7gvmibekgq=": {
+    "title": "Error 404 (Not Found)!!1",
+    "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEepLl_ln43ahDGLZifiPgxdvbX3gdryI7xrJvxcF93_pFIc2ZqHyuA4U_jMsmsX8CCR7M70dyQNtE8TDwwIB_TKvSaV_fKn8QGmIA8-NBeYElbaD2F34HKlj1HkosRydUTLJcwxT3dOrIGdl8C8lBJgZHOJdTubpbIEkp2kS8kRPRIc0AUsdaXwBN-qP9w7GvMIBEKgQ=",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "corporatefinanceinstitute.com/resources/artificial-intelligence-ai/roi-of-implementing-ai-agents-in-finance": {
+    "title": "ROI of Implementing AI Agents in Finance: How Finance Teams Measure Value",
+    "url": "https://corporatefinanceinstitute.com/resources/artificial-intelligence-ai/roi-of-implementing-ai-agents-in-finance/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-07-08"
+  },
+  "hbr.org/2026/07/how-agentic-ai-supercharges-startups-and-threatens-incumbents": {
+    "title": "How Agentic AI Supercharges Startups and Threatens Incumbents",
+    "url": "https://hbr.org/2026/07/how-agentic-ai-supercharges-startups-and-threatens-incumbents",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-01"
+  },
+  "ramp.com/data/ai-index-june-2026": {
+    "title": "How much does it cost to be AI-pilled?",
+    "url": "https://ramp.com/data/ai-index-june-2026",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-26"
+  },
+  "aibusinessweekly.net/p/enterprise-ai-spending-cfo-scrutiny-roi-2026": {
+    "title": "Enterprise AI Spend Scrutiny 2026: CFO Review, ROI Falls Short",
+    "url": "https://aibusinessweekly.net/p/enterprise-ai-spending-cfo-scrutiny-roi-2026",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-07"
+  },
+  "finance.yahoo.com/markets/stocks/articles/paypal-ceo-unveils-ai-reset-090620216.html": {
+    "title": "PayPal CEO Unveils AI Reset, $1.5B Savings Plan at Bernstein Conference",
+    "url": "https://finance.yahoo.com/markets/stocks/articles/paypal-ceo-unveils-ai-reset-090620216.html",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-02"
+  },
+  "openai.com/index/singular-bank": {
+    "title": "Singular Bank helps bankers move fast with ChatGPT and Codex",
+    "url": "https://openai.com/index/singular-bank",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-05-07"
+  },
+  "finance.yahoo.com/news/mit-report-95-generative-ai-105412686.html": {
+    "title": "MIT report: 95% of generative AI pilots at companies are failing",
+    "url": "https://finance.yahoo.com/news/mit-report-95-generative-ai-105412686.html",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2025-08-18"
+  },
+  "preferredcfo.com/insights/how-not-to-use-ai-systems-in-finance": {
+    "title": "How NOT to Use AI Systems in Financial Management - Preferred CFO",
+    "url": "https://preferredcfo.com/insights/how-not-to-use-ai-systems-in-finance",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2025-01-06"
+  },
+  "holisticai.com/blog/ai-governance-in-financial-services": {
+    "title": "AI Governance in Financial Services - Holistic AI",
+    "url": "https://www.holisticai.com/blog/ai-governance-in-financial-services",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "gartner.com/en/newsroom/press-releases/2026-07-20-gartner-survey-shows-45-percent-of-cfos-say-their-ai-investments-lean-towwards-productivity-while-20-percent-say-these-investments-lean-towards-decision-quality": {
+    "title": "Gartner Survey Shows 45% of CFOs Say Their AI Investments Lean Toward Productivity",
+    "url": "https://www.gartner.com/en/newsroom/press-releases/2026-07-20-gartner-survey-shows-45-percent-of-cfos-say-their-ai-investments-lean-towwards-productivity-while-20-percent-say-these-investments-lean-towards-decision-quality",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "zylo.com/blog/ai-cost-management": {
+    "title": "How to Manage AI Costs Across Your Software Stack - Zylo",
+    "url": "https://zylo.com/blog/ai-cost-management",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-07-21"
+  },
+  "mitsloan.mit.edu/ideas-made-to-matter/these-are-most-urgent-ai-risks-according-to-272-experts": {
+    "title": "These are the most urgent AI risks, according to 272 experts | MIT Sloan",
+    "url": "https://mitsloan.mit.edu/ideas-made-to-matter/these-are-most-urgent-ai-risks-according-to-272-experts",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-07-20"
+  },
+  "wired.com/story/claude-tokens-compute-cost-code-8x8": {
+    "title": "'Pretty Crazy' Token Usage Is Testing Bosses' Bet on AI",
+    "url": "https://www.wired.com/story/claude-tokens-compute-cost-code-8x8/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-16"
+  },
+  "techcrunch.com/2026/06/15/salesforce-acquires-ai-customer-service-platform-fin-for-3-6b": {
+    "title": "Salesforce acquires AI customer service platform Fin for $3.6 billion",
+    "url": "https://techcrunch.com/2026/06/15/salesforce-acquires-ai-customer-service-platform-fin-for-3-6b/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-15"
+  },
+  "news.google.com/rss/articles/cbmitwfbvv95cuxovxhjcdncrgjvwhj4mwl2rkqymfcts0mwwwllbwdjrfm2n1jtwkjruklowwt3qmftamhlnmvyt2jpzurtqzvfumuwudvmbdvtmmhpy3ryr3lqnmhxdwx2stczvzhisefkzmfimmqzqmljz25pmna2nexvtfjfddrjngp5t0hktkkzlv9duxjpcfd0dnbvawpxmnlivudptw43qxrfd29tqkvoyzziunnzrjqxblmtampsabcbqvvfexfmtwfznkl3exv6rwxldgpktzhkaxp3y1zqzm9lrge3wwoyemfev2tgvmhssvjpwkfkcef4odhquxhta0c2vtf0rzk4tnhvb0fic1rsmfv0swd6vi1dvmdnm09tqjjuukflz0xqstdvy21etfbor29awdnysvzomnm4vnbrbmx6rnfsyzfjuuf6bghraw5tu3nlumfkzmzvzvdrvwfvqjjdc29cdvhqyuzaai1fduywadnr": {
+    "title": "China's AI 'Hundred Model' War Shifts from Performance to Enterprise Value, JPMorgan Says",
+    "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOVXhjcDNCRGJvWHJ4MWl2RkQyMFctS0MwWWllbWdJRFM2N1JtWkJRUkloWWt3QmFTamhlNmVyT2JPZURTQzVfUmUwUDVMbDVtMmhPY3RyR3lqNmhXdWx2STczVzhiSEFKZmFIMmQzQmlJZ25PMnA2NExVTFJFdDRJNGp5T0hkTkkzLV9DUXJPcFd0dnBVaWpXMnliVUdpTW43QXRfd29TQkVoYzZiUnNZRjQxblMtamPSAbcBQVVfeXFMTWFZNkl3eXV6RWxLdGpkTzhkaXp3Y1ZqZm9LRGE3WWoyemFEV2tGVmhSSVJPWkFkcEF4ODhqUXhTa0c2VTF0Rzk4TnhVb0FIc1RSMFV0SWd6Vi1DVmdNM09TQjJuUkFLZ0xQSTdvY21ETFBOR29aWDNySVZoMnM4VnBrbmx6RnFSYzFjUUF6bGhRaW5TU3NlUmFkZmZvZVdRVWFvQjJDc29CdVhQYUZaai1FdUYwaDNR?oc=5&hl=en-IN&gl=IN&ceid=IN:en",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-14"
+  },
+  "techcrunch.com/2026/06/08/apple-will-let-you-build-workflows-using-ai-in-its-new-shortcuts-app": {
+    "title": "Apple Will Let Users Build Workflows Using AI in Redesigned Shortcuts App",
+    "url": "https://techcrunch.com/2026/06/08/apple-will-let-you-build-workflows-using-ai-in-its-new-shortcuts-app/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-08"
+  },
+  "trovata.io/blog/ai-projects-fail-corporate-finance": {
+    "title": "Why Finance & Treasury AI Projects Fail (and How Not to) - Trovata",
+    "url": "https://trovata.io/blog/ai-projects-fail-corporate-finance",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2025-12-23"
+  },
+  "chatfin.ai/blog/how-to-use-ai-to-fix-ai-hallucinations-caused-2-3b-in-trading-losses": {
+    "title": "How AI to Fix AI Hallucinations Caused $2.3B in Trading Losses - ChatFin",
+    "url": "https://chatfin.ai/blog/how-to-use-ai-to-fix-ai-hallucinations-caused-2-3b-in-trading-losses/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "chatfin.ai/blog/ai-agent-roi-calculator-finance-teams-cfo-spending-2026": {
+    "title": "AI Agent ROI Calculator for Finance Teams: What CFOs Are Actually Spending in 2026",
+    "url": "https://chatfin.ai/blog/ai-agent-roi-calculator-finance-teams-cfo-spending-2026/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "cast.ai/blog/fractional-gpu-kubernetes": {
+    "title": "Fractional GPUs and GPU Rightsizing: Stop Wasting Whole Cards",
+    "url": "https://cast.ai/blog/fractional-gpu-kubernetes/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-17"
+  },
+  "theverge.com/report/947575/microsoft-claude-fable-5-restricted-internally": {
+    "title": "Microsoft restricts Claude Fable for employees over data retention concerns",
+    "url": "https://www.theverge.com/report/947575/microsoft-claude-fable-5-restricted-internally",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-10"
+  },
+  "idc.com/resource-center/blog/circular-financing-has-muddied-the-ai-story-watch-the-application-layer-instead": {
+    "title": "Do AI Markets Face a Circular Financing Problem? Enterprise Applications Will Determine the Answer.",
+    "url": "https://www.idc.com/resource-center/blog/circular-financing-has-muddied-the-ai-story-watch-the-application-layer-instead/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-04"
+  },
+  "arxiv.org/abs/2605.30406": {
+    "title": "AI Loss of Control Incident Management: A Framework for Response & Resilience",
+    "url": "https://arxiv.org/abs/2605.30406",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-01"
+  },
+  "techcrunch.com/2026/05/25/what-clickups-mass-layoff-tells-us-about-the-future-of-work": {
+    "title": "What ClickUp's mass layoff tells us about the future of work",
+    "url": "https://techcrunch.com/2026/05/25/what-clickups-mass-layoff-tells-us-about-the-future-of-work/",
+    "campaigns": [
+      "ai-value-finder-campaign",
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-05-25"
+  },
+  "smartdev.com/glossary-ai-enterprise-roadmap": {
+    "title": "What is AI Enterprise Roadmap? Definition, Strategy & Cost - SmartDev",
+    "url": "https://smartdev.com/glossary-ai-enterprise-roadmap/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-04-24"
+  },
+  "vertice.one/insights/unused-saas-applications": {
+    "title": "Unused SaaS applications | Insights | Vertice",
+    "url": "https://www.vertice.one/insights/unused-saas-applications",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-01-15"
+  },
+  "omind.ai/blog/intelligent-automation/ai-operational-efficiency-strategies": {
+    "title": "AI Operational Efficiency: The Complete Enterprise Guide - Omind",
+    "url": "https://www.omind.ai/blog/intelligent-automation/ai-operational-efficiency-strategies/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2024-08-19"
+  },
+  "legal.io/blog/5719519/mit-report-finds-95-of-ai-pilots-fail-to-deliver-roi-exposing-genai-divide": {
+    "title": "MIT Report Finds 95% of AI Pilots Fail to Deliver ROI, Exposing \"GenAI Divide\"",
+    "url": "https://www.legal.io/blog/5719519/MIT-Report-Finds-95-of-AI-Pilots-Fail-to-Deliver-ROI-Exposing-GenAI-Divide",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "aibusinessweekly.com/ai-adoption-statistics-business-enterprise-data-2026": {
+    "title": "AI Adoption Statistics: Business & Enterprise Data 2026 - AI Business Weekly",
+    "url": "https://aibusinessweekly.com/ai-adoption-statistics-business-enterprise-data-2026/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "powellstrategy.com/the-ceos-guide-to-ai-transformation": {
+    "title": "The CEO's Guide to AI Transformation | Vincent A. Powell",
+    "url": "https://www.powellstrategy.com/the-ceos-guide-to-ai-transformation",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "emerj.com/how-ai-is-reshaping-regulated-professional-workflows": {
+    "title": "How AI Is Reshaping Regulated Professional Workflows",
+    "url": "https://emerj.com/how-ai-is-reshaping-regulated-professional-workflows/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "eur-lex.europa.eu/legal-content/en/txt": {
+    "title": "Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence",
+    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "gartner.com/en/documents/2026-enterprise-agentic-ai-governance": {
+    "title": "Gartner Research on Agentic AI Governance Maturity 2026",
+    "url": "https://www.gartner.com/en/documents/2026-enterprise-agentic-ai-governance",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "techcrunch.com/2026/06/23/anthropics-claude-tag-is-learning-your-company-one-slack-message-at-a-time": {
+    "title": "Anthropic's Claude Tag is learning your company, one Slack message at a time",
+    "url": "https://techcrunch.com/2026/06/23/anthropics-claude-tag-is-learning-your-company-one-slack-message-at-a-time/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-23"
+  },
+  "hai.stanford.edu/news/ai-coding-agents-fail-at-teamwork": {
+    "title": "AI Coding Agents Fail at Teamwork",
+    "url": "https://hai.stanford.edu/news/ai-coding-agents-fail-at-teamwork",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-22"
+  },
+  "theverge.com/news/939713/microsoft-scout-assistant-openclaw": {
+    "title": "Microsoft launches Scout, an always-on AI personal assistant built on OpenClaw",
+    "url": "https://www.theverge.com/news/939713/microsoft-scout-assistant-openclaw",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-02"
+  },
+  "news.google.com/rss/articles/cbmingfbvv95cuxor3hyzzaydlbdumrms2poy0vobedvzjnocxa5zmzoak5dvxzzs1rqz21vwmdaavvyx2xplwvbqm1ut09tx3pkcth6s3uwbfjmdtl5cld6lxlrbmlmd3d4odb2yl90skfvstkzs1zysmtjanptretnngrobwctsxmyd0syrm5yedf6dhfzakvydhpjuezwdujgzerzatdtvu0": {
+    "title": "Renting intelligence is a risky way to run a business",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOR3hYZzAydlBDUmRmS2poY0VobEdVZjNOcXA5ZmZOak5DVXZZS1RQZ21VWmdaaVVYX2xPLWVBQm1uT09tX3pKcTh6S3UwbFJmdTl5cld6LXlrbmlmd3d4ODB2Yl90SkFVSTkzS1ZYSmtJanpTREtnNGRobWctSXMyd0syRm5YeDF6dHFZakVYdHpjUEZwdUJGZERzaTdtVU0?oc=5",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-31"
+  },
+  "theverge.com/ai-artificial-intelligence/931479/andon-labs-ai-radio-companies": {
+    "title": "AI radio station experiment demonstrates why AI can't be trusted to run businesses alone",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/931479/andon-labs-ai-radio-companies",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-15"
+  },
+  "404media.co/software-developers-say-ai-is-rotting-their-brains": {
+    "title": "Software Developers Say AI Is Rotting Their Brains",
+    "url": "https://www.404media.co/software-developers-say-ai-is-rotting-their-brains/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-13"
+  },
+  "chatfin.ai/blog/cfos-ai-investment-priorities-2026-shifting-budgets-from-testing-to-production-scale": {
+    "title": "CFOs' AI Investment Priorities 2026: Shifting Budgets from Testing to Production Scale",
+    "url": "https://chatfin.ai/blog/cfos-ai-investment-priorities-2026-shifting-budgets-from-testing-to-production-scale/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "agility-at-scale.com/ai/strategy/roi-and-success-metrics": {
+    "title": "How to Measure AI ROI: A CFO's Framework for Enterprise AI Investment - Agility at Scale",
+    "url": "https://agility-at-scale.com/ai/strategy/roi-and-success-metrics/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-07-05"
+  },
+  "codingwithjesse.com/blog/rockstar-developers": {
+    "title": "Cleaning up after AI rockstar developers",
+    "url": "https://www.codingwithjesse.com/blog/rockstar-developers/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-06-10"
+  },
+  "thinking.inc/en/industry-service/financial-services-ai-roi": {
+    "title": "AI ROI in Financial Services — 2026 Guide - The Thinking Company",
+    "url": "https://thinking.inc/en/industry-service/financial-services-ai-roi/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-03-11"
+  },
+  "varisource.com/blog/eliminate-unused-software-licenses-guide": {
+    "title": "Eliminate Unused Software Licenses: 2026 Guide to ROI",
+    "url": "https://www.varisource.com/blog/eliminate-unused-software-licenses-guide",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "marketscale.com/industries/software-and-technology/palo-alto-networks-ceo-puts-a-number-on-the-ai-cost-problem-90-token-price-drop-needed": {
+    "title": "Palo Alto Networks CEO puts a number on the AI cost problem: 90% token price drop needed - MarketScale",
+    "url": "https://www.marketscale.com/industries/software-and-technology/palo-alto-networks-ceo-puts-a-number-on-the-ai-cost-problem-90-token-price-drop-needed",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-07-20"
+  },
+  "kentucky.com/news/business/article316397303.html": {
+    "title": "How much do AI tokens cost businesses? | Lexington Herald Leader",
+    "url": "https://www.kentucky.com/news/business/article316397303.html",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-07-06"
+  },
+  "techcrunch.com/video/neas-tiffany-luck-says-enterprises-are-still-figuring-out-their-ai-roi": {
+    "title": "NEA's Tiffany Luck: Enterprises Are Still Figuring Out AI ROI as 'Tokenmaxxing' Bills Come Due",
+    "url": "https://techcrunch.com/video/neas-tiffany-luck-says-enterprises-are-still-figuring-out-their-ai-roi/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-17"
+  },
+  "bcg.com/publications/2026/the-cfos-ai-agenda-from-automation-to-advantage": {
+    "title": "The CFO's AI Agenda: From Automation to Advantage | BCG",
+    "url": "https://www.bcg.com/publications/2026/the-cfos-ai-agenda-from-automation-to-advantage",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ],
+    "publishedAt": "2026-04-30"
+  },
+  "softco.com/guides/ai-in-finance-2026-the-cfo-guide-to-automation-compliance-ap-efficiency": {
+    "title": "AI in Finance 2026: The CFO Guide to Automation, Compliance & AP Efficiency - SoftCo",
+    "url": "https://softco.com/guides/ai-in-finance-2026-the-cfo-guide-to-automation-compliance-ap-efficiency/",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "rsmus.com/insights/industries/financial-services/ai-for-financial-services-organizations-in-2026.html": {
+    "title": "How financial services organizations are using AI in 2026 - RSM US",
+    "url": "https://rsmus.com/insights/industries/financial-services/ai-for-financial-services-organizations-in-2026.html",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "grantthornton.com/insights/articles/banking/2026/treasury-guidance-brings-urgency-to-ai-governance": {
+    "title": "Treasury guidance brings urgency to AI governance for financial institutions - Grant Thornton",
+    "url": "https://www.grantthornton.com/insights/articles/banking/2026/treasury-guidance-brings-urgency-to-ai-governance",
+    "campaigns": [
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+    ]
+  },
+  "valueaddvc.com/blog/the-true-cost-of-running-an-ai-product-in-2026-gpu-api-and-inference-bills": {
+    "title": "Cost of Running an AI Product in 2026: GPU, API, and Inference Bills",
+    "url": "https://valueaddvc.com/blog/the-true-cost-of-running-an-ai-product-in-2026-gpu-api-and-inference-bills",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-06"
+  },
+  "marketscale.com/industries/software-and-technology/enterprise-ai-moves-from-pilot-to-production-in-2026-but-gaps-in-governance-and-talent-persist": {
+    "title": "Enterprise AI adoption in 2026: Why 79% face challenges despite high investment",
+    "url": "https://www.marketscale.com/industries/software-and-technology/enterprise-ai-moves-from-pilot-to-production-in-2026-but-gaps-in-governance-and-talent-persist/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-25"
+  },
+  "zylo.com/blog/shelfware": {
+    "title": "Shelfware Explained: The Hidden Cost in Your SaaS Stack",
+    "url": "https://zylo.com/blog/shelfware",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-15"
+  },
+  "openai.com/index/travelers": {
+    "title": "Travelers deploys AI-powered claims assistant countrywide with OpenAI",
+    "url": "https://openai.com/index/travelers",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-03"
+  },
+  "techcrunch.com/2026/06/03/coralogix-raises-200m-in-race-to-build-the-monitoring-layer-for-ai-agents": {
+    "title": "Coralogix raises $200M on bet that someone needs to watch the AI agents",
+    "url": "https://techcrunch.com/2026/06/03/coralogix-raises-200m-in-race-to-build-the-monitoring-layer-for-ai-agents/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-03"
+  },
+  "openai.com/index/boston-childrens-hospital": {
+    "title": "Boston Children's Hospital uses AI to unlock new diagnoses for 40+ rare disease cases",
+    "url": "https://openai.com/index/boston-childrens-hospital",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-05-30"
+  },
+  "byteiota.com/ai-inference-costs-2026-the-hidden-15-20x-gpu-crisis": {
+    "title": "AI Inference Costs 2026: The Hidden 15-20x GPU Crisis",
+    "url": "https://byteiota.com/ai-inference-costs-2026-the-hidden-15-20x-gpu-crisis/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-02-02"
+  },
+  "virtualizationreview.com/articles/2025/08/19/mit-report-finds-most-ai-business-investments-fail-reveals-genai-divide.aspx": {
+    "title": "MIT Report Finds Most AI Business Investments Fail, Reveals 'GenAI Divide'",
+    "url": "https://virtualizationreview.com/articles/2025/08/19/mit-report-finds-most-ai-business-investments-fail-reveals-genai-divide.aspx",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2025-08-19"
+  },
+  "pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-global-ceo-survey.html": {
+    "title": "PwC 2026 Global CEO Survey",
+    "url": "https://www.pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-global-ceo-survey.html",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-ai-performance-study.html": {
+    "title": "Three-quarters of AI's economic gains are being captured by just 20% of companies",
+    "url": "https://www.pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-ai-performance-study.html",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "firstpagesage.com/reports/agentic-ai-adoption-statistics": {
+    "title": "Agentic AI Adoption Statistics for 2026 - First Page Sage",
+    "url": "https://firstpagesage.com/reports/agentic-ai-adoption-statistics/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-06"
+  },
+  "masterofcode.com/blog/ai-roi": {
+    "title": "AI ROI: Why Only 5% of Enterprises See Real Returns in 2026",
+    "url": "https://masterofcode.com/blog/ai-roi",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-02-17"
+  },
+  "pwc.com/gx/en/services/ai/ai-jobs-barometer.html": {
+    "title": "AI Jobs Barometer - PwC",
+    "url": "https://www.pwc.com/gx/en/services/ai/ai-jobs-barometer.html",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "conference-board.org/research/policy-backgrounders/ai-and-the-c-suite-implications-for-ceo-strategy-in-2026": {
+    "title": "AI and the C-Suite: Implications for CEO Strategy in 2026 - The Conference Board",
+    "url": "https://www.conference-board.org/research/policy-backgrounders/ai-and-the-c-suite-implications-for-ceo-strategy-in-2026",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "organizing4innovation.com/ai-leadership-challenges": {
+    "title": "AI Leadership Challenges - - Organizing4Innovation",
+    "url": "https://www.organizing4innovation.com/ai-leadership-challenges/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  }
+}

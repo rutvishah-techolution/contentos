@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# secrets & credentials — never commit
+.env
+.env.*
+!.env.example
+gcp-service-account.json
+*.pem
+
+# misc
+.DS_Store
+*.log
+npm-debug.log*
+
+# obsidian workspace state (keep the vault content, ignore local UI state)
+brain/.obsidian/workspace.json
