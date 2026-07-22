@@ -13,24 +13,20 @@ import { getResearchBundle } from "@/lib/research/read";
 import { callClaude } from "@/lib/models/claude";
 import { readStorylines } from "@/lib/storyline/storyline";
 import { extractFigures } from "@/lib/research/verify";
-import {
-  Channel,
-  CHANNEL_LABELS,
-  ChatMsg,
-  StorylineDoc,
-} from "@/lib/storyline/types";
+import { Channel, CHANNEL_LABELS, ChatMsg, StorylineDoc } from "@/lib/storyline/types";
 
 export interface FactTrace {
   total: number;
   traced: number;
-  untraced: string[]; // figures in the draft NOT found in the research
+  untraced: string[];
 }
 
 export interface DraftDoc {
+  id: string; // piece id (= storyline/topic id)
   channel: Channel;
   personaId: string;
   personaName: string;
-  copy: string; // final markdown copy
+  copy: string;
   factTrace: FactTrace;
   chat: ChatMsg[];
   approved: boolean;
@@ -44,33 +40,30 @@ async function readWriting(file: string): Promise<string> {
     return "";
   }
 }
-
-function draftPath(slug: string, channel: Channel): string {
-  return path.join(draftsDirPath(slug), `${channel}.md`);
+function draftPath(slug: string, id: string): string {
+  return path.join(draftsDirPath(slug), `${id}.md`);
 }
 
 const GROUNDING = `Use ONLY facts, figures, and companies present in the VERIFIED
-RESEARCH provided. Never invent or add a statistic or claim not in it. Every
-number must trace to the research. You have NO web access.`;
+RESEARCH provided. Never invent a statistic or claim not in it. Every number must
+trace to the research. You have NO web access.`;
 
-/** The 3-pass drafting pipeline for every approved storyline. */
+/** 3-pass drafting pipeline for every approved storyline. */
 export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
   const campaign = await getCampaign(slug);
   if (!campaign) throw new Error(`Campaign not found: ${slug}`);
   const storylines = (await readStorylines(slug)).filter((s) => s.approved);
-  if (storylines.length === 0)
-    throw new Error("Approve at least one storyline first.");
+  if (storylines.length === 0) throw new Error("Approve at least one storyline first.");
   const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
 
-  const [structure, formats, craft, psych, brand, humanizer] =
-    await Promise.all([
-      readWriting("storyline-structure.md"),
-      readWriting("format-rules.md"),
-      readWriting("craft-rules.md"),
-      readWriting("reader-psychology.md"),
-      readWriting("brand-context.md"),
-      readWriting("humanizer.md"),
-    ]);
+  const [structure, formats, craft, psych, brand, humanizer] = await Promise.all([
+    readWriting("storyline-structure.md"),
+    readWriting("format-rules.md"),
+    readWriting("craft-rules.md"),
+    readWriting("reader-psychology.md"),
+    readWriting("brand-context.md"),
+    readWriting("humanizer.md"),
+  ]);
   const personas = await listPersonas();
   const pathById = new Map(personas.map((p) => [p.id, p.path]));
 
@@ -87,11 +80,11 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
         frameworks: { structure, formats, craft, psych, brand, humanizer },
       });
       const doc: DraftDoc = {
+        id: sl.id,
         channel: sl.channel,
         personaId: sl.personaId,
         personaName: sl.personaName,
         copy,
-        // brand proof points (e.g. the $50M biotech case) are valid facts too
         factTrace: traceFacts(copy, `${research}\n\n${brand}`),
         chat: [],
         approved: false,
@@ -125,7 +118,6 @@ Proof: ${s.proof}
 Learning: ${s.learning}
 CTA: ${s.cta}`;
 
-  // ── Draft 1: write from the storyline ──
   const write1System = `You write B2B campaign content as a specific persona.
 
 ${GROUNDING}
@@ -153,22 +145,15 @@ ${a.research}
 
 Write the full ${chan} piece, following the ${chan} format rules exactly.
 Output ONLY the piece as clean Markdown — no preamble, no notes.`;
-  const d1 = await callClaude({
-    system: write1System,
-    user: write1User,
-    maxTokens: 3000,
-    webSearch: false,
-  });
+  const d1 = await callClaude({ system: write1System, user: write1User, maxTokens: 3000, webSearch: false });
 
-  // ── Draft 2: editing pass (craft + psychology) ──
-  const editSystem = `You are a sharp editor. Tighten this draft to enforce these
-rules, WITHOUT adding any new facts and WITHOUT losing the persona's voice:
+  const editSystem = `You are a sharp editor. Tighten this draft to enforce these rules, WITHOUT adding new facts and WITHOUT losing the persona's voice:
 
 ${a.frameworks.craft}
 
 ${a.frameworks.psych}
 
-Keep it in the same voice. Output ONLY the edited piece as Markdown.`;
+Keep the same voice. Output ONLY the edited piece as Markdown.`;
   const d2 = await callClaude({
     system: editSystem,
     user: `RESEARCH (facts must stay grounded here):\n${a.research}\n\nDRAFT:\n${d1}`,
@@ -176,7 +161,6 @@ Keep it in the same voice. Output ONLY the edited piece as Markdown.`;
     webSearch: false,
   });
 
-  // ── Draft 3: humanizer + GEO ──
   const humanSystem = `${a.frameworks.humanizer}\n\nEdit only. Do not add new facts. Keep the persona's voice. Output ONLY the final piece as Markdown.`;
   const d3 = await callClaude({
     system: humanSystem,
@@ -184,14 +168,12 @@ Keep it in the same voice. Output ONLY the edited piece as Markdown.`;
     maxTokens: 3000,
     webSearch: false,
   });
-
   return d3.trim();
 }
 
-/** Deterministic fact-trace: every figure in the copy must appear in research. */
-function traceFacts(copy: string, research: string): FactTrace {
+function traceFacts(copy: string, corpus: string): FactTrace {
   const figs = extractFigures(copy);
-  const lower = research.toLowerCase();
+  const lower = corpus.toLowerCase();
   const untraced: string[] = [];
   let traced = 0;
   for (const f of figs) {
@@ -204,22 +186,21 @@ function traceFacts(copy: string, research: string): FactTrace {
 /** Chat-with-memory revision of a draft's copy. */
 export async function reviseDraft(
   slug: string,
-  channel: Channel,
+  id: string,
   message: string,
 ): Promise<DraftDoc> {
-  const doc = await readDraft(slug, channel);
+  const doc = await readDraft(slug, id);
   if (!doc) throw new Error("Draft not found.");
   const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
   const personas = await listPersonas();
   const pPath = personas.find((p) => p.id === doc.personaId)?.path;
   const voice = pPath ? await readPersonaBody(pPath) : "";
-  const [craft, brand, humanizer] = await Promise.all([
+  const [craft, brand] = await Promise.all([
     readWriting("craft-rules.md"),
     readWriting("brand-context.md"),
-    readWriting("humanizer.md"),
   ]);
 
-  const system = `You are revising a finished ${CHANNEL_LABELS[channel]} piece with the reviewer, in a conversation. Apply their guidance while keeping it grounded, in voice, and clean.
+  const system = `You are revising a finished ${CHANNEL_LABELS[doc.channel]} piece with the reviewer, in a conversation. Apply their guidance while keeping it grounded, in voice, and clean.
 
 ${GROUNDING}
 
@@ -232,7 +213,7 @@ ${brand}
 VOICE:
 ${voice}
 
-Return the FULL revised piece as Markdown, then on a new line "---REPLY---", then one sentence on what you changed.`;
+Return the FULL revised piece as Markdown, then a new line "---REPLY---", then one sentence on what you changed.`;
 
   const history = doc.chat
     .map((m) => `${m.role === "user" ? "REVIEWER" : "YOU"}: ${m.content}`)
@@ -265,9 +246,9 @@ NEW MESSAGE:
 
 export async function approveDraft(
   slug: string,
-  channel: Channel,
+  id: string,
 ): Promise<{ allApproved: boolean }> {
-  const doc = await readDraft(slug, channel);
+  const doc = await readDraft(slug, id);
   if (!doc) throw new Error("Draft not found.");
   doc.approved = true;
   await writeDraft(slug, doc);
@@ -278,13 +259,20 @@ export async function approveDraft(
 }
 
 export async function readDrafts(slug: string): Promise<DraftDoc[]> {
-  const order: Channel[] = ["blog", "linkedin", "instagram"];
-  const out: DraftDoc[] = [];
-  for (const c of order) {
-    const d = await readDraft(slug, c);
-    if (d) out.push(d);
+  const dir = draftsDirPath(slug);
+  let files: string[] = [];
+  try {
+    files = (await fs.readdir(dir)).filter((f) => f.endsWith(".md"));
+  } catch {
+    return [];
   }
-  return out;
+  const docs: DraftDoc[] = [];
+  for (const f of files) {
+    const d = await readDraft(slug, f.replace(/\.md$/, ""));
+    if (d) docs.push(d);
+  }
+  const rank: Record<string, number> = { longform: 0, blog: 1, linkedin: 2, instagram: 3 };
+  return docs.sort((a, b) => (rank[a.channel] ?? 9) - (rank[b.channel] ?? 9));
 }
 
 async function writeDraft(slug: string, doc: DraftDoc): Promise<void> {
@@ -292,6 +280,7 @@ async function writeDraft(slug: string, doc: DraftDoc): Promise<void> {
   const md = [
     "---",
     campaignLink(slug),
+    `pieceId: ${doc.id}`,
     `channel: ${doc.channel}`,
     `persona: ${doc.personaName}`,
     `approved: ${doc.approved}`,
@@ -309,15 +298,12 @@ async function writeDraft(slug: string, doc: DraftDoc): Promise<void> {
     "```",
     "",
   ].join("\n");
-  await fs.writeFile(draftPath(slug, doc.channel), md, "utf8");
+  await fs.writeFile(draftPath(slug, doc.id), md, "utf8");
 }
 
-async function readDraft(
-  slug: string,
-  channel: Channel,
-): Promise<DraftDoc | null> {
+async function readDraft(slug: string, id: string): Promise<DraftDoc | null> {
   try {
-    const md = await fs.readFile(draftPath(slug, channel), "utf8");
+    const md = await fs.readFile(draftPath(slug, id), "utf8");
     const block = md.match(/## Data\s*```json\s*([\s\S]*?)```/);
     return block ? (JSON.parse(block[1]) as DraftDoc) : null;
   } catch {

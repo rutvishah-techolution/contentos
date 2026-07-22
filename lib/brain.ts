@@ -16,6 +16,9 @@ export function storylineDirPath(slug: string): string {
 export function planPath(slug: string): string {
   return path.join(storylineDirPath(slug), "plan.md");
 }
+export function topicBankPath(slug: string): string {
+  return path.join(storylineDirPath(slug), "topic-bank.md");
+}
 export function draftsDirPath(slug: string): string {
   return path.join(CAMPAIGNS_DIR, slug, "drafts");
 }

@@ -11,11 +11,10 @@ import {
 } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
 import { callClaude } from "@/lib/models/claude";
-import { readPlan } from "@/lib/storyline/plan";
+import { getTopics, setTopicStatus } from "@/lib/storyline/topics";
 import {
   Channel,
   CHANNEL_LABELS,
-  ChatMsg,
   Storyline,
   StorylineDoc,
 } from "@/lib/storyline/types";
@@ -28,30 +27,31 @@ async function readWriting(file: string): Promise<string> {
   }
 }
 
-function piecePath(slug: string, channel: Channel): string {
-  return path.join(storylineDirPath(slug), `${channel}.md`);
+// piece files are prefixed so they don't collide with plan.md / topic-bank.md
+function piecePath(slug: string, id: string): string {
+  return path.join(storylineDirPath(slug), `piece-${id}.md`);
 }
 
 const GROUNDING = `════════ ANTI-HALLUCINATION — ABSOLUTE ════════
 Use ONLY facts, figures, companies, and claims present in the VERIFIED RESEARCH
-below. Never invent or add a statistic or claim that isn't in it. Every number in
-the storyline must trace to the research. You have NO web access — the research is
-your only source of facts.`;
+below. Never invent a statistic or claim that isn't in it. Every number must
+trace to the research. You have NO web access.`;
 
-const LAYERING = `STRUCTURE (the storyline shape) governs the SHAPE of the piece.
-PERSONA governs the VOICE. Where the persona's habits conflict with the required
-structure, keep the structure and express the persona through voice — not by
-changing the shape.`;
+const LAYERING = `STRUCTURE governs the SHAPE of the piece. PERSONA governs the
+VOICE. On conflict, keep the structure and express the persona through voice.`;
 
-/** Generates a storyline for every approved plan item. */
-export async function generateStorylines(slug: string): Promise<StorylineDoc[]> {
+/** Generates a storyline for each SELECTED topic id, and marks them in-production. */
+export async function generateStorylines(
+  slug: string,
+  topicIds: string[],
+): Promise<StorylineDoc[]> {
   const campaign = await getCampaign(slug);
   if (!campaign) throw new Error(`Campaign not found: ${slug}`);
-  const plan = await readPlan(slug);
-  if (!plan || !plan.approved) throw new Error("Approve a content plan first.");
-  const bundle = await getResearchBundle(slug);
-  const research = bundle.campaignBase?.markdown || "";
+  const topics = await getTopics(slug, topicIds);
+  if (topics.length === 0) throw new Error("Select at least one topic.");
+  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
   if (!research) throw new Error("No approved research base.");
+  const spine = ""; // spine is in the topic bank; not needed per-piece here
 
   const [structure, craft, brand, psych] = await Promise.all([
     readWriting("storyline-structure.md"),
@@ -63,10 +63,10 @@ export async function generateStorylines(slug: string): Promise<StorylineDoc[]> 
   const pathById = new Map(personas.map((p) => [p.id, p.path]));
 
   const docs = await Promise.all(
-    plan.items.map(async (item) => {
-      const pPath = pathById.get(item.personaId);
-      const voice = pPath ? await readPersonaBody(pPath) : "";
-
+    topics.map(async (t) => {
+      const voice = pathById.get(t.personaId)
+        ? await readPersonaBody(pathById.get(t.personaId) as string)
+        : "";
       const system = `You write B2B campaign content as a specific persona.
 
 ${GROUNDING}
@@ -83,40 +83,35 @@ ${psych}
 ════════ BRAND ════════
 ${brand}
 
-════════ YOUR VOICE (the persona you write as) ════════
+════════ YOUR VOICE ════════
 ${voice}
 
 ${LAYERING}`;
-
       const user = `CAMPAIGN: ${campaign.name} — ${campaign.topic}
-OBJECTIVE: ${campaign.objective}${campaign.icp ? `\nICP: ${campaign.icp}` : ""}
-SPINE (shared campaign message): ${plan.spine}
+OBJECTIVE: ${campaign.objective}${campaign.icp ? `\nICP: ${campaign.icp}` : ""}${spine}
 
 THIS PIECE:
-- Channel: ${CHANNEL_LABELS[item.channel]}
-- Angle: ${item.angle}
-- Working headline: ${item.headline}
-- Content type: Type 1 (service-focused — the service is the hero, introduced after the villain)
+- Channel: ${CHANNEL_LABELS[t.channel]}
+- Angle: ${t.angle}
+- Working headline: ${t.headline}
+- Content type: Type 1 (service-focused — the service is the hero, after the villain)
 
 VERIFIED RESEARCH (your ONLY source of facts):
 ${research}
 
-Produce the storyline for THIS piece — the narrative skeleton, not the full copy.
+Produce the storyline for THIS piece — the narrative skeleton, not full copy.
 Return ONLY JSON (no prose, no code fences):
 {"headline":"","hook":"","villain":"","shift":"","hero":"","proof":"","learning":"","cta":""}`;
 
-      const raw = await callClaude({
-        system,
-        user,
-        maxTokens: 2000,
-        webSearch: false,
-      });
-      const storyline = parseStoryline(raw, item.headline);
+      const raw = await callClaude({ system, user, maxTokens: 2000, webSearch: false });
+      const storyline = parseStoryline(raw, t.headline);
       const doc: StorylineDoc = {
-        channel: item.channel,
-        personaId: item.personaId,
-        personaName: item.personaName,
-        angle: item.angle,
+        id: t.id,
+        channel: t.channel,
+        personaId: t.personaId,
+        personaName: t.personaName,
+        angle: t.angle,
+        headline: storyline.headline,
         storyline,
         chat: [],
         approved: false,
@@ -127,21 +122,21 @@ Return ONLY JSON (no prose, no code fences):
     }),
   );
 
+  await setTopicStatus(slug, topicIds, "in-production");
+  await setCampaignStatus(slug, "storyline");
   return docs;
 }
 
-/** Chat-with-memory revision: the model sees the full thread + current storyline. */
+/** Chat-with-memory revision. */
 export async function reviseStoryline(
   slug: string,
-  channel: Channel,
+  id: string,
   message: string,
 ): Promise<StorylineDoc> {
-  const doc = await readDoc(slug, channel);
+  const doc = await readDoc(slug, id);
   if (!doc) throw new Error("Storyline not found.");
   const campaign = await getCampaign(slug);
-  const bundle = await getResearchBundle(slug);
-  const research = bundle.campaignBase?.markdown || "";
-
+  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
   const personas = await listPersonas();
   const pPath = personas.find((p) => p.id === doc.personaId)?.path;
   const voice = pPath ? await readPersonaBody(pPath) : "";
@@ -151,20 +146,20 @@ export async function reviseStoryline(
     readWriting("brand-context.md"),
   ]);
 
-  const system = `You are revising an existing storyline with the reviewer, in a conversation. Apply their guidance while keeping the storyline grounded in the research and true to the persona's voice and the required structure.
+  const system = `You are revising an existing storyline with the reviewer, in a conversation. Apply their guidance while keeping it grounded, in voice, and true to the structure.
 
 ${GROUNDING}
 
-════════ STORYLINE STRUCTURE ════════
+STORYLINE STRUCTURE:
 ${structure}
 
-════════ CRAFT RULES ════════
+CRAFT:
 ${craft}
 
-════════ BRAND ════════
+BRAND:
 ${brand}
 
-════════ YOUR VOICE ════════
+YOUR VOICE:
 ${voice}
 
 ${LAYERING}
@@ -174,7 +169,6 @@ Return ONLY JSON: {"storyline":{"headline":"","hook":"","villain":"","shift":"",
   const history = doc.chat
     .map((m) => `${m.role === "user" ? "REVIEWER" : "YOU"}: ${m.content}`)
     .join("\n");
-
   const user = `CAMPAIGN: ${campaign?.name} — ${campaign?.topic}
 
 VERIFIED RESEARCH (your ONLY source of facts):
@@ -189,28 +183,42 @@ ${history || "(none yet)"}
 NEW MESSAGE FROM REVIEWER:
 "${message}"
 
-Revise the storyline accordingly and reply.`;
+Revise accordingly and reply.`;
 
   const raw = await callClaude({ system, user, maxTokens: 2200, webSearch: false });
   const { storyline, reply } = parseRevision(raw, doc.storyline);
-
   doc.storyline = storyline;
+  doc.headline = storyline.headline;
   doc.chat.push({ role: "user", content: message });
   doc.chat.push({ role: "assistant", content: reply });
-  doc.approved = false; // a revision un-approves until re-approved
+  doc.approved = false;
+  await writeDoc(slug, doc);
+  return doc;
+}
+
+/** Manual edit — the user overrides storyline fields directly. */
+export async function editStoryline(
+  slug: string,
+  id: string,
+  patch: Partial<Storyline>,
+): Promise<StorylineDoc> {
+  const doc = await readDoc(slug, id);
+  if (!doc) throw new Error("Storyline not found.");
+  doc.storyline = { ...doc.storyline, ...patch };
+  doc.headline = doc.storyline.headline;
+  doc.approved = false;
   await writeDoc(slug, doc);
   return doc;
 }
 
 export async function approveStoryline(
   slug: string,
-  channel: Channel,
+  id: string,
 ): Promise<{ allApproved: boolean }> {
-  const doc = await readDoc(slug, channel);
+  const doc = await readDoc(slug, id);
   if (!doc) throw new Error("Storyline not found.");
   doc.approved = true;
   await writeDoc(slug, doc);
-
   const all = await readStorylines(slug);
   const allApproved = all.length > 0 && all.every((d) => d.approved);
   if (allApproved) await setCampaignStatus(slug, "ready-for-draft");
@@ -219,20 +227,29 @@ export async function approveStoryline(
 
 export async function readStorylines(slug: string): Promise<StorylineDoc[]> {
   const dir = storylineDirPath(slug);
-  const order: Channel[] = ["blog", "linkedin", "instagram"];
+  let files: string[] = [];
+  try {
+    files = (await fs.readdir(dir)).filter(
+      (f) => f.startsWith("piece-") && f.endsWith(".md"),
+    );
+  } catch {
+    return [];
+  }
   const docs: StorylineDoc[] = [];
-  for (const c of order) {
-    const d = await readDoc(slug, c);
+  for (const f of files) {
+    const id = f.replace(/^piece-/, "").replace(/\.md$/, "");
+    const d = await readDoc(slug, id);
     if (d) docs.push(d);
   }
-  return docs;
+  // order: longform, blog, linkedin, instagram
+  const rank: Record<string, number> = { longform: 0, blog: 1, linkedin: 2, instagram: 3 };
+  return docs.sort((a, b) => (rank[a.channel] ?? 9) - (rank[b.channel] ?? 9));
 }
 
 // ── parse + persist ──────────────────────────────────────────────────────────
 function parseStoryline(raw: string, fallbackHeadline: string): Storyline {
-  const m = raw.match(/\{[\s\S]*\}/);
-  const j = m ? safe(m[0]) : null;
-  const s = (j || {}) as Partial<Storyline>;
+  const j = safe(raw.match(/\{[\s\S]*\}/)?.[0] || "") as Partial<Storyline> | null;
+  const s = j || {};
   return {
     headline: str(s.headline) || fallbackHeadline,
     hook: str(s.hook),
@@ -244,14 +261,14 @@ function parseStoryline(raw: string, fallbackHeadline: string): Storyline {
     cta: str(s.cta),
   };
 }
-
 function parseRevision(
   raw: string,
   prev: Storyline,
 ): { storyline: Storyline; reply: string } {
-  const m = raw.match(/\{[\s\S]*\}/);
-  const j = m ? safe(m[0]) : null;
-  const obj = (j || {}) as { storyline?: Partial<Storyline>; reply?: unknown };
+  const obj = (safe(raw.match(/\{[\s\S]*\}/)?.[0] || "") || {}) as {
+    storyline?: Partial<Storyline>;
+    reply?: unknown;
+  };
   const s = obj.storyline || {};
   return {
     storyline: {
@@ -267,7 +284,6 @@ function parseRevision(
     reply: str(obj.reply) || "Updated.",
   };
 }
-
 function str(v: unknown): string {
   return typeof v === "string" ? v : "";
 }
@@ -282,9 +298,10 @@ function safe(s: string): unknown {
 async function writeDoc(slug: string, doc: StorylineDoc): Promise<void> {
   await fs.mkdir(storylineDirPath(slug), { recursive: true });
   const s = doc.storyline;
-  const lines = [
+  const md = [
     "---",
     campaignLink(slug),
+    `pieceId: ${doc.id}`,
     `channel: ${doc.channel}`,
     `persona: ${doc.personaName}`,
     `approved: ${doc.approved}`,
@@ -308,16 +325,13 @@ async function writeDoc(slug: string, doc: StorylineDoc): Promise<void> {
     JSON.stringify(doc, null, 2),
     "```",
     "",
-  ];
-  await fs.writeFile(piecePath(slug, doc.channel), lines.join("\n"), "utf8");
+  ].join("\n");
+  await fs.writeFile(piecePath(slug, doc.id), md, "utf8");
 }
 
-async function readDoc(
-  slug: string,
-  channel: Channel,
-): Promise<StorylineDoc | null> {
+async function readDoc(slug: string, id: string): Promise<StorylineDoc | null> {
   try {
-    const md = await fs.readFile(piecePath(slug, channel), "utf8");
+    const md = await fs.readFile(piecePath(slug, id), "utf8");
     const block = md.match(/## Data\s*```json\s*([\s\S]*?)```/);
     return block ? (JSON.parse(block[1]) as StorylineDoc) : null;
   } catch {

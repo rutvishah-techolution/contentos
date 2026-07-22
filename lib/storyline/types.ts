@@ -53,10 +53,12 @@ export interface ChatMsg {
 
 /** One piece's storyline + its revision chat (with memory). */
 export interface StorylineDoc {
+  id: string; // the piece id (= topic id)
   channel: Channel;
   personaId: string;
   personaName: string;
   angle: string;
+  headline: string;
   storyline: Storyline;
   chat: ChatMsg[];
   approved: boolean;

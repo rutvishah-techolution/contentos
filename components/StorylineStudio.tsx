@@ -2,82 +2,34 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CHANNEL_LABELS, StorylineDoc } from "@/lib/storyline/types";
+import { CHANNEL_LABELS, Storyline, StorylineDoc } from "@/lib/storyline/types";
 
 export default function StorylineStudio({
   slug,
-  initialStorylines,
+  storylines,
 }: {
   slug: string;
-  initialStorylines: StorylineDoc[];
+  storylines: StorylineDoc[];
 }) {
+  const [docs, setDocs] = useState<StorylineDoc[]>(storylines);
   const router = useRouter();
-  const [docs, setDocs] = useState<StorylineDoc[]>(initialStorylines);
-  const [generating, setGenerating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  async function generate() {
-    setGenerating(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/campaigns/${slug}/storylines`, {
-        method: "POST",
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed.");
-      setDocs(data.storylines);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error");
-    } finally {
-      setGenerating(false);
-    }
-  }
-
-  function updateDoc(updated: StorylineDoc) {
-    setDocs((cur) =>
-      cur.map((d) => (d.channel === updated.channel ? updated : d)),
-    );
+  function update(d: StorylineDoc) {
+    setDocs((cur) => cur.map((x) => (x.id === d.id ? d : x)));
     router.refresh();
   }
 
   const allApproved = docs.length > 0 && docs.every((d) => d.approved);
 
-  if (docs.length === 0) {
-    return (
-      <section className="card">
-        <h2 className="text-sm font-medium text-fg">Storylines</h2>
-        <p className="mt-1 text-xs text-faint">
-          Generate a storyline for each approved piece — villain → hero, in each
-          persona&rsquo;s voice, grounded in your research.
-        </p>
-        <button className="btn-primary mt-3" onClick={generate} disabled={generating}>
-          {generating ? "Generating storylines…" : "Generate storylines"}
-        </button>
-        {error && <p className="alert-error mt-3">{error}</p>}
-      </section>
-    );
-  }
+  if (docs.length === 0) return null;
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-muted">Storylines</h2>
-        <button
-          className="text-xs text-faint hover:text-fg"
-          onClick={generate}
-          disabled={generating}
-        >
-          {generating ? "Regenerating…" : "↻ Regenerate all"}
-        </button>
-      </div>
-      {error && <p className="alert-error">{error}</p>}
-      {docs.map((doc) => (
-        <StorylineCard
-          key={doc.channel}
-          slug={slug}
-          doc={doc}
-          onUpdate={updateDoc}
-        />
+      <h2 className="text-sm font-medium text-muted">
+        Storylines ({docs.length})
+      </h2>
+      {docs.map((d) => (
+        <StorylineCard key={d.id} slug={slug} doc={d} onUpdate={update} />
       ))}
       {allApproved && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-sm">
@@ -94,6 +46,16 @@ export default function StorylineStudio({
   );
 }
 
+const BEATS: (keyof Storyline)[] = [
+  "hook",
+  "villain",
+  "shift",
+  "hero",
+  "proof",
+  "learning",
+  "cta",
+];
+
 function StorylineCard({
   slug,
   doc,
@@ -104,21 +66,20 @@ function StorylineCard({
   onUpdate: (d: StorylineDoc) => void;
 }) {
   const [msg, setMsg] = useState("");
-  const [busy, setBusy] = useState<null | "revise" | "approve">(null);
+  const [busy, setBusy] = useState<null | "revise" | "approve" | "edit">(null);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Storyline>(doc.storyline);
   const s = doc.storyline;
 
   async function revise() {
     if (!msg.trim()) return;
     setBusy("revise");
     try {
-      const res = await fetch(
-        `/api/campaigns/${slug}/storylines/${doc.channel}/revise`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: msg }),
-        },
-      );
+      const res = await fetch(`/api/campaigns/${slug}/storylines/${doc.id}/revise`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg }),
+      });
       const data = await res.json();
       if (res.ok) {
         onUpdate(data.storyline);
@@ -129,28 +90,35 @@ function StorylineCard({
     }
   }
 
-  async function approve() {
-    setBusy("approve");
+  async function saveEdit() {
+    setBusy("edit");
     try {
-      const res = await fetch(
-        `/api/campaigns/${slug}/storylines/${doc.channel}/approve`,
-        { method: "POST" },
-      );
-      if (res.ok) onUpdate({ ...doc, approved: true });
+      const res = await fetch(`/api/campaigns/${slug}/storylines/${doc.id}/edit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patch: draft }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        onUpdate(data.storyline);
+        setEditing(false);
+      }
     } finally {
       setBusy(null);
     }
   }
 
-  const beats: [string, string][] = [
-    ["Hook", s.hook],
-    ["Villain", s.villain],
-    ["Shift", s.shift],
-    ["Hero", s.hero],
-    ["Proof", s.proof],
-    ["Learning", s.learning],
-    ["CTA", s.cta],
-  ];
+  async function approve() {
+    setBusy("approve");
+    try {
+      const res = await fetch(`/api/campaigns/${slug}/storylines/${doc.id}/approve`, {
+        method: "POST",
+      });
+      if (res.ok) onUpdate({ ...doc, approved: true });
+    } finally {
+      setBusy(null);
+    }
+  }
 
   return (
     <div className="card">
@@ -161,18 +129,61 @@ function StorylineCard({
           {doc.approved && <span className="text-ok">✓ approved</span>}
         </span>
       </div>
-      <h3 className="text-[15px] font-semibold text-fg">{s.headline}</h3>
 
-      <dl className="mt-3 flex flex-col gap-2">
-        {beats.map(([k, v]) => (
-          <div key={k} className="grid grid-cols-[80px_1fr] gap-2">
-            <dt className="text-xs font-medium text-faint">{k}</dt>
-            <dd className="text-sm text-muted">{v}</dd>
+      {editing ? (
+        <div className="flex flex-col gap-2">
+          <input
+            className="input"
+            value={draft.headline}
+            onChange={(e) => setDraft({ ...draft, headline: e.target.value })}
+          />
+          {BEATS.map((k) => (
+            <div key={k} className="grid grid-cols-[80px_1fr] items-start gap-2">
+              <span className="pt-2 text-xs font-medium capitalize text-faint">
+                {k}
+              </span>
+              <textarea
+                className="input resize-none"
+                rows={2}
+                value={draft[k]}
+                onChange={(e) => setDraft({ ...draft, [k]: e.target.value })}
+              />
+            </div>
+          ))}
+          <div className="flex gap-2 self-end">
+            <button className="btn-ghost" onClick={() => setEditing(false)}>
+              Cancel
+            </button>
+            <button className="btn-primary" onClick={saveEdit} disabled={busy !== null}>
+              {busy === "edit" ? "Saving…" : "Save edits"}
+            </button>
           </div>
-        ))}
-      </dl>
+        </div>
+      ) : (
+        <>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-[15px] font-semibold text-fg">{s.headline}</h3>
+            <button
+              className="shrink-0 text-xs text-faint hover:text-fg"
+              onClick={() => {
+                setDraft(doc.storyline);
+                setEditing(true);
+              }}
+            >
+              Edit
+            </button>
+          </div>
+          <dl className="mt-3 flex flex-col gap-2">
+            {BEATS.map((k) => (
+              <div key={k} className="grid grid-cols-[80px_1fr] gap-2">
+                <dt className="text-xs font-medium capitalize text-faint">{k}</dt>
+                <dd className="text-sm text-muted">{s[k]}</dd>
+              </div>
+            ))}
+          </dl>
+        </>
+      )}
 
-      {/* chat-with-memory revision */}
       {doc.chat.length > 0 && (
         <div className="mt-4 flex flex-col gap-2 border-t border-border pt-3">
           {doc.chat.map((m, i) => (
@@ -189,31 +200,29 @@ function StorylineCard({
         </div>
       )}
 
-      <div className="mt-3 flex flex-col gap-2">
-        <textarea
-          className="input resize-none"
-          rows={2}
-          placeholder="Tell it what to change — it remembers the conversation. e.g. 'sharpen the villain, make the hook less generic'"
-          value={msg}
-          onChange={(e) => setMsg(e.target.value)}
-        />
-        <div className="flex gap-2 self-end">
-          <button
-            className="btn-ghost"
-            onClick={revise}
-            disabled={busy !== null || !msg.trim()}
-          >
-            {busy === "revise" ? "Revising…" : "Send"}
-          </button>
-          <button
-            className="btn-primary"
-            onClick={approve}
-            disabled={busy !== null}
-          >
-            {busy === "approve" ? "Approving…" : "Approve"}
-          </button>
+      {!editing && (
+        <div className="mt-3 flex flex-col gap-2">
+          <textarea
+            className="input resize-none"
+            rows={2}
+            placeholder="Chat to revise — it remembers the conversation. Or use Edit above to change it yourself."
+            value={msg}
+            onChange={(e) => setMsg(e.target.value)}
+          />
+          <div className="flex gap-2 self-end">
+            <button
+              className="btn-ghost"
+              onClick={revise}
+              disabled={busy !== null || !msg.trim()}
+            >
+              {busy === "revise" ? "Revising…" : "Send"}
+            </button>
+            <button className="btn-primary" onClick={approve} disabled={busy !== null}>
+              {busy === "approve" ? "Approving…" : "Approve"}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

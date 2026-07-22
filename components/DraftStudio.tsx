@@ -35,7 +35,7 @@ export default function DraftStudio({
   }
 
   function update(d: DraftDoc) {
-    setDrafts((cur) => cur.map((x) => (x.channel === d.channel ? d : x)));
+    setDrafts((cur) => cur.map((x) => (x.id === d.id ? d : x)));
     router.refresh();
   }
 
@@ -71,7 +71,7 @@ export default function DraftStudio({
       </div>
       {error && <p className="alert-error">{error}</p>}
       {drafts.map((d) => (
-        <DraftCard key={d.channel} slug={slug} draft={d} onUpdate={update} />
+        <DraftCard key={d.id} slug={slug} draft={d} onUpdate={update} />
       ))}
       {allApproved && (
         <div className="flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm">
@@ -103,7 +103,7 @@ function DraftCard({
     setBusy("revise");
     try {
       const res = await fetch(
-        `/api/campaigns/${slug}/drafts/${draft.channel}/revise`,
+        `/api/campaigns/${slug}/drafts/${draft.id}/revise`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -124,7 +124,7 @@ function DraftCard({
     setBusy("approve");
     try {
       const res = await fetch(
-        `/api/campaigns/${slug}/drafts/${draft.channel}/approve`,
+        `/api/campaigns/${slug}/drafts/${draft.id}/approve`,
         { method: "POST" },
       );
       if (res.ok) onUpdate({ ...draft, approved: true });
