@@ -32,7 +32,7 @@ export default async function Home() {
 
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((s) => (
-          <div key={s.label} className="card">
+          <div key={s.label} className="card stat-card">
             <div className="text-2xl font-semibold tracking-tight text-fg">
               {s.value}
             </div>

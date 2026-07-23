@@ -32,11 +32,48 @@
 
 html,
 body {
-  background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+/* pure-white base stays; atmosphere is layered on top */
+html {
+  background: var(--bg);
+}
+body {
+  background: transparent;
+  isolation: isolate;
+}
+/* very soft ambient glow — corners only, center stays white */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      1100px 620px at 6% -10%,
+      rgba(59, 91, 219, 0.05),
+      transparent 58%
+    ),
+    radial-gradient(
+      1000px 640px at 102% -8%,
+      rgba(180, 83, 9, 0.032),
+      transparent 55%
+    );
+}
+/* whisper of grain so white reads like paper, not screen */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
 }
 
 ::selection {
@@ -135,6 +172,20 @@ body {
     border: 1px solid var(--border);
     background: var(--surface);
     padding: 22px;
+    box-shadow:
+      0 1px 2px rgba(17, 17, 16, 0.04),
+      0 1px 3px rgba(17, 17, 16, 0.02);
+    transition:
+      box-shadow 0.18s ease,
+      border-color 0.18s ease;
+  }
+
+  /* stat tiles: a faint vertical fade + a touch more lift */
+  .stat-card {
+    background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+    box-shadow:
+      0 1px 2px rgba(17, 17, 16, 0.05),
+      0 4px 14px rgba(17, 17, 16, 0.03);
   }
 
   .badge {
