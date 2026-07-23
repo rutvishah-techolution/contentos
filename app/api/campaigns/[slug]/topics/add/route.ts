@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addCustomTopic } from "@/lib/storyline/topics";
-import { Channel } from "@/lib/storyline/types";
-
-const VALID: Channel[] = ["longform", "blog", "linkedin", "instagram"];
+import { ALL_CHANNELS, Channel, PieceKind } from "@/lib/storyline/types";
 
 export async function POST(
   req: NextRequest,
@@ -11,6 +9,7 @@ export async function POST(
   const { slug } = await params;
   let body: {
     channel?: string;
+    kind?: string;
     headline?: string;
     angle?: string;
     personaId?: string;
@@ -21,15 +20,18 @@ export async function POST(
     return NextResponse.json({ error: "Invalid body." }, { status: 400 });
   }
   const channel = body.channel as Channel;
-  if (!VALID.includes(channel) || !body.headline) {
+  if (!ALL_CHANNELS.includes(channel) || !body.headline) {
     return NextResponse.json(
       { error: "Channel and headline required." },
       { status: 400 },
     );
   }
+  const kind: PieceKind =
+    body.kind === "thought-leadership" ? "thought-leadership" : "campaign";
   try {
     const bank = await addCustomTopic(slug, {
       channel,
+      kind,
       headline: body.headline,
       angle: body.angle || "",
       personaId: body.personaId || "",

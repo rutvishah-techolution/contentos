@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CHANNEL_LABELS, Storyline, StorylineDoc } from "@/lib/storyline/types";
+import { KindPill } from "@/components/TopicPlanner";
 
 export default function StorylineStudio({
   slug,
@@ -129,7 +130,10 @@ function StorylineCard({
   return (
     <div className="card">
       <div className="mb-2 flex items-center justify-between">
-        <span className="badge">{CHANNEL_LABELS[doc.channel]}</span>
+        <span className="flex items-center gap-2">
+          <span className="badge">{CHANNEL_LABELS[doc.channel]}</span>
+          <KindPill kind={doc.kind} />
+        </span>
         <span className="flex items-center gap-2 text-xs text-faint">
           {doc.personaName}
           {doc.approved && <span className="text-ok">✓ approved</span>}

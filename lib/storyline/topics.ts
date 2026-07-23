@@ -10,8 +10,14 @@ import {
   readPersonaBody,
 } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
+import { getKnowledgeContext } from "@/lib/knowledge";
 import { callClaude } from "@/lib/models/claude";
-import { Channel, CHANNEL_LABELS } from "@/lib/storyline/types";
+import {
+  Channel,
+  CHANNEL_LABELS,
+  CHANNEL_ORDER,
+  PieceKind,
+} from "@/lib/storyline/types";
 
 export type TopicStatus = "available" | "in-production";
 
@@ -19,6 +25,7 @@ export type TopicStatus = "available" | "in-production";
 export interface Topic {
   id: string;
   channel: Channel;
+  kind: PieceKind; // campaign (service pitch) vs thought-leadership (POV)
   personaId: string;
   personaName: string;
   angle: string;
@@ -86,11 +93,13 @@ export async function generateTopics(
     ...channels.filter((c) => c !== "longform"),
   ];
 
-  const [structure, angles, brand] = await Promise.all([
+  const [structure, angles, brand, knowledge] = await Promise.all([
     readWriting("storyline-structure.md"),
     readWriting("content-angles.md"),
     readWriting("brand-context.md"),
+    getKnowledgeContext(6000),
   ]);
+  const scoutMd = bundle.scoutBase?.markdown || "";
   const personas = await listPersonas();
   const roster = await Promise.all(
     personas.map(async (p) => ({
@@ -107,8 +116,20 @@ export async function generateTopics(
   const system = `You are a B2B content strategist proposing topic options for a campaign.
 
 ════════ ANTI-HALLUCINATION — ABSOLUTE ════════
-Ground EVERY option strictly in the VERIFIED RESEARCH below. Never invent a
-statistic, company, or claim not present in it.
+Ground EVERY option strictly in the VERIFIED RESEARCH / KNOWLEDGE below. Never
+invent a statistic, company, or claim not present in it.
+
+════════ TWO KINDS OF TOPIC ════════
+Every topic is one of:
+- "campaign" — service-oriented. Ties to the campaign spine and builds toward the
+  service as the hero, ending in a soft CTA. Grounded in the CAMPAIGN RESEARCH.
+- "thought-leadership" — a pure point-of-view / insight piece. NOT a pitch. It
+  earns authority by saying something sharp and useful about the wider trend.
+  Grounded more in the BROADER (scout) RESEARCH + company KNOWLEDGE. It STILL ends
+  with a smooth, subtle one-line mention of the service — a light "this is the kind
+  of problem we work on" note, never a hard sell.
+
+Tag each topic with its "kind".
 
 ════════ HOW TO PLAN ════════
 ${structure}
@@ -132,8 +153,14 @@ ${brand}`;
   const user = `CAMPAIGN: ${campaign.name} — ${campaign.topic}
 OBJECTIVE: ${campaign.objective}${campaign.icp ? `\nICP: ${campaign.icp}` : ""}
 
-VERIFIED RESEARCH (the ONLY source of facts):
+CAMPAIGN RESEARCH (facts for campaign topics):
 ${bundle.campaignBase.markdown}
+
+BROADER / SCOUT RESEARCH (facts for thought-leadership topics):
+${scoutMd || "(none — lean on the campaign research and knowledge)"}
+
+COMPANY KNOWLEDGE (background facts, use where relevant):
+${knowledge || "(none uploaded)"}
 
 CANDIDATE PERSONAS (assign the best-fit one to each topic):
 ${roleList}
@@ -142,18 +169,19 @@ CHANNELS: ${channelLabels}${revision}${avoid}
 
 Produce:
 1. spine — the campaign's single core message (one sentence), grounded in research.
-2. topics — AT LEAST ${PER_CHANNEL} DISTINCT options FOR EACH channel above (so
-   ${PER_CHANNEL}× per channel). Every option: a different angle, a best-fit
-   persona, and it must pass the 3 quality gates. Longform options are flagship
+2. topics — AT LEAST ${PER_CHANNEL} DISTINCT options FOR EACH channel above. For
+   EACH channel, include a mix: at least one "campaign" topic AND at least one
+   "thought-leadership" topic. Every option: a different angle, a best-fit persona,
+   its "kind", and it must pass the 3 quality gates. Longform options are flagship
    (deep) pieces.
 
 Return ONLY JSON (no prose, no code fences):
-{"spine":"...","topics":[{"channel":"longform|blog|linkedin|instagram","personaId":"<id>","angle":"","headline":"","rationale":""}]}`;
+{"spine":"...","topics":[{"channel":"longform|blog|linkedin|carousel|instagram","kind":"campaign|thought-leadership","personaId":"<id>","angle":"","headline":"","rationale":""}]}`;
 
   const raw = await callClaude({ system, user, maxTokens: 5000, webSearch: false });
   const parsed = safe(raw.match(/\{[\s\S]*\}/)?.[0] || "");
   const spine =
-    (parsed?.spine && String(parsed.spine)) ||
+    (typeof parsed?.spine === "string" && parsed.spine) ||
     (await readTopicBank(slug))?.spine ||
     "(spine not generated)";
 
@@ -168,9 +196,14 @@ Return ONLY JSON (no prose, no code fences):
     if (seen.has(key)) continue; // dedupe against shelf + this batch
     seen.add(key);
     const personaId = String(it.personaId || "");
+    const kind: PieceKind =
+      String(it.kind || "").toLowerCase() === "thought-leadership"
+        ? "thought-leadership"
+        : "campaign";
     fresh.push({
       id: newId(channel),
       channel,
+      kind,
       personaId,
       personaName: nameById.get(personaId) || personaId,
       angle: String(it.angle || ""),
@@ -219,7 +252,13 @@ export async function updateTopic(
 
 export async function addCustomTopic(
   slug: string,
-  input: { channel: Channel; headline: string; angle: string; personaId: string },
+  input: {
+    channel: Channel;
+    kind?: PieceKind;
+    headline: string;
+    angle: string;
+    personaId: string;
+  },
 ): Promise<TopicBank> {
   const bank = (await readTopicBank(slug)) || {
     spine: "",
@@ -231,6 +270,7 @@ export async function addCustomTopic(
   bank.topics.push({
     id: newId(input.channel),
     channel: input.channel,
+    kind: input.kind || "campaign",
     personaId: input.personaId,
     personaName: nameById.get(input.personaId) || input.personaId,
     angle: input.angle,
@@ -279,13 +319,13 @@ async function writeBank(slug: string, bank: TopicBank): Promise<void> {
     `**Spine:** ${bank.spine}`,
     "",
   ];
-  for (const c of ["longform", "blog", "linkedin", "instagram"] as Channel[]) {
+  for (const c of CHANNEL_ORDER) {
     const list = byChannel(c);
     if (!list.length) continue;
     lines.push(`## ${CHANNEL_LABELS[c]}`, "");
     for (const t of list) {
       lines.push(
-        `- **${t.headline}** — ${t.personaName} · _${t.status}_`,
+        `- **${t.headline}** — ${t.personaName} · _${t.kind}_ · _${t.status}_`,
         `  - ${t.angle}`,
       );
     }

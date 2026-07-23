@@ -1,239 +1,171 @@
 ---
 campaign: "[[enterprise-ai-roi-and-workflow-automation-for-finance-teams]]"
-updatedAt: 2026-07-22T18:16:13.808Z
+updatedAt: 2026-07-23T11:33:57.065Z
 ---
 
 # Topic Bank
 
-**Spine:** AI spending is not AI return — the finance teams extracting measurable value anchor AI to specific workflows, govern its costs, and prove outcomes at the transaction level.
+**Spine:** Enterprise AI spending has exploded, but only the finance teams that anchor AI to specific workflows, govern its token costs, and measure returns at the transaction level are booking returns that survive audit.
 
 ## Longform Article
 
-- **The $30 Billion That Never Reached the P&L: Auditing Enterprise AI's Return Signal** — Auditor · _in-production_
-  - The data story — the 680x spend gap and the 95% pilot failure
-- **When 40% of Agentic Projects Get Canceled: The Vendor Risk CFOs Aren't Pricing In** — Policy Insider · _available_
-  - The cautionary pattern — vendor and market structural risk
-- **The Only AI Returns That Survive an Audit: Narrow, Workflow-Level, Time-Quantified** — Auditor · _available_
-  - The outcome/case — ROI that survives audit
-- **Why 45% of Finance Teams Are Stuck in Pilot Mode — and What the 17% Did Differently** — Interviewer · _available_
-  - How it actually works — from pilot to production
+- **The $30 Billion That Never Reached the P&L: Why 95% of AI Pilots Fail an Audit** — Auditor · _campaign_ · _available_
+  - The data story — the 680x spend gap vs. the 95% zero-P&L failure rate, dissected as a measurement problem finance owns
+- **The Quiet Insurgency: What Treasury's New AI Rules Mean for the CFO's Risk Register** — Policy Insider · _thought-leadership_ · _available_
+  - The trend read — Treasury's May 2026 AI guidance plus the 'quiet insurgency' means governance is now a finance-function mandate, not IT's
 
 ## Blog
 
-- **The $18M Nobody Budgeted For: Where AI Costs Escape Finance Control** — Auditor · _in-production_
-  - The data story — SaaS/Copilot license waste
-- **Why AI Got 30x More Expensive While Tokens Got Cheaper** — Policy Insider · _available_
-  - The trend read — consumption cost non-linearity
-- **The Enterprises Winning at AI Aren't Using Better Models. They're Doing This.** — Interviewer · _available_
-  - The practical play — governance as the winning variable
-- **Only 25% of AI Projects Hit Their ROI. The Problem Is How You're Measuring.** — Ai For Humans · _available_
-  - How it actually works — the Evaluability Gap explained
+- **51% of Your SaaS Licenses Are Idle. Your AI Budget Is Repeating the Mistake.** — Auditor · _campaign_ · _available_
+  - The cautionary pattern — unused Copilot licenses and idle SaaS as the first recoverable AI loss finance can claw back
+- **Why One Company Spent $500M on AI in a Single Month — and How to Read Your Own Token Bill** — Ai For Humans · _thought-leadership_ · _available_
+  - How it actually works — why token costs jumped 30x and what runaway agentic consumption looks like on a monthly bill
 
 ## LinkedIn
 
-- **680x. That's the gap between what top AI spenders spend and what the median does. Here's what it doesn't buy them.** — Feed · _available_
-  - The data story — one striking figure
-- **Gartner counted the 'agentic AI' vendors. Only ~130 of thousands were real.** — Feed · _available_
-  - The cautionary pattern — 'agentic' is mostly rebranded chatbots
-- **HSBC monitors 900 million transactions a month and cut false positives 60%. That's what AI ROI looks like when it's real.** — Auditor · _available_
-  - The outcome/case — documented banking ROI
-- **AI agents are now inside your procurement decisions. Finance leaders have two years to redesign around it.** — Policy Insider · _available_
-  - The trend read — agents entering the buying process
+- **30 AI ideas. Several failed pilots. Then 3 days changed the math.** — Feed · _campaign_ · _available_
+  - The outcome/case — biotech: 30+ scattered ideas to 5 board-ready projects in 3 days, told fast
+- **Gartner says 40% of agentic AI projects die by 2027. Most 'agents' are just rebranded chatbots.** — Feed · _thought-leadership_ · _available_
+  - The trend read — Gartner's 40% cancellation forecast and the 'only 130 real agentic vendors' call-out
+- **56% of finance teams adopted AI. Only 17% actually use it. The gap is the whole story.** — Interviewer · _thought-leadership_ · _available_
+  - The data story — only 17% of finance teams use AI in core workflows despite 56% adoption; the pilot-to-production chasm
 
-## Instagram
+## LinkedIn Carousel
 
-- **Spending More on AI ≠ Getting More From AI** — Ai For Humans · _available_
-  - The data story — the spending-vs-return split
-- **Uber blew its entire 2026 AI budget by April.** — Feed · _available_
-  - The cautionary pattern — runaway consumption cost
-- **What real AI ROI looks like in a finance team** — Ai For Humans · _available_
-  - The outcome/case — 60-90 minutes back per banker per day
-- **56% of finance teams say they use AI. Only 17% actually run it in core work.** — Ai For Humans · _available_
-  - How it actually works — the finance adoption reality
+- **Task Automation Saves Minutes. Workflow Automation Saves Weeks. Here's the Difference.** — Ai For Humans · _campaign_ · _in-production_
+  - The practical play — the difference between task automation (saves minutes) and workflow automation (saves weeks), slide by slide
+- **$800 Billion in Circular AI Money: How to Read Vendor Demand Before You Sign** — Policy Insider · _thought-leadership_ · _available_
+  - The cautionary pattern — the $800B circular-financing loop and why CFOs should question vendor 'demand' signals
+- **How HSBC Cut False Positives 60% Across 900 Million Transactions a Month** — Interviewer · _thought-leadership_ · _available_
+  - How it actually works — the HSBC/Google Cloud fraud case: 900M transactions, 60% fewer false positives, as an anatomy of ROI that survives audit
 
 ## Data
 
 ```json
 {
-  "spine": "AI spending is not AI return — the finance teams extracting measurable value anchor AI to specific workflows, govern its costs, and prove outcomes at the transaction level.",
+  "spine": "Enterprise AI spending has exploded, but only the finance teams that anchor AI to specific workflows, govern its token costs, and measure returns at the transaction level are booking returns that survive audit.",
   "topics": [
     {
-      "id": "longform-3zp3y6",
+      "id": "longform-jo6cvx",
       "channel": "longform",
+      "kind": "campaign",
       "personaId": "auditor-persona",
       "personaName": "Auditor",
-      "angle": "The data story — the 680x spend gap and the 95% pilot failure",
-      "headline": "The $30 Billion That Never Reached the P&L: Auditing Enterprise AI's Return Signal",
-      "rationale": "Arthur's 10-K-footnote lens turns the Ramp 680x spend gap and MIT's 95%-zero-P&L finding into a forensic read on why spending signal masquerades as return signal. Executive-forwardable: reframes AI budgets as an audit problem. ROI stakes land in paragraph one. Techolution enters as the credible voice on transaction-level measurement — only we tie the biotech $50M+ annual savings to operational change, not spend.",
-      "status": "in-production",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "angle": "The data story — the 680x spend gap vs. the 95% zero-P&L failure rate, dissected as a measurement problem finance owns",
+      "headline": "The $30 Billion That Never Reached the P&L: Why 95% of AI Pilots Fail an Audit",
+      "rationale": "Leads with Ramp's 680x spend gap and MIT's 95% zero-P&L figure — numbers a CFO hasn't reconciled. Villain: value that can't be traced to a transaction. Hero enters as ValueFinder, which starts on the ops floor and ranks projects by enterprise ROI. Arthur's 10-K footnote rigor makes it uncopyable; ties every claim to board defensibility.",
+      "status": "available",
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     },
     {
-      "id": "longform-ceom0e",
+      "id": "longform-qvtf76",
       "channel": "longform",
+      "kind": "thought-leadership",
       "personaId": "policy-insider",
       "personaName": "Policy Insider",
-      "angle": "The cautionary pattern — vendor and market structural risk",
-      "headline": "When 40% of Agentic Projects Get Canceled: The Vendor Risk CFOs Aren't Pricing In",
-      "rationale": "Policy Insider dissects Gartner's 40%-cancellation forecast, the $800B circular-financing loop, and the '130 of thousands' real-agentic-vendor figure — structural risks a CFO must underwrite. Passes forward test with the 'clean revenue' Q1 2026 shift. Techolution appears as credible voice on avoiding vendor lock-in via workflow-anchored deployment (FEA), not rebranded chatbots.",
+      "angle": "The trend read — Treasury's May 2026 AI guidance plus the 'quiet insurgency' means governance is now a finance-function mandate, not IT's",
+      "headline": "The Quiet Insurgency: What Treasury's New AI Rules Mean for the CFO's Risk Register",
+      "rationale": "Grounds in Treasury guidance (May 2026) and the 'quiet insurgency' adoption pattern. Policy Insider's regulatory fluency is the credible voice; no pitch, just a sharp reframe that AI risk belongs in existing compliance frameworks. Passes forward-test: reframes a problem CFOs thought was IT's. Light closing note on where governed, workflow-level deployment lives.",
       "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     },
     {
-      "id": "longform-1621nz",
-      "channel": "longform",
+      "id": "blog-unakl4",
+      "channel": "blog",
+      "kind": "campaign",
       "personaId": "auditor-persona",
       "personaName": "Auditor",
-      "angle": "The outcome/case — ROI that survives audit",
-      "headline": "The Only AI Returns That Survive an Audit: Narrow, Workflow-Level, Time-Quantified",
-      "rationale": "Arthur contrasts documented banking-risk ROI (350-500% three-year, 3-8 month payback; HSBC's 900M transactions, 60% fewer false positives) against undisclosed 'scaled to 100,000 employees' claims. The distinction — measured at the transaction level — is exactly Techolution's ValueFinder/FEA methodology, shown through the biotech 11-day compliance handoff made autonomous.",
+      "angle": "The cautionary pattern — unused Copilot licenses and idle SaaS as the first recoverable AI loss finance can claw back",
+      "headline": "51% of Your SaaS Licenses Are Idle. Your AI Budget Is Repeating the Mistake.",
+      "rationale": "Opens with the $18M/year idle-license waste and 30-40% unused Copilot figure — recoverable money in paragraph one. Villain: AI cost that escapes procurement control. Hero: FEA/BPA 4.0 with the $100K→2x-in-100-days guarantee shown through workflow savings. CFO funnel, budget-review scene.",
       "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     },
     {
-      "id": "longform-a2r4rk",
-      "channel": "longform",
+      "id": "blog-kxf1s4",
+      "channel": "blog",
+      "kind": "thought-leadership",
+      "personaId": "ai-for-humans",
+      "personaName": "Ai For Humans",
+      "angle": "How it actually works — why token costs jumped 30x and what runaway agentic consumption looks like on a monthly bill",
+      "headline": "Why One Company Spent $500M on AI in a Single Month — and How to Read Your Own Token Bill",
+      "rationale": "Explains the $0.04→$1.20 per-interaction jump and RBC's 500% token surge in plain terms for non-technical execs. Maya's translator role fits perfectly. Not a pitch — demystifies a cost line CFOs can't yet read; closes with a light note that governing consumption at the workflow level is the work Techolution does.",
+      "status": "available",
+      "generatedAt": "2026-07-23T11:33:57.065Z"
+    },
+    {
+      "id": "linkedin-nwxoov",
+      "channel": "linkedin",
+      "kind": "campaign",
+      "personaId": "feed-persona",
+      "personaName": "Feed",
+      "angle": "The outcome/case — biotech: 30+ scattered ideas to 5 board-ready projects in 3 days, told fast",
+      "headline": "30 AI ideas. Several failed pilots. Then 3 days changed the math.",
+      "rationale": "Ethan's fast, name-it style compresses the biotech proof point (30+ ideas → 5 projects → $50M+ annual savings) into a scroll-stopping arc. Villain: scattered pilots. Hero: ValueFinder, shown through the 11-day compliance handoff made autonomous. ROI visible immediately; self-selecting CTA.",
+      "status": "available",
+      "generatedAt": "2026-07-23T11:33:57.065Z"
+    },
+    {
+      "id": "linkedin-0vbvs6",
+      "channel": "linkedin",
+      "kind": "thought-leadership",
+      "personaId": "feed-persona",
+      "personaName": "Feed",
+      "angle": "The trend read — Gartner's 40% cancellation forecast and the 'only 130 real agentic vendors' call-out",
+      "headline": "Gartner says 40% of agentic AI projects die by 2027. Most 'agents' are just rebranded chatbots.",
+      "rationale": "Ethan calls out the market's inflated agentic labeling (130 of thousands deemed real) and the 40% cancellation forecast — data execs haven't seen framed this bluntly. Pure POV, no pitch; ends with a subtle 'the survivors are the ones anchored to real workflows' nod. Passes competitor test via sharp, named stance.",
+      "status": "available",
+      "generatedAt": "2026-07-23T11:33:57.065Z"
+    },
+    {
+      "id": "linkedin-j8dy9d",
+      "channel": "linkedin",
+      "kind": "thought-leadership",
       "personaId": "interviewer-persona",
       "personaName": "Interviewer",
-      "angle": "How it actually works — from pilot to production",
-      "headline": "Why 45% of Finance Teams Are Stuck in Pilot Mode — and What the 17% Did Differently",
-      "rationale": "Interviewer format explores the CFO Connect data (56% adoption, only 17% in core workflows, 45% limited pilots) against Bayer's documented prototype-to-production engineering patterns and OpenAI's trust/governance/workflow thesis. Techolution is the credible voice: 'Task automation saves minutes; workflow automation saves weeks' framed through BPA 4.0's learning of how experts actually work.",
+      "angle": "The data story — only 17% of finance teams use AI in core workflows despite 56% adoption; the pilot-to-production chasm",
+      "headline": "56% of finance teams adopted AI. Only 17% actually use it. The gap is the whole story.",
+      "rationale": "Leads with the CFO Connect 56% vs 17% split — a stat that reframes 'we're doing AI' as 'we're stuck in pilots.' Interviewer's researched, forward-looking voice earns authority. TL piece; closes lightly on what moving past pilot mode requires.",
       "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     },
     {
-      "id": "blog-gxwc5c",
-      "channel": "blog",
-      "personaId": "auditor-persona",
-      "personaName": "Auditor",
-      "angle": "The data story — SaaS/Copilot license waste",
-      "headline": "The $18M Nobody Budgeted For: Where AI Costs Escape Finance Control",
-      "rationale": "Leads with the recoverable losses CFOs can act on this quarter: 30-40% of Copilot licenses unused in 90 days, 51% of SaaS idle, ~$18M wasted annually. Forwardable because it's found money. Techolution enters as credible voice — ValueFinder starts on the ops floor to rank projects by ROI, not license count.",
+      "id": "carousel-nrdipi",
+      "channel": "carousel",
+      "kind": "campaign",
+      "personaId": "ai-for-humans",
+      "personaName": "Ai For Humans",
+      "angle": "The practical play — the difference between task automation (saves minutes) and workflow automation (saves weeks), slide by slide",
+      "headline": "Task Automation Saves Minutes. Workflow Automation Saves Weeks. Here's the Difference.",
+      "rationale": "Maya turns Techolution's core distinction into a scannable carousel for busy execs. Villain: isolated task bots that never touch the P&L. Hero: FEA connecting workflows across departments. Each slide ties to a business outcome; final slide is a self-selecting CTA for teams ready to move beyond tasks.",
       "status": "in-production",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     },
     {
-      "id": "blog-udo73v",
-      "channel": "blog",
+      "id": "carousel-fvkxk4",
+      "channel": "carousel",
+      "kind": "thought-leadership",
       "personaId": "policy-insider",
       "personaName": "Policy Insider",
-      "angle": "The trend read — consumption cost non-linearity",
-      "headline": "Why AI Got 30x More Expensive While Tokens Got Cheaper",
-      "rationale": "Explains the $0.04-to-$1.20-per-interaction jump, Microsoft engineers' $500-2,000/month Claude Code bills, and Uber exhausting its 2026 AI budget by April. Reframes a cost problem executives think they understand. Techolution as credible voice on governing consumption via workflow design rather than open-ended agent spend.",
+      "angle": "The cautionary pattern — the $800B circular-financing loop and why CFOs should question vendor 'demand' signals",
+      "headline": "$800 Billion in Circular AI Money: How to Read Vendor Demand Before You Sign",
+      "rationale": "Policy Insider unpacks the circular-financing analysis (Nvidia→OpenAI→Nvidia, OpenAI's reported ~$14B 2026 loss) as a due-diligence lens for buyers. No pitch — protects the reader. Novel angle no competitor with a logo would frame this cleanly; light close on choosing deployment partners judged by audited outcomes.",
       "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     },
     {
-      "id": "blog-kfcdmt",
-      "channel": "blog",
+      "id": "carousel-wng9bd",
+      "channel": "carousel",
+      "kind": "thought-leadership",
       "personaId": "interviewer-persona",
       "personaName": "Interviewer",
-      "angle": "The practical play — governance as the winning variable",
-      "headline": "The Enterprises Winning at AI Aren't Using Better Models. They're Doing This.",
-      "rationale": "Distills the OpenAI finding that winners prioritize trust, governance, workflow design and quality over model capability, plus Bayer's production patterns. Practical takeaway a VP can apply this week. Techolution as credible voice — the ValueFinder-to-FEA path operationalizes exactly this discipline, with the biotech 30-ideas-to-5-projects filter as proof.",
+      "angle": "How it actually works — the HSBC/Google Cloud fraud case: 900M transactions, 60% fewer false positives, as an anatomy of ROI that survives audit",
+      "headline": "How HSBC Cut False Positives 60% Across 900 Million Transactions a Month",
+      "rationale": "Breaks down a documented, high-ROI use case (fraud detection: 350-500% three-year ROI, 3-8 month payback) as the pattern to replicate. Interviewer's explanatory depth fits the carousel format. Credible-voice piece; ends with a subtle note that narrow, workflow-level wins are where enterprise ROI actually lives.",
       "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "blog-z0vdp9",
-      "channel": "blog",
-      "personaId": "ai-for-humans",
-      "personaName": "Ai For Humans",
-      "angle": "How it actually works — the Evaluability Gap explained",
-      "headline": "Only 25% of AI Projects Hit Their ROI. The Problem Is How You're Measuring.",
-      "rationale": "Maya demystifies the 'AI Evaluability Gap' (25% deliver expected ROI, 16% scaled) and the 'lead with tech not customer needs = capture under one-third of value' failure mode for non-technical decision-makers. Techolution as credible voice: measurement at the transaction level, ranked projects, the $100K-to-2x-in-100-days ROI guarantee explained in plain terms.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "linkedin-o55ttp",
-      "channel": "linkedin",
-      "personaId": "feed-persona",
-      "personaName": "Feed",
-      "angle": "The data story — one striking figure",
-      "headline": "680x. That's the gap between what top AI spenders spend and what the median does. Here's what it doesn't buy them.",
-      "rationale": "Ethan's fast-take voice lands the Ramp 680x spend gap and 14.1% MoM power-user growth against MIT's 95%-zero-P&L stat in seconds. High forward/share velocity. Techolution's light CTA: value comes from workflow anchoring, not spend rank.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "linkedin-1h8a3n",
-      "channel": "linkedin",
-      "personaId": "feed-persona",
-      "personaName": "Feed",
-      "angle": "The cautionary pattern — 'agentic' is mostly rebranded chatbots",
-      "headline": "Gartner counted the 'agentic AI' vendors. Only ~130 of thousands were real.",
-      "rationale": "Ethan calls out the rebranding by name, ties it to Gartner's 40%-cancellation-by-2027 forecast. Skeptical CFOs forward this to their procurement teams. Techolution as credible voice on deploying real workflow automation, not chatbots with a new label.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "linkedin-rkbx8x",
-      "channel": "linkedin",
-      "personaId": "auditor-persona",
-      "personaName": "Auditor",
-      "angle": "The outcome/case — documented banking ROI",
-      "headline": "HSBC monitors 900 million transactions a month and cut false positives 60%. That's what AI ROI looks like when it's real.",
-      "rationale": "Arthur's audit voice presents the HSBC/Google Cloud numbers and the 350-500% fraud-detection ROI as the benchmark for defensible returns. Forwardable to a board. Techolution as credible voice — this is transaction-level, workflow-anchored value, the biotech case as a parallel proof point.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "linkedin-v5oodl",
-      "channel": "linkedin",
-      "personaId": "policy-insider",
-      "personaName": "Policy Insider",
-      "angle": "The trend read — agents entering the buying process",
-      "headline": "AI agents are now inside your procurement decisions. Finance leaders have two years to redesign around it.",
-      "rationale": "Connects the 300% agent-adoption surge, HBR's finding on gen-AI reshaping B2B buying, and the CFO Connect 17%-in-core-workflows reality. Reframes AI adoption as an org-redesign question. Techolution as credible voice on building hybrid human-AI workflows that cross department lines.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "instagram-t30o0v",
-      "channel": "instagram",
-      "personaId": "ai-for-humans",
-      "personaName": "Ai For Humans",
-      "angle": "The data story — the spending-vs-return split",
-      "headline": "Spending More on AI ≠ Getting More From AI",
-      "rationale": "Maya's visual-first explainer: one carousel contrasting $30-40B invested vs 95% of pilots delivering zero P&L. Simple, forwardable, ROI-clear. Techolution's light closing note on measuring at the transaction level.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "instagram-wmx4zx",
-      "channel": "instagram",
-      "personaId": "feed-persona",
-      "personaName": "Feed",
-      "angle": "The cautionary pattern — runaway consumption cost",
-      "headline": "Uber blew its entire 2026 AI budget by April.",
-      "rationale": "Ethan's punchy single-stat card (with the $0.04-to-$1.20 30x jump as the second slide) makes runaway agent cost visceral and shareable. Techolution as light credible voice on governing consumption through workflow design.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "instagram-lqrvwi",
-      "channel": "instagram",
-      "personaId": "ai-for-humans",
-      "personaName": "Ai For Humans",
-      "angle": "The outcome/case — 60-90 minutes back per banker per day",
-      "headline": "What real AI ROI looks like in a finance team",
-      "rationale": "Maya translates Singular Bank's 60-90 minutes/day saved on meeting prep and portfolio analysis into a relatable outcome card. Narrow, workflow-level, quantified — exactly the winning pattern. Techolution's light note: this is what workflow automation, not task automation, delivers.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
-    },
-    {
-      "id": "instagram-th2tdt",
-      "channel": "instagram",
-      "personaId": "ai-for-humans",
-      "personaName": "Ai For Humans",
-      "angle": "How it actually works — the finance adoption reality",
-      "headline": "56% of finance teams say they use AI. Only 17% actually run it in core work.",
-      "rationale": "Maya's clean stat card exposes the pilot-purgatory gap (45% still in limited pilots) for a scanning executive. Forwardable reality check. Techolution as light credible voice on moving from pilot to enterprise-wide workflow deployment.",
-      "status": "available",
-      "generatedAt": "2026-07-22T18:16:13.808Z"
+      "generatedAt": "2026-07-23T11:33:57.065Z"
     }
   ],
-  "updatedAt": "2026-07-22T18:16:13.808Z"
+  "updatedAt": "2026-07-23T11:33:57.065Z"
 }
 ```

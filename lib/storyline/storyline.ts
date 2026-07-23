@@ -10,14 +10,27 @@ import {
   readPersonaBody,
 } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
+import { getKnowledgeContext } from "@/lib/knowledge";
 import { callClaude } from "@/lib/models/claude";
 import { getTopics, setTopicStatus } from "@/lib/storyline/topics";
 import {
-  Channel,
   CHANNEL_LABELS,
+  CHANNEL_ORDER,
+  PieceKind,
   Storyline,
   StorylineDoc,
 } from "@/lib/storyline/types";
+
+/** How the storyline should treat the service, per kind. */
+function intentGuidance(kind: PieceKind): string {
+  return kind === "thought-leadership"
+    ? `CONTENT TYPE: Thought leadership (informative). The HERO is the insight or
+approach — NOT the service. Do not make the service the hero and do not pitch.
+The CTA must be a smooth, SUBTLE one-line mention of the service ("the kind of
+problem we work on…"), never a hard sell.`
+    : `CONTENT TYPE: Campaign (Type 1, service-focused). The service is the hero,
+introduced after the villain. The CTA is a soft, direct call to the service.`;
+}
 
 async function readWriting(file: string): Promise<string> {
   try {
@@ -49,16 +62,24 @@ export async function generateStorylines(
   if (!campaign) throw new Error(`Campaign not found: ${slug}`);
   const topics = await getTopics(slug, topicIds);
   if (topics.length === 0) throw new Error("Select at least one topic.");
-  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
-  if (!research) throw new Error("No approved research base.");
+  const bundle = await getResearchBundle(slug);
+  const campaignMd = bundle.campaignBase?.markdown || "";
+  const scoutMd = bundle.scoutBase?.markdown || "";
+  if (!campaignMd) throw new Error("No approved research base.");
   const spine = ""; // spine is in the topic bank; not needed per-piece here
 
-  const [structure, craft, brand, psych] = await Promise.all([
+  const [structure, craft, brand, psych, knowledge] = await Promise.all([
     readWriting("storyline-structure.md"),
     readWriting("craft-rules.md"),
     readWriting("brand-context.md"),
     readWriting("reader-psychology.md"),
+    getKnowledgeContext(6000),
   ]);
+  // thought-leadership pieces may draw on the broader scout research + knowledge
+  const researchFor = (kind: PieceKind) =>
+    kind === "thought-leadership"
+      ? [campaignMd, scoutMd, knowledge].filter(Boolean).join("\n\n──────\n\n")
+      : campaignMd;
   const personas = await listPersonas();
   const pathById = new Map(personas.map((p) => [p.id, p.path]));
 
@@ -94,10 +115,10 @@ THIS PIECE:
 - Channel: ${CHANNEL_LABELS[t.channel]}
 - Angle: ${t.angle}
 - Working headline: ${t.headline}
-- Content type: Type 1 (service-focused — the service is the hero, after the villain)
+${intentGuidance(t.kind)}
 
 VERIFIED RESEARCH (your ONLY source of facts):
-${research}
+${researchFor(t.kind)}
 
 Produce the storyline for THIS piece — the narrative skeleton, not full copy.
 Return ONLY JSON (no prose, no code fences):
@@ -108,6 +129,7 @@ Return ONLY JSON (no prose, no code fences):
       const doc: StorylineDoc = {
         id: t.id,
         channel: t.channel,
+        kind: t.kind,
         personaId: t.personaId,
         personaName: t.personaName,
         angle: t.angle,
@@ -241,9 +263,11 @@ export async function readStorylines(slug: string): Promise<StorylineDoc[]> {
     const d = await readDoc(slug, id);
     if (d) docs.push(d);
   }
-  // order: longform, blog, linkedin, instagram
-  const rank: Record<string, number> = { longform: 0, blog: 1, linkedin: 2, instagram: 3 };
-  return docs.sort((a, b) => (rank[a.channel] ?? 9) - (rank[b.channel] ?? 9));
+  return docs.sort(
+    (a, b) =>
+      (CHANNEL_ORDER.indexOf(a.channel) + 1 || 9) -
+      (CHANNEL_ORDER.indexOf(b.channel) + 1 || 9),
+  );
 }
 
 // ── parse + persist ──────────────────────────────────────────────────────────
@@ -303,6 +327,7 @@ async function writeDoc(slug: string, doc: StorylineDoc): Promise<void> {
     campaignLink(slug),
     `pieceId: ${doc.id}`,
     `channel: ${doc.channel}`,
+    `kind: ${doc.kind}`,
     `persona: ${doc.personaName}`,
     `approved: ${doc.approved}`,
     "---",

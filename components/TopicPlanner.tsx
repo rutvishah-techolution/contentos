@@ -5,11 +5,33 @@ import { useRouter } from "next/navigation";
 import {
   Channel,
   CHANNEL_LABELS,
+  CHANNEL_ORDER,
+  KIND_LABEL,
+  PieceKind,
   SELECTABLE_CHANNELS,
 } from "@/lib/storyline/types";
 import type { TopicBank, Topic } from "@/lib/storyline/topics";
 
-const CHANNEL_ORDER: Channel[] = ["longform", "blog", "linkedin", "instagram"];
+export function KindPill({ kind }: { kind?: PieceKind }) {
+  const k: PieceKind = kind === "thought-leadership" ? "thought-leadership" : "campaign";
+  const tl = k === "thought-leadership";
+  return (
+    <span
+      className={`shrink-0 rounded-full px-2 py-0.5 text-[10.5px] font-medium ${
+        tl
+          ? "border border-fg text-fg"
+          : "border border-border bg-surface text-faint"
+      }`}
+      title={
+        tl
+          ? "Thought leadership — pure POV, subtle service mention at the end"
+          : "Campaign — service-oriented, ends on a soft CTA"
+      }
+    >
+      {KIND_LABEL[k]}
+    </span>
+  );
+}
 
 export default function TopicPlanner({
   slug,
@@ -304,7 +326,8 @@ function TopicRow({
           <span className="shrink-0 text-xs text-faint">{topic.personaName}</span>
         </span>
         <span className="mt-0.5 block text-xs text-muted">{topic.angle}</span>
-        <span className="mt-1 flex items-center gap-3">
+        <span className="mt-1.5 flex items-center gap-2">
+          <KindPill kind={topic.kind} />
           {inProd ? (
             <span className="text-xs text-ok">✓ in production</span>
           ) : (
