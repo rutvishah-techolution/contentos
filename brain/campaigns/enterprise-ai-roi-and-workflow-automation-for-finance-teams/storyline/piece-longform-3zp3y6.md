@@ -3,7 +3,7 @@ campaign: "[[enterprise-ai-roi-and-workflow-automation-for-finance-teams]]"
 pieceId: longform-3zp3y6
 channel: longform
 persona: Auditor
-approved: false
+approved: true
 ---
 
 # Longform Article Storyline — The $30 Billion That Never Reached the P&L: Auditing Enterprise AI's Return Signal
@@ -39,7 +39,7 @@ approved: false
     "cta": "For finance leaders ready to separate their weekly-used AI from their abandoned licenses — and to see which workflows can carry a number defensible to the board — the operations floor is where that audit starts."
   },
   "chat": [],
-  "approved": false,
+  "approved": true,
   "generatedAt": "2026-07-22T18:16:57.066Z"
 }
 ```

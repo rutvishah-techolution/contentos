@@ -19,7 +19,7 @@ export default function StorylineStudio({
     router.refresh();
   }
 
-  const allApproved = docs.length > 0 && docs.every((d) => d.approved);
+  const approvedCount = docs.filter((d) => d.approved).length;
 
   if (docs.length === 0) return null;
 
@@ -31,14 +31,17 @@ export default function StorylineStudio({
       {docs.map((d) => (
         <StorylineCard key={d.id} slug={slug} doc={d} onUpdate={update} />
       ))}
-      {allApproved && (
+      {approvedCount > 0 && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-sm">
           <span className="flex items-center gap-2">
             <span className="text-ok">✓</span>
-            <span className="text-fg">All storylines approved.</span>
+            <span className="text-fg">
+              {approvedCount} of {docs.length} storyline
+              {docs.length > 1 ? "s" : ""} approved.
+            </span>
           </span>
           <a href={`/campaigns/${slug}/content`} className="btn-primary">
-            Continue to drafting →
+            Continue to drafting ({approvedCount}) →
           </a>
         </div>
       )}
