@@ -73,6 +73,7 @@ export interface CampaignBrief {
 export interface Campaign extends CampaignBrief {
   slug: string;
   createdAt: string;
+  updatedAt: string; // latest change to anything in the campaign folder
   status: string;
 }
 
@@ -174,7 +175,7 @@ export async function createCampaign(brief: CampaignBrief): Promise<Campaign> {
 
   await fs.writeFile(briefPath(slug), md, "utf8");
 
-  return { slug, createdAt, status, ...brief };
+  return { slug, createdAt, updatedAt: createdAt, status, ...brief };
 }
 
 // ── Campaign reads ───────────────────────────────────────────────────────────
@@ -194,16 +195,48 @@ export async function getCampaign(slug: string): Promise<Campaign | null> {
   const icp = clean(sectionText(body, "Target ICP"));
   const constraints = clean(sectionText(body, "Constraints"));
 
+  const latest = await latestMtime(path.join(CAMPAIGNS_DIR, slug));
+  const updatedAt = latest || data.createdAt || "";
+
   return {
     slug: data.slug || slug,
     name: data.name || data.topic || slug,
     topic,
     createdAt: data.createdAt || "",
+    updatedAt,
     status: data.status || "brief",
     objective,
     icp,
     constraints,
   };
+}
+
+/** Most recent modification time (ISO) anywhere under a directory. */
+async function latestMtime(dir: string): Promise<string> {
+  let newest = 0;
+  async function walk(d: string): Promise<void> {
+    let entries;
+    try {
+      entries = await fs.readdir(d, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      const full = path.join(d, e.name);
+      if (e.isDirectory()) {
+        await walk(full);
+      } else {
+        try {
+          const st = await fs.stat(full);
+          if (st.mtimeMs > newest) newest = st.mtimeMs;
+        } catch {
+          /* skip */
+        }
+      }
+    }
+  }
+  await walk(dir);
+  return newest ? new Date(newest).toISOString() : "";
 }
 
 export async function listCampaigns(): Promise<Campaign[]> {

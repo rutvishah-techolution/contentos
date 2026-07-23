@@ -1,19 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewCampaignForm from "@/components/NewCampaignForm";
 import type { Campaign } from "@/lib/brain";
 
-const STAGE: Record<string, { label: string; cls: string }> = {
-  brief: { label: "Brief", cls: "text-faint" },
-  researching: { label: "Researching", cls: "text-warn" },
-  review: { label: "Research review", cls: "text-link" },
-  planning: { label: "Storyline", cls: "text-link" },
-  storyline: { label: "Storyline", cls: "text-link" },
-  drafting: { label: "Drafting", cls: "text-warn" },
-  done: { label: "Shipped", cls: "text-ok" },
+const STAGE_LABEL: Record<string, string> = {
+  brief: "Brief",
+  researching: "Researching",
+  review: "Research review",
+  planning: "Storyline",
+  storyline: "Storyline",
+  drafting: "Drafting",
+  done: "Shipped",
+};
+
+type Sort = "recent" | "created" | "name";
+const SORT_LABEL: Record<Sort, string> = {
+  recent: "Recently updated",
+  created: "Newest",
+  name: "Name",
 };
 
 export default function CampaignsSection({
@@ -25,9 +32,26 @@ export default function CampaignsSection({
   const [creating, setCreating] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [list, setList] = useState<Campaign[]>(campaigns);
+  const [sort, setSort] = useState<Sort>("recent");
+
+  const sorted = useMemo(() => {
+    const copy = [...list];
+    if (sort === "name") copy.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sort === "created")
+      copy.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    else
+      copy.sort((a, b) =>
+        (b.updatedAt || b.createdAt).localeCompare(a.updatedAt || a.createdAt),
+      );
+    return copy;
+  }, [list, sort]);
 
   async function del(slug: string, name: string) {
-    if (!confirm(`Delete "${name}"? This removes all its research, storylines, and drafts. This can't be undone.`))
+    if (
+      !confirm(
+        `Delete "${name}"? This removes all its research, storylines, and drafts. This can't be undone.`,
+      )
+    )
       return;
     setDeleting(slug);
     try {
@@ -43,15 +67,30 @@ export default function CampaignsSection({
 
   return (
     <section>
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex items-center justify-between gap-3">
         <h2 className="text-sm font-medium text-muted">
           Campaigns {list.length > 0 && `(${list.length})`}
         </h2>
-        {!creating && (
-          <button className="btn-primary" onClick={() => setCreating(true)}>
-            + New campaign
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {list.length > 1 && (
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as Sort)}
+              className="rounded-lg border border-border-strong bg-surface px-2.5 py-1.5 text-xs text-muted outline-none transition hover:border-fg"
+            >
+              {(Object.keys(SORT_LABEL) as Sort[]).map((s) => (
+                <option key={s} value={s}>
+                  {SORT_LABEL[s]}
+                </option>
+              ))}
+            </select>
+          )}
+          {!creating && (
+            <button className="btn-primary" onClick={() => setCreating(true)}>
+              + New campaign
+            </button>
+          )}
+        </div>
       </div>
 
       {creating && (
@@ -75,44 +114,61 @@ export default function CampaignsSection({
         </p>
       ) : (
         <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
-          {list.map((c) => {
-            const stage = STAGE[c.status] || { label: c.status, cls: "text-faint" };
-            return (
-              <li
-                key={c.slug}
-                className="group flex min-w-0 items-center justify-between gap-3 px-5 py-4 transition hover:bg-surface-2"
-              >
-                <Link href={`/campaigns/${c.slug}`} className="flex min-w-0 flex-1 flex-col">
+          {sorted.map((c) => (
+            <li
+              key={c.slug}
+              className="group flex min-w-0 items-center justify-between gap-3 px-5 py-4 transition hover:bg-surface-2"
+            >
+              <Link href={`/campaigns/${c.slug}`} className="flex min-w-0 flex-1 flex-col">
+                <span className="flex items-center gap-2">
                   <span className="truncate text-[15px] font-medium text-fg">
                     {c.name}
                   </span>
-                  <span className="mt-0.5 truncate text-xs text-faint">
-                    {c.topic} · {formatDate(c.createdAt)}
-                  </span>
-                </Link>
-                <span className="flex shrink-0 items-center gap-4">
-                  <span className={`text-xs ${stage.cls}`}>{stage.label}</span>
-                  <button
-                    onClick={() => del(c.slug, c.name)}
-                    disabled={deleting === c.slug}
-                    title="Delete campaign"
-                    className="text-faint opacity-0 transition hover:text-warn group-hover:opacity-100"
-                  >
-                    {deleting === c.slug ? "…" : "🗑"}
-                  </button>
-                  <Link
-                    href={`/campaigns/${c.slug}`}
-                    className="text-faint transition group-hover:translate-x-0.5"
-                  >
-                    →
-                  </Link>
+                  <StatusPill status={c.status} />
                 </span>
-              </li>
-            );
-          })}
+                <span className="mt-0.5 truncate text-xs text-faint">{c.topic}</span>
+              </Link>
+              <span className="flex shrink-0 items-center gap-4">
+                <span className="hidden text-xs text-faint sm:inline">
+                  Updated <RelativeTime iso={c.updatedAt || c.createdAt} />
+                </span>
+                <button
+                  onClick={() => del(c.slug, c.name)}
+                  disabled={deleting === c.slug}
+                  title="Delete campaign"
+                  className="text-faint opacity-0 transition hover:text-fg group-hover:opacity-100"
+                >
+                  {deleting === c.slug ? "…" : "🗑"}
+                </button>
+                <Link
+                  href={`/campaigns/${c.slug}`}
+                  className="text-faint transition group-hover:translate-x-0.5"
+                >
+                  →
+                </Link>
+              </span>
+            </li>
+          ))}
         </ul>
       )}
     </section>
+  );
+}
+
+function StatusPill({ status }: { status: string }) {
+  const label = STAGE_LABEL[status] || status;
+  // monochrome, matches our base — completed is filled, everything else outlined
+  if (status === "done") {
+    return (
+      <span className="shrink-0 rounded-full bg-fg px-2.5 py-0.5 text-[11px] font-medium text-accent-fg">
+        {label}
+      </span>
+    );
+  }
+  return (
+    <span className="shrink-0 rounded-full border border-border-strong bg-surface-2 px-2.5 py-0.5 text-[11px] font-medium text-muted">
+      {label}
+    </span>
   );
 }
 
@@ -120,10 +176,29 @@ const MONTHS = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
-// Deterministic (UTC) so server and client render identically — avoids hydration mismatch.
-function formatDate(iso: string): string {
-  if (!iso) return "";
+function absolute(iso: string): string {
   const d = new Date(iso);
   if (isNaN(d.getTime())) return "";
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`;
+}
+function relative(iso: string): string {
+  const t = new Date(iso).getTime();
+  if (isNaN(t)) return "";
+  const s = Math.max(0, (Date.now() - t) / 1000);
+  if (s < 60) return "just now";
+  const m = s / 60;
+  if (m < 60) return `${Math.floor(m)}m ago`;
+  const h = m / 60;
+  if (h < 24) return `${Math.floor(h)}h ago`;
+  const d = h / 24;
+  if (d < 7) return `${Math.floor(d)}d ago`;
+  return absolute(iso);
+}
+
+// Renders the deterministic absolute date on the server, swaps to relative
+// after mount — so server and client HTML match (no hydration mismatch).
+function RelativeTime({ iso }: { iso: string }) {
+  const [txt, setTxt] = useState(() => absolute(iso));
+  useEffect(() => setTxt(relative(iso)), [iso]);
+  return <>{txt}</>;
 }
