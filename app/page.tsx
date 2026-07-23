@@ -1,104 +1,74 @@
-import Link from "next/link";
-import CreateCampaignPanel from "@/components/CreateCampaignPanel";
 import { listCampaigns, listPersonas } from "@/lib/brain";
+import { listKnowledge } from "@/lib/knowledge";
+import CampaignsSection from "@/components/CampaignsSection";
+import KnowledgeBase from "@/components/KnowledgeBase";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [campaigns, personas] = await Promise.all([
+  const [campaigns, personas, knowledge] = await Promise.all([
     listCampaigns(),
     listPersonas(),
+    listKnowledge(),
   ]);
-  const campaignCount = personas.filter((p) => p.stream === "campaign").length;
-  const scoutCount = personas.filter((p) => p.stream === "scout").length;
+
+  const active = campaigns.filter((c) => c.status !== "done").length;
+  const done = campaigns.filter((c) => c.status === "done").length;
+
+  const stats = [
+    { label: "Campaigns", value: campaigns.length },
+    { label: "In progress", value: active },
+    { label: "Shipped", value: done },
+    { label: "Knowledge docs", value: knowledge.length },
+  ];
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-20">
-      {/* hero */}
-      <header className="mb-12 text-center">
-        <span className="badge mb-6">
-          {campaignCount + scoutCount} research personas · V1
-        </span>
-        <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-          Content that survives
-          <br />a CFO&rsquo;s scrutiny.
-        </h1>
-        <p className="mx-auto mt-5 max-w-xl text-pretty text-[17px] leading-relaxed text-muted">
-          The autonomous content engine for B2B — research, fact-check, storyline,
-          draft. It starts with research: {campaignCount} campaign personas and{" "}
-          {scoutCount} scouts dig your brief in parallel, every claim sourced and
-          verified.
-        </p>
-        <div className="mt-8 flex justify-center">
-          <CreateCampaignPanel />
+    <div className="min-h-screen">
+      {/* top bar */}
+      <header className="border-b border-border">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+          <div className="flex items-baseline gap-2.5">
+            <span className="text-[15px] font-semibold tracking-tight text-fg">
+              ContentOS
+            </span>
+            <span className="text-xs text-faint">
+              autonomous B2B content engine
+            </span>
+          </div>
+          <span className="badge">{personas.length} research personas</span>
         </div>
       </header>
 
-      {/* existing campaigns */}
-      <section>
-        <h2 className="mb-3 text-sm font-medium text-muted">
-          Campaigns {campaigns.length > 0 && `(${campaigns.length})`}
-        </h2>
-        {campaigns.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-border px-5 py-10 text-center text-sm text-faint">
-            No campaigns yet. Create your first one above.
+      <main className="mx-auto max-w-5xl px-6 py-10">
+        {/* intro */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold tracking-tight text-fg">
+            Your content workspace
+          </h1>
+          <p className="mt-1.5 text-[15px] text-muted">
+            Research, fact-check, storyline, and draft — every claim sourced and
+            verified. Feed it your company knowledge and let it work.
           </p>
-        ) : (
-          <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
-            {campaigns.map((c) => (
-              <li key={c.slug}>
-                <Link
-                  href={`/campaigns/${c.slug}`}
-                  className="group flex items-center justify-between px-5 py-4 transition hover:bg-surface-2"
-                >
-                  <span className="flex min-w-0 flex-col">
-                    <span className="truncate text-[15px] font-medium text-fg">
-                      {c.name}
-                    </span>
-                    <span className="mt-0.5 truncate text-xs text-faint">
-                      {c.topic} · {formatDate(c.createdAt)}
-                    </span>
-                  </span>
-                  <span className="ml-4 flex shrink-0 items-center gap-4">
-                    <StatusPill status={c.status} />
-                    <span className="text-faint transition group-hover:translate-x-0.5">
-                      →
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-    </main>
-  );
-}
+        </div>
 
-function StatusPill({ status }: { status: string }) {
-  const map: Record<string, string> = {
-    brief: "text-faint",
-    researching: "text-warn",
-    review: "text-link",
-    approved: "text-ok",
-  };
-  return (
-    <span className={`text-xs capitalize ${map[status] || "text-faint"}`}>
-      {status}
-    </span>
-  );
-}
+        {/* stats */}
+        <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="card">
+              <div className="text-2xl font-semibold tracking-tight text-fg">
+                {s.value}
+              </div>
+              <div className="mt-0.5 text-xs text-faint">{s.label}</div>
+            </div>
+          ))}
+        </div>
 
-function formatDate(iso: string): string {
-  if (!iso) return "";
-  try {
-    return new Date(iso).toLocaleDateString(undefined, {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  } catch {
-    return iso;
-  }
+        {/* main grid */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_340px]">
+          <CampaignsSection campaigns={campaigns} />
+          <KnowledgeBase initialDocs={knowledge} />
+        </div>
+      </main>
+    </div>
+  );
 }

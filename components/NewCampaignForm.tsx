@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function NewCampaignForm() {
@@ -12,8 +12,37 @@ export default function NewCampaignForm() {
   const [constraints, setConstraints] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [extracting, setExtracting] = useState(false);
+  const [extractNote, setExtractNote] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const canSubmit = name.trim() && topic.trim() && !submitting;
+
+  async function extractFromDoc(file: File | undefined) {
+    if (!file) return;
+    setExtracting(true);
+    setError(null);
+    setExtractNote(null);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/campaigns/extract", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Couldn't read that document.");
+      const b = data.brief;
+      if (b.name) setName(b.name);
+      if (b.topic) setTopic(b.topic);
+      if (b.objective) setObjective(b.objective);
+      if (b.icp) setIcp(b.icp);
+      if (b.constraints) setConstraints(b.constraints);
+      setExtractNote(`Filled from ${file.name} — review and edit before creating.`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Couldn't read that document.");
+    } finally {
+      setExtracting(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,6 +66,38 @@ export default function NewCampaignForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      {/* upload-a-brief shortcut */}
+      <div className="flex items-center justify-between gap-3 rounded-lg border border-dashed border-border bg-surface-2 px-4 py-3">
+        <div className="min-w-0">
+          <div className="text-sm font-medium text-fg">
+            Have a brief document?
+          </div>
+          <div className="text-xs text-faint">
+            Upload a PDF or DOC and we&rsquo;ll auto-fill the form.
+          </div>
+        </div>
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".pdf,.docx,.doc,.txt,.md"
+          className="hidden"
+          onChange={(e) => extractFromDoc(e.target.files?.[0])}
+        />
+        <button
+          type="button"
+          className="btn-ghost shrink-0"
+          onClick={() => fileRef.current?.click()}
+          disabled={extracting}
+        >
+          {extracting ? "Reading…" : "Upload brief"}
+        </button>
+      </div>
+      {extractNote && (
+        <p className="rounded-lg bg-surface-2 px-3 py-2 text-xs text-ok">
+          {extractNote}
+        </p>
+      )}
+
       <Field label="Campaign name" hint="A short name for this campaign." required>
         <input
           value={name}

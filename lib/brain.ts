@@ -238,6 +238,15 @@ export async function setCampaignStatus(
   }
 }
 
+/** Permanently deletes a campaign folder and everything under it. */
+export async function deleteCampaign(slug: string): Promise<void> {
+  const dir = path.join(CAMPAIGNS_DIR, slug);
+  // guard: must live under CAMPAIGNS_DIR
+  if (!path.resolve(dir).startsWith(path.resolve(CAMPAIGNS_DIR) + path.sep))
+    throw new Error("Invalid campaign slug.");
+  await fs.rm(dir, { recursive: true, force: true });
+}
+
 function sectionText(body: string, heading: string): string {
   const re = new RegExp(`##\\s+${heading}\\s*\\n([\\s\\S]*?)(?:\\n##\\s|$)`);
   const m = body.match(re);
