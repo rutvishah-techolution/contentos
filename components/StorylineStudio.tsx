@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CHANNEL_LABELS, Storyline, StorylineDoc } from "@/lib/storyline/types";
 
@@ -13,6 +13,9 @@ export default function StorylineStudio({
 }) {
   const [docs, setDocs] = useState<StorylineDoc[]>(storylines);
   const router = useRouter();
+
+  // keep in sync when the server re-renders (e.g. after producing more)
+  useEffect(() => setDocs(storylines), [storylines]);
 
   function update(d: StorylineDoc) {
     setDocs((cur) => cur.map((x) => (x.id === d.id ? d : x)));
@@ -32,7 +35,7 @@ export default function StorylineStudio({
         <StorylineCard key={d.id} slug={slug} doc={d} onUpdate={update} />
       ))}
       {approvedCount > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-sm">
+        <div className="sticky bottom-4 z-10 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border-strong bg-surface px-4 py-3 text-sm shadow-lg shadow-black/5">
           <span className="flex items-center gap-2">
             <span className="text-ok">✓</span>
             <span className="text-fg">

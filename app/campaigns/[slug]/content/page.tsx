@@ -35,8 +35,8 @@ export default async function ContentPage({
         <span className="badge mb-4 capitalize">{campaign.status}</span>
         <h1 className="text-3xl font-semibold tracking-tight">{campaign.name}</h1>
         <p className="mt-2 text-muted">
-          Final copy — 3-draft pipeline, humanized, fact-checked against your
-          research.
+          Draft the copy — step each piece Draft 1 → Draft 2 → Final, with an AI
+          assistant to fact-check as you go.
         </p>
       </header>
 

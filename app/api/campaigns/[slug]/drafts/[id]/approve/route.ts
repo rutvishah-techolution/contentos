@@ -3,9 +3,9 @@ import { approveDraft } from "@/lib/draft/draft";
 
 export async function POST(
   _req: NextRequest,
-  { params }: { params: Promise<{ slug: string; channel: string }> },
+  { params }: { params: Promise<{ slug: string; id: string }> },
 ) {
-  const { slug, channel: id } = await params;
+  const { slug, id } = await params;
   try {
     const result = await approveDraft(slug, id);
     return NextResponse.json(result);

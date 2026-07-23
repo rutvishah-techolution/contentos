@@ -2,7 +2,7 @@
 slug: enterprise-ai-roi-and-workflow-automation-for-finance-teams
 topic: Enterprise AI ROI and workflow automation for finance teams
 createdAt: 2026-07-21T09:19:12.837Z
-status: storyline
+status: drafting
 ---
 
 # Enterprise AI ROI and workflow automation for finance teams

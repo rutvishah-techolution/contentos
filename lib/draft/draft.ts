@@ -11,9 +11,22 @@ import {
 } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
 import { callClaude } from "@/lib/models/claude";
+import { callGemini } from "@/lib/models/gemini";
 import { readStorylines } from "@/lib/storyline/storyline";
 import { extractFigures } from "@/lib/research/verify";
 import { Channel, CHANNEL_LABELS, ChatMsg, StorylineDoc } from "@/lib/storyline/types";
+
+export type DraftStage = "draft1" | "draft2" | "final";
+export const STAGE_LABEL: Record<DraftStage, string> = {
+  draft1: "Draft 1",
+  draft2: "Draft 2",
+  final: "Final",
+};
+export const NEXT_STAGE: Record<DraftStage, DraftStage | null> = {
+  draft1: "draft2",
+  draft2: "final",
+  final: null,
+};
 
 export interface FactTrace {
   total: number;
@@ -22,14 +35,16 @@ export interface FactTrace {
 }
 
 export interface DraftDoc {
-  id: string; // piece id (= storyline/topic id)
+  id: string;
   channel: Channel;
   personaId: string;
   personaName: string;
-  copy: string;
+  stage: DraftStage;
+  content: string; // the current stage's copy
+  drafts: Partial<Record<DraftStage, string>>; // snapshots per stage
   factTrace: FactTrace;
-  chat: ChatMsg[];
-  approved: boolean;
+  chat: ChatMsg[]; // the Gemini help-assistant conversation
+  approved: boolean; // final approved
   generatedAt: string;
 }
 
@@ -45,47 +60,133 @@ function draftPath(slug: string, id: string): string {
 }
 
 const GROUNDING = `Use ONLY facts, figures, and companies present in the VERIFIED
-RESEARCH provided. Never invent a statistic or claim not in it. Every number must
-trace to the research. You have NO web access.`;
+RESEARCH provided. Never invent a statistic or claim not in it. You have NO web access.`;
 
-/** 3-pass drafting pipeline for every approved storyline. */
+// ── The three passes ─────────────────────────────────────────────────────────
+async function writePass(
+  sl: StorylineDoc,
+  campaign: { name: string; topic: string },
+  research: string,
+  voice: string,
+  fw: Record<string, string>,
+): Promise<string> {
+  const chan = CHANNEL_LABELS[sl.channel];
+  const s = sl.storyline;
+  const system = `You write B2B campaign content as a specific persona.
+
+${GROUNDING}
+
+STORYLINE STRUCTURE:
+${fw.structure}
+
+CHANNEL FORMAT RULES (follow the rules for ${chan}):
+${fw.formats}
+
+BRAND:
+${fw.brand}
+
+YOUR VOICE (write as this persona):
+${voice}
+
+STRUCTURE governs shape; PERSONA governs voice. On conflict, keep structure.`;
+  const user = `CAMPAIGN: ${campaign.name} — ${campaign.topic}
+
+APPROVED STORYLINE (follow it):
+Headline: ${s.headline}
+Hook: ${s.hook}
+Villain: ${s.villain}
+Shift: ${s.shift}
+Hero: ${s.hero}
+Proof: ${s.proof}
+Learning: ${s.learning}
+CTA: ${s.cta}
+
+VERIFIED RESEARCH (your only source of facts):
+${research}
+
+Write the full ${chan} piece, following the ${chan} format rules exactly.
+Output ONLY the piece as clean Markdown — no preamble.`;
+  return (await callClaude({ system, user, maxTokens: 3000, webSearch: false })).trim();
+}
+
+async function editPass(
+  content: string,
+  research: string,
+  fw: Record<string, string>,
+): Promise<string> {
+  const system = `You are a sharp editor. Tighten this draft to enforce these rules, WITHOUT adding new facts and WITHOUT losing the persona's voice:
+
+${fw.craft}
+
+${fw.psych}
+
+Output ONLY the edited piece as Markdown.`;
+  return (
+    await callClaude({
+      system,
+      user: `RESEARCH (facts must stay grounded here):\n${research}\n\nDRAFT:\n${content}`,
+      maxTokens: 3000,
+      webSearch: false,
+    })
+  ).trim();
+}
+
+async function humanizePass(
+  content: string,
+  fw: Record<string, string>,
+): Promise<string> {
+  const system = `${fw.humanizer}\n\nEdit only. Do not add new facts. Keep the persona's voice. Output ONLY the final piece as Markdown.`;
+  return (
+    await callClaude({
+      system,
+      user: `FINAL PASS on this piece:\n\n${content}`,
+      maxTokens: 3000,
+      webSearch: false,
+    })
+  ).trim();
+}
+
+// ── Generate Draft 1 for every approved storyline ────────────────────────────
 export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
   const campaign = await getCampaign(slug);
   if (!campaign) throw new Error(`Campaign not found: ${slug}`);
   const storylines = (await readStorylines(slug)).filter((s) => s.approved);
   if (storylines.length === 0) throw new Error("Approve at least one storyline first.");
   const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
+  const brand = await readWriting("brand-context.md");
 
-  const [structure, formats, craft, psych, brand, humanizer] = await Promise.all([
-    readWriting("storyline-structure.md"),
-    readWriting("format-rules.md"),
-    readWriting("craft-rules.md"),
-    readWriting("reader-psychology.md"),
-    readWriting("brand-context.md"),
-    readWriting("humanizer.md"),
-  ]);
+  const fw = {
+    structure: await readWriting("storyline-structure.md"),
+    formats: await readWriting("format-rules.md"),
+    brand,
+  };
   const personas = await listPersonas();
   const pathById = new Map(personas.map((p) => [p.id, p.path]));
 
   const docs = await Promise.all(
     storylines.map(async (sl) => {
+      // skip if a draft already exists (don't clobber in-progress work)
+      const existing = await readDraft(slug, sl.id);
+      if (existing) return existing;
       const voice = pathById.get(sl.personaId)
         ? await readPersonaBody(pathById.get(sl.personaId) as string)
         : "";
-      const copy = await runPipeline({
-        campaign: { name: campaign.name, topic: campaign.topic },
-        storyline: sl,
+      const content = await writePass(
+        sl,
+        { name: campaign.name, topic: campaign.topic },
         research,
         voice,
-        frameworks: { structure, formats, craft, psych, brand, humanizer },
-      });
+        fw,
+      );
       const doc: DraftDoc = {
         id: sl.id,
         channel: sl.channel,
         personaId: sl.personaId,
         personaName: sl.personaName,
-        copy,
-        factTrace: traceFacts(copy, `${research}\n\n${brand}`),
+        stage: "draft1",
+        content,
+        drafts: { draft1: content },
+        factTrace: traceFacts(content, `${research}\n\n${brand}`),
         chat: [],
         approved: false,
         generatedAt: new Date().toISOString(),
@@ -98,148 +199,103 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
   return docs;
 }
 
-interface PipelineArgs {
-  campaign: { name: string; topic: string };
-  storyline: StorylineDoc;
-  research: string;
-  voice: string;
-  frameworks: Record<string, string>;
+/** Advance a piece to the next draft stage (draft1→draft2 edit, draft2→final humanize). */
+export async function advanceDraft(slug: string, id: string): Promise<DraftDoc> {
+  const doc = await readDraft(slug, id);
+  if (!doc) throw new Error("Draft not found.");
+  const next = NEXT_STAGE[doc.stage];
+  if (!next) throw new Error("Already at final.");
+  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
+  const brand = await readWriting("brand-context.md");
+  const fw = {
+    craft: await readWriting("craft-rules.md"),
+    psych: await readWriting("reader-psychology.md"),
+    humanizer: await readWriting("humanizer.md"),
+  };
+
+  const content =
+    next === "draft2"
+      ? await editPass(doc.content, research, fw)
+      : await humanizePass(doc.content, fw);
+
+  doc.stage = next;
+  doc.content = content;
+  doc.drafts[next] = content;
+  doc.factTrace = traceFacts(content, `${research}\n\n${brand}`);
+  await writeDraft(slug, doc);
+  return doc;
 }
 
-async function runPipeline(a: PipelineArgs): Promise<string> {
-  const chan = CHANNEL_LABELS[a.storyline.channel];
-  const s = a.storyline.storyline;
-  const storylineText = `Headline: ${s.headline}
-Hook: ${s.hook}
-Villain: ${s.villain}
-Shift: ${s.shift}
-Hero: ${s.hero}
-Proof: ${s.proof}
-Learning: ${s.learning}
-CTA: ${s.cta}`;
-
-  const write1System = `You write B2B campaign content as a specific persona.
-
-${GROUNDING}
-
-STORYLINE STRUCTURE:
-${a.frameworks.structure}
-
-CHANNEL FORMAT RULES (follow the rules for ${chan}):
-${a.frameworks.formats}
-
-BRAND:
-${a.frameworks.brand}
-
-YOUR VOICE (write as this persona):
-${a.voice}
-
-STRUCTURE governs shape; PERSONA governs voice. On conflict, keep structure.`;
-  const write1User = `CAMPAIGN: ${a.campaign.name} — ${a.campaign.topic}
-
-APPROVED STORYLINE (follow it):
-${storylineText}
-
-VERIFIED RESEARCH (your only source of facts):
-${a.research}
-
-Write the full ${chan} piece, following the ${chan} format rules exactly.
-Output ONLY the piece as clean Markdown — no preamble, no notes.`;
-  const d1 = await callClaude({ system: write1System, user: write1User, maxTokens: 3000, webSearch: false });
-
-  const editSystem = `You are a sharp editor. Tighten this draft to enforce these rules, WITHOUT adding new facts and WITHOUT losing the persona's voice:
-
-${a.frameworks.craft}
-
-${a.frameworks.psych}
-
-Keep the same voice. Output ONLY the edited piece as Markdown.`;
-  const d2 = await callClaude({
-    system: editSystem,
-    user: `RESEARCH (facts must stay grounded here):\n${a.research}\n\nDRAFT:\n${d1}`,
-    maxTokens: 3000,
-    webSearch: false,
-  });
-
-  const humanSystem = `${a.frameworks.humanizer}\n\nEdit only. Do not add new facts. Keep the persona's voice. Output ONLY the final piece as Markdown.`;
-  const d3 = await callClaude({
-    system: humanSystem,
-    user: `FINAL PASS on this ${chan} piece:\n\n${d2}`,
-    maxTokens: 3000,
-    webSearch: false,
-  });
-  return d3.trim();
+/** Manual edit of the current stage's content. */
+export async function editDraft(
+  slug: string,
+  id: string,
+  content: string,
+): Promise<DraftDoc> {
+  const doc = await readDraft(slug, id);
+  if (!doc) throw new Error("Draft not found.");
+  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
+  const brand = await readWriting("brand-context.md");
+  doc.content = content;
+  doc.drafts[doc.stage] = content;
+  doc.factTrace = traceFacts(content, `${research}\n\n${brand}`);
+  await writeDraft(slug, doc);
+  return doc;
 }
 
-function traceFacts(copy: string, corpus: string): FactTrace {
-  const figs = extractFigures(copy);
-  const lower = corpus.toLowerCase();
-  const untraced: string[] = [];
-  let traced = 0;
-  for (const f of figs) {
-    if (f.variants.some((v) => lower.includes(v))) traced++;
-    else untraced.push(f.label);
-  }
-  return { total: figs.length, traced, untraced: [...new Set(untraced)] };
-}
-
-/** Chat-with-memory revision of a draft's copy. */
-export async function reviseDraft(
+/** The Gemini help-assistant: answers, fact-checks, and edits on request. */
+export async function assistDraft(
   slug: string,
   id: string,
   message: string,
 ): Promise<DraftDoc> {
   const doc = await readDraft(slug, id);
   if (!doc) throw new Error("Draft not found.");
-  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
-  const personas = await listPersonas();
-  const pPath = personas.find((p) => p.id === doc.personaId)?.path;
-  const voice = pPath ? await readPersonaBody(pPath) : "";
-  const [craft, brand] = await Promise.all([
-    readWriting("craft-rules.md"),
-    readWriting("brand-context.md"),
-  ]);
+  const bundle = await getResearchBundle(slug);
+  const research = bundle.campaignBase?.markdown || "";
+  const sourceList = [
+    ...(bundle.sources?.campaign || []),
+    ...(bundle.sources?.scout || []),
+  ]
+    .map((s) => `- ${s.title} (${s.url})`)
+    .join("\n");
 
-  const system = `You are revising a finished ${CHANNEL_LABELS[doc.channel]} piece with the reviewer, in a conversation. Apply their guidance while keeping it grounded, in voice, and clean.
+  const system = `You are a helpful writing assistant reviewing a B2B content draft with the writer. You can:
+- answer questions about the draft
+- FACT-CHECK figures/claims against the VERIFIED RESEARCH and its sources (and the web)
+- suggest improvements
 
-${GROUNDING}
-
-CRAFT:
-${craft}
-
-BRAND:
-${brand}
-
-VOICE:
-${voice}
-
-Return the FULL revised piece as Markdown, then a new line "---REPLY---", then one sentence on what you changed.`;
+If — and ONLY if — the user explicitly asks you to change the draft, output the full revised draft after a line containing exactly "---DRAFT---". Otherwise, do not include that marker. Keep any facts grounded in the research; flag anything that looks unsupported.`;
 
   const history = doc.chat
-    .map((m) => `${m.role === "user" ? "REVIEWER" : "YOU"}: ${m.content}`)
+    .map((m) => `${m.role === "user" ? "USER" : "YOU"}: ${m.content}`)
     .join("\n");
-  const user = `RESEARCH (facts must stay grounded here):
+  const user = `VERIFIED RESEARCH:
 ${research}
 
-CURRENT PIECE:
-${doc.copy}
+SOURCES:
+${sourceList || "(none)"}
+
+CURRENT DRAFT (${STAGE_LABEL[doc.stage]}):
+${doc.content}
 
 CONVERSATION SO FAR:
-${history || "(none yet)"}
+${history || "(none)"}
 
-NEW MESSAGE:
+USER MESSAGE:
 "${message}"`;
 
-  const raw = await callClaude({ system, user, maxTokens: 3200, webSearch: false });
-  const [copyPart, replyPart] = raw.split(/---REPLY---/);
-  const copy = (copyPart || raw).trim();
-  const reply = (replyPart || "Updated.").trim();
-
-  doc.copy = copy;
-  doc.factTrace = traceFacts(copy, `${research}\n\n${brand}`);
+  const raw = await callGemini({ system, user, maxTokens: 3000 });
+  const [replyPart, draftPart] = raw.split(/---DRAFT---/);
+  const reply = (replyPart || raw).trim();
   doc.chat.push({ role: "user", content: message });
-  doc.chat.push({ role: "assistant", content: reply.slice(0, 200) });
-  doc.approved = false;
+  doc.chat.push({ role: "assistant", content: reply.slice(0, 4000) });
+  if (draftPart && draftPart.trim().length > 40) {
+    const brand = await readWriting("brand-context.md");
+    doc.content = draftPart.trim();
+    doc.drafts[doc.stage] = doc.content;
+    doc.factTrace = traceFacts(doc.content, `${research}\n\n${brand}`);
+  }
   await writeDraft(slug, doc);
   return doc;
 }
@@ -250,6 +306,7 @@ export async function approveDraft(
 ): Promise<{ allApproved: boolean }> {
   const doc = await readDraft(slug, id);
   if (!doc) throw new Error("Draft not found.");
+  if (doc.stage !== "final") throw new Error("Advance to the final draft first.");
   doc.approved = true;
   await writeDraft(slug, doc);
   const all = await readDrafts(slug);
@@ -275,6 +332,18 @@ export async function readDrafts(slug: string): Promise<DraftDoc[]> {
   return docs.sort((a, b) => (rank[a.channel] ?? 9) - (rank[b.channel] ?? 9));
 }
 
+function traceFacts(copy: string, corpus: string): FactTrace {
+  const figs = extractFigures(copy);
+  const lower = corpus.toLowerCase();
+  const untraced: string[] = [];
+  let traced = 0;
+  for (const f of figs) {
+    if (f.variants.some((v) => lower.includes(v))) traced++;
+    else untraced.push(f.label);
+  }
+  return { total: figs.length, traced, untraced: [...new Set(untraced)] };
+}
+
 async function writeDraft(slug: string, doc: DraftDoc): Promise<void> {
   await fs.mkdir(draftsDirPath(slug), { recursive: true });
   const md = [
@@ -283,13 +352,14 @@ async function writeDraft(slug: string, doc: DraftDoc): Promise<void> {
     `pieceId: ${doc.id}`,
     `channel: ${doc.channel}`,
     `persona: ${doc.personaName}`,
+    `stage: ${doc.stage}`,
     `approved: ${doc.approved}`,
     `factTrace: ${doc.factTrace.traced}/${doc.factTrace.total} traced`,
     "---",
     "",
-    `# ${CHANNEL_LABELS[doc.channel]} — Final Copy`,
+    `# ${CHANNEL_LABELS[doc.channel]} — ${STAGE_LABEL[doc.stage]}`,
     "",
-    doc.copy,
+    doc.content,
     "",
     "## Data",
     "",

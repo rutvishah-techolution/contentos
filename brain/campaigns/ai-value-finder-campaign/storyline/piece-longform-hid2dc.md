@@ -3,7 +3,7 @@ campaign: "[[ai-value-finder-campaign]]"
 pieceId: longform-hid2dc
 channel: longform
 persona: Auditor
-approved: false
+approved: true
 ---
 
 # Longform Article Storyline — The 5% That Made AI Pay: What the 95% Got Wrong Before They Wrote the First Check
@@ -39,7 +39,7 @@ approved: false
     "cta": "For leadership teams sitting on a list of AI ideas and no ranking that survives a board review — the roadmap comes before the spend, not after."
   },
   "chat": [],
-  "approved": false,
+  "approved": true,
   "generatedAt": "2026-07-23T05:57:39.336Z"
 }
 ```

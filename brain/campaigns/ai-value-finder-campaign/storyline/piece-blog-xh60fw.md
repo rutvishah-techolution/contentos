@@ -3,7 +3,7 @@ campaign: "[[ai-value-finder-campaign]]"
 pieceId: blog-xh60fw
 channel: blog
 persona: Ai For Humans
-approved: false
+approved: true
 ---
 
 # Blog Storyline — 53% of Your Software Licenses Sit Unused. Your AI Budget Is Making the Same Bet Blind.
@@ -39,7 +39,7 @@ approved: false
     "cta": "If your team has bought plenty of AI and still can't point to the line on the P&L where it paid off, spend three days finding out which three workflows actually would — before your IT and compliance teams get handed another tool to vet."
   },
   "chat": [],
-  "approved": false,
+  "approved": true,
   "generatedAt": "2026-07-23T05:57:39.952Z"
 }
 ```

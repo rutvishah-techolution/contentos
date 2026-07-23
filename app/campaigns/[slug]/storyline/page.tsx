@@ -4,8 +4,7 @@ import { getCampaign, listPersonas } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
 import { readTopicBank } from "@/lib/storyline/topics";
 import { readStorylines } from "@/lib/storyline/storyline";
-import TopicPlanner from "@/components/TopicPlanner";
-import StorylineStudio from "@/components/StorylineStudio";
+import StorylineStage from "@/components/StorylineStage";
 
 export const dynamic = "force-dynamic";
 
@@ -45,10 +44,12 @@ export default async function StorylinePage({
       </header>
 
       {bundle.campaignBase ? (
-        <div className="flex flex-col gap-10">
-          <TopicPlanner slug={slug} initialBank={bank} personas={roster} />
-          <StorylineStudio slug={slug} storylines={storylines} />
-        </div>
+        <StorylineStage
+          slug={slug}
+          bank={bank}
+          personas={roster}
+          storylines={storylines}
+        />
       ) : (
         <div className="rounded-xl border border-dashed border-border px-5 py-10 text-center">
           <p className="text-sm text-muted">

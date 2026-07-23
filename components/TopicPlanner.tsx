@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Channel,
@@ -27,6 +27,9 @@ export default function TopicPlanner({
   const [feedback, setFeedback] = useState("");
   const [busy, setBusy] = useState<null | "gen" | "produce">(null);
   const [error, setError] = useState<string | null>(null);
+
+  // sync when the server re-renders (e.g. topics flip to in-production)
+  useEffect(() => setBank(initialBank), [initialBank]);
 
   const toggleChannel = (c: Channel) =>
     setChannels((cur) =>
