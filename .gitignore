@@ -26,3 +26,8 @@ npm-debug.log*
 # obsidian workspace state (keep the vault content, ignore local UI state)
 brain/.obsidian/workspace.json
 *.tsbuildinfo
+
+# private user data (never commit to the public repo)
+brain/auth/
+brain/campaigns/
+brain/news/

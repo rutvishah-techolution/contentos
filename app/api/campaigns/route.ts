@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createCampaign, listCampaigns } from "@/lib/brain";
+import { auth } from "@/auth";
 
 export async function GET() {
-  const campaigns = await listCampaigns();
+  const session = await auth();
+  const campaigns = await listCampaigns(session?.user?.id);
   return NextResponse.json({ campaigns });
 }
 
@@ -36,12 +38,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Topic is required." }, { status: 400 });
   }
 
-  const campaign = await createCampaign({
-    name,
-    topic,
-    objective,
-    icp,
-    constraints,
-  });
+  const session = await auth();
+  const campaign = await createCampaign(
+    { name, topic, objective, icp, constraints },
+    session?.user?.id || "",
+  );
   return NextResponse.json({ campaign }, { status: 201 });
 }

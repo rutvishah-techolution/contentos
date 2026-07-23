@@ -1,9 +1,10 @@
 # Verified Digest (snapshot)
 
-Synced from the daily AI Content Intelligence pipeline. 1191 items, newest 2026-07-22.
+Synced from the daily AI Content Intelligence pipeline. 1192 items, newest 2026-07-23.
 
 ## Latest
 
+- **2026-07-23** [b2b] AI Won’t Save Your Transformation — [Forrester Blog](https://www.forrester.com/blogs/ai-wont-save-your-transformation/)
 - **2026-07-22** [b2b] Google Puts A Number On AI Search Clicks, Without The Data via @sejournal, @MattGSouthern — [Search Engine Journal](https://www.searchenginejournal.com/google-puts-a-number-on-ai-search-clicks-without-the-data/582755/)
 - **2026-07-21** [b2b] How To Measure AI Search Visibility via @sejournal, @slobodanmanic — [Search Engine Journal](https://www.searchenginejournal.com/how-to-measure-ai-search-visibility/579893/)
 - **2026-07-20** [b2b] Answer Engines’ Next Act: From Visibility To Growth — [Forrester Blog](https://www.forrester.com/blogs/answer-engines-next-act-from-visibility-to-growth/)
@@ -18,4 +19,3 @@ Synced from the daily AI Content Intelligence pipeline. 1191 items, newest 2026-
 - **2026-07-09** [b2b] B2B Social Media Influencers Have More Influence Than Ever — [Forrester](https://www.forrester.com/blogs/b2b-social-media-influencers-have-more-influence-than-ever/)
 - **2026-07-08** [b2b] SEO for Content — [Content Marketing Institute](https://contentmarketinginstitute.com/measurement-optimization/seo-for-content)
 - **2026-07-07** [b2b] Google Put AI Visibility Inside The SEO Tool On Purpose via @sejournal, @slobodanmanic — [Search Engine Journal](https://www.searchenginejournal.com/google-put-ai-visibility-inside-the-seo-tool-on-purpose/577889/)
-- **2026-07-06** [b2b] AEO Changes What Content Is Worth Creating — [Forrester](https://www.forrester.com/blogs/aeo-changes-what-content-is-worth-creating/)

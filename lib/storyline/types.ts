@@ -1,11 +1,22 @@
-export type Channel = "longform" | "blog" | "linkedin" | "instagram";
+export type Channel =
+  | "longform"
+  | "blog"
+  | "linkedin"
+  | "carousel"
+  | "instagram";
 
 /** Channels the user can toggle. Longform is always included as the flagship. */
-export const SELECTABLE_CHANNELS: Channel[] = ["blog", "linkedin", "instagram"];
+export const SELECTABLE_CHANNELS: Channel[] = [
+  "blog",
+  "linkedin",
+  "carousel",
+  "instagram",
+];
 export const ALL_CHANNELS: Channel[] = [
   "longform",
   "blog",
   "linkedin",
+  "carousel",
   "instagram",
 ];
 
@@ -13,26 +24,25 @@ export const CHANNEL_LABELS: Record<Channel, string> = {
   longform: "Longform Article",
   blog: "Blog",
   linkedin: "LinkedIn",
+  carousel: "LinkedIn Carousel",
   instagram: "Instagram",
 };
 
-/** One planned content piece: a distinct angle, a channel, and its author. */
-export interface PlanItem {
-  channel: Channel;
-  personaId: string;
-  personaName: string;
-  angle: string; // the distinct angle/topic this piece takes
-  headline: string; // proposed working headline
-  rationale: string; // why this angle + persona for this channel
-}
+/** Channel display order used across menus, banks, and workspace. */
+export const CHANNEL_ORDER: Channel[] = [
+  "longform",
+  "blog",
+  "linkedin",
+  "carousel",
+  "instagram",
+];
 
-/** The campaign content plan: one shared spine + distinct pieces. */
-export interface ContentPlan {
-  spine: string; // the campaign's single core message
-  items: PlanItem[];
-  generatedAt: string;
-  approved: boolean;
-}
+/** Whether a piece pitches the service (campaign) or is pure POV (thought leadership). */
+export type PieceKind = "campaign" | "thought-leadership";
+export const KIND_LABEL: Record<PieceKind, string> = {
+  campaign: "Campaign",
+  "thought-leadership": "Thought leadership",
+};
 
 /** The narrative skeleton of one piece. */
 export interface Storyline {
@@ -55,6 +65,7 @@ export interface ChatMsg {
 export interface StorylineDoc {
   id: string; // the piece id (= topic id)
   channel: Channel;
+  kind: PieceKind;
   personaId: string;
   personaName: string;
   angle: string;

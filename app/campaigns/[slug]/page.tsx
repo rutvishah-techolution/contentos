@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCampaign, listPersonas } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
 import RunResearchButton from "@/components/RunResearchButton";
+import ShareCode from "@/components/ShareCode";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +33,10 @@ export default async function CampaignPage({
       </Link>
 
       <header className="animate-fade-in mb-6">
-        <span className="badge mb-4 capitalize">{campaign.status}</span>
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <span className="badge capitalize">{campaign.status}</span>
+          <ShareCode code={campaign.joinCode} />
+        </div>
         <h1 className="text-3xl font-semibold tracking-tight">
           {campaign.name}
         </h1>

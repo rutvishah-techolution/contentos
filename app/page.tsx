@@ -1,5 +1,6 @@
 import { listCampaigns } from "@/lib/brain";
 import { listKnowledge } from "@/lib/knowledge";
+import { auth } from "@/auth";
 import CampaignsSection from "@/components/CampaignsSection";
 
 export const dynamic = "force-dynamic";
@@ -34,8 +35,9 @@ const ICONS: Record<string, React.ReactNode> = {
 };
 
 export default async function Home() {
+  const session = await auth();
   const [campaigns, knowledge] = await Promise.all([
-    listCampaigns(),
+    listCampaigns(session?.user?.id),
     listKnowledge(),
   ]);
 

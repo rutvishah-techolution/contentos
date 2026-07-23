@@ -10,11 +10,28 @@ import {
   readPersonaBody,
 } from "@/lib/brain";
 import { getResearchBundle } from "@/lib/research/read";
+import { getKnowledgeContext } from "@/lib/knowledge";
 import { callClaude } from "@/lib/models/claude";
 import { callGemini } from "@/lib/models/gemini";
 import { readStorylines } from "@/lib/storyline/storyline";
 import { extractFigures } from "@/lib/research/verify";
-import { Channel, CHANNEL_LABELS, ChatMsg, StorylineDoc } from "@/lib/storyline/types";
+import {
+  Channel,
+  CHANNEL_LABELS,
+  CHANNEL_ORDER,
+  ChatMsg,
+  PieceKind,
+  StorylineDoc,
+} from "@/lib/storyline/types";
+
+function intentGuidance(kind: PieceKind): string {
+  return kind === "thought-leadership"
+    ? `INTENT: Thought leadership. This is NOT a sales pitch — the value is the
+insight. Do not pitch the service in the body. End with a smooth, SUBTLE one-line
+mention of the service (the kind of problem we work on), never a hard sell.`
+    : `INTENT: Campaign. The service is the hero after the villain, and the piece
+ends on a soft, direct CTA to the service.`;
+}
 
 export type DraftStage = "draft1" | "draft2" | "final";
 export const STAGE_LABEL: Record<DraftStage, string> = {
@@ -37,6 +54,7 @@ export interface FactTrace {
 export interface DraftDoc {
   id: string;
   channel: Channel;
+  kind: PieceKind;
   personaId: string;
   personaName: string;
   stage: DraftStage;
@@ -75,6 +93,8 @@ async function writePass(
   const system = `You write B2B campaign content as a specific persona.
 
 ${GROUNDING}
+
+${intentGuidance(sl.kind)}
 
 STORYLINE STRUCTURE:
 ${fw.structure}
@@ -152,8 +172,15 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
   if (!campaign) throw new Error(`Campaign not found: ${slug}`);
   const storylines = (await readStorylines(slug)).filter((s) => s.approved);
   if (storylines.length === 0) throw new Error("Approve at least one storyline first.");
-  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
+  const bundle = await getResearchBundle(slug);
+  const campaignMd = bundle.campaignBase?.markdown || "";
+  const scoutMd = bundle.scoutBase?.markdown || "";
   const brand = await readWriting("brand-context.md");
+  const knowledge = await getKnowledgeContext(6000);
+  const researchFor = (kind: PieceKind) =>
+    kind === "thought-leadership"
+      ? [campaignMd, scoutMd, knowledge].filter(Boolean).join("\n\n──────\n\n")
+      : campaignMd;
 
   const fw = {
     structure: await readWriting("storyline-structure.md"),
@@ -168,6 +195,7 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
       // skip if a draft already exists (don't clobber in-progress work)
       const existing = await readDraft(slug, sl.id);
       if (existing) return existing;
+      const research = researchFor(sl.kind);
       const voice = pathById.get(sl.personaId)
         ? await readPersonaBody(pathById.get(sl.personaId) as string)
         : "";
@@ -181,6 +209,7 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
       const doc: DraftDoc = {
         id: sl.id,
         channel: sl.channel,
+        kind: sl.kind,
         personaId: sl.personaId,
         personaName: sl.personaName,
         stage: "draft1",
@@ -205,8 +234,7 @@ export async function advanceDraft(slug: string, id: string): Promise<DraftDoc> 
   if (!doc) throw new Error("Draft not found.");
   const next = NEXT_STAGE[doc.stage];
   if (!next) throw new Error("Already at final.");
-  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
-  const brand = await readWriting("brand-context.md");
+  const research = researchForKind(await getResearchBundle(slug), doc.kind, "");
   const fw = {
     craft: await readWriting("craft-rules.md"),
     psych: await readWriting("reader-psychology.md"),
@@ -221,9 +249,22 @@ export async function advanceDraft(slug: string, id: string): Promise<DraftDoc> 
   doc.stage = next;
   doc.content = content;
   doc.drafts[next] = content;
-  doc.factTrace = traceFacts(content, `${research}\n\n${brand}`);
+  doc.factTrace = traceFacts(content, await traceCorpus(slug, doc.kind));
   await writeDraft(slug, doc);
   return doc;
+}
+
+/** Facts a piece may draw on: campaign only, or wider (scout) for thought leadership. */
+function researchForKind(
+  bundle: Awaited<ReturnType<typeof getResearchBundle>>,
+  kind: PieceKind,
+  knowledge: string,
+): string {
+  const campaignMd = bundle.campaignBase?.markdown || "";
+  if (kind !== "thought-leadership") return campaignMd;
+  return [campaignMd, bundle.scoutBase?.markdown || "", knowledge]
+    .filter(Boolean)
+    .join("\n\n──────\n\n");
 }
 
 /** Manual edit of the current stage's content. */
@@ -234,11 +275,9 @@ export async function editDraft(
 ): Promise<DraftDoc> {
   const doc = await readDraft(slug, id);
   if (!doc) throw new Error("Draft not found.");
-  const research = (await getResearchBundle(slug)).campaignBase?.markdown || "";
-  const brand = await readWriting("brand-context.md");
   doc.content = content;
   doc.drafts[doc.stage] = content;
-  doc.factTrace = traceFacts(content, `${research}\n\n${brand}`);
+  doc.factTrace = traceFacts(content, await traceCorpus(slug, doc.kind));
   await writeDraft(slug, doc);
   return doc;
 }
@@ -252,7 +291,7 @@ export async function assistDraft(
   const doc = await readDraft(slug, id);
   if (!doc) throw new Error("Draft not found.");
   const bundle = await getResearchBundle(slug);
-  const research = bundle.campaignBase?.markdown || "";
+  const research = researchForKind(bundle, doc.kind, await getKnowledgeContext(6000));
   const sourceList = [
     ...(bundle.sources?.campaign || []),
     ...(bundle.sources?.scout || []),
@@ -298,10 +337,9 @@ USER MESSAGE:
   doc.chat.push({ role: "user", content: message });
   doc.chat.push({ role: "assistant", content: reply.slice(0, 4000) });
   if (draftPart && draftPart.trim().length > 40) {
-    const brand = await readWriting("brand-context.md");
     doc.content = draftPart.trim();
     doc.drafts[doc.stage] = doc.content;
-    doc.factTrace = traceFacts(doc.content, `${research}\n\n${brand}`);
+    doc.factTrace = traceFacts(doc.content, await traceCorpus(slug, doc.kind));
   }
   await writeDraft(slug, doc);
   return doc;
@@ -335,8 +373,22 @@ export async function readDrafts(slug: string): Promise<DraftDoc[]> {
     const d = await readDraft(slug, f.replace(/\.md$/, ""));
     if (d) docs.push(d);
   }
-  const rank: Record<string, number> = { longform: 0, blog: 1, linkedin: 2, instagram: 3 };
-  return docs.sort((a, b) => (rank[a.channel] ?? 9) - (rank[b.channel] ?? 9));
+  return docs.sort(
+    (a, b) =>
+      (CHANNEL_ORDER.indexOf(a.channel) + 1 || 9) -
+      (CHANNEL_ORDER.indexOf(b.channel) + 1 || 9),
+  );
+}
+
+/** The corpus a draft's figures are allowed to trace to (wider for TL pieces). */
+async function traceCorpus(slug: string, kind: PieceKind): Promise<string> {
+  const bundle = await getResearchBundle(slug);
+  const brand = await readWriting("brand-context.md");
+  const parts = [bundle.campaignBase?.markdown || "", brand];
+  if (kind === "thought-leadership") {
+    parts.push(bundle.scoutBase?.markdown || "", await getKnowledgeContext(6000));
+  }
+  return parts.filter(Boolean).join("\n\n");
 }
 
 function traceFacts(copy: string, corpus: string): FactTrace {
@@ -358,6 +410,7 @@ async function writeDraft(slug: string, doc: DraftDoc): Promise<void> {
     campaignLink(slug),
     `pieceId: ${doc.id}`,
     `channel: ${doc.channel}`,
+    `kind: ${doc.kind}`,
     `persona: ${doc.personaName}`,
     `stage: ${doc.stage}`,
     `approved: ${doc.approved}`,

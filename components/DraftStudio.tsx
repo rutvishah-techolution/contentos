@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CHANNEL_LABELS } from "@/lib/storyline/types";
+import { KindPill } from "@/components/TopicPlanner";
 import type { DraftDoc, DraftStage } from "@/lib/draft/draft";
 
 const STAGES: DraftStage[] = ["draft1", "draft2", "final"];
@@ -104,6 +105,7 @@ export default function DraftStudio({
           <span className="min-w-0">
             <span className="flex items-center gap-2">
               <span className="badge">{CHANNEL_LABELS[d.channel]}</span>
+              <KindPill kind={d.kind} />
               <span className="text-xs text-faint">{STAGE_LABEL[d.stage]}</span>
               {d.approved && <span className="text-xs text-ok">✓ approved</span>}
             </span>
@@ -302,8 +304,9 @@ function DraftFullscreen({
       {/* main — the draft */}
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between gap-3 border-b border-border px-6 py-3">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <span className="badge">{CHANNEL_LABELS[draft.channel]}</span>
+            <KindPill kind={draft.kind} />
             <span className="text-xs text-faint">{draft.personaName}</span>
           </div>
           {/* stage stepper */}

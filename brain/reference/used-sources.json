@@ -162,7 +162,8 @@
     "title": "OpenAI and PwC collaborate to reimagine the office of the CFO",
     "url": "https://openai.com/index/openai-pwc-finance-collaboration/",
     "campaigns": [
-      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
     ],
     "publishedAt": "2026-05-06"
   },
@@ -461,7 +462,8 @@
     "title": "How much does it cost to be AI-pilled?",
     "url": "https://ramp.com/data/ai-index-june-2026",
     "campaigns": [
-      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign"
     ],
     "publishedAt": "2026-06-26"
   },
@@ -947,6 +949,96 @@
   "organizing4innovation.com/ai-leadership-challenges": {
     "title": "AI Leadership Challenges - - Organizing4Innovation",
     "url": "https://www.organizing4innovation.com/ai-leadership-challenges/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "forrester.com/blogs/ai-wont-save-your-transformation": {
+    "title": "AI Won’t Save Your Transformation",
+    "url": "https://www.forrester.com/blogs/ai-wont-save-your-transformation/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-18"
+  },
+  "forbes.com/sites/jemmagreen/2026/07/02/ai-costs-more-than-the-people-it-replaced": {
+    "title": "AI Costs More Than The People It Replaced",
+    "url": "https://www.forbes.com/sites/jemmagreen/2026/07/02/ai-costs-more-than-the-people-it-replaced/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-07-02"
+  },
+  "info.productiveedge.com/blog/the-roi-of-ai-in-healthcare-what-the-numbers-actually-show": {
+    "title": "The ROI of AI in Healthcare: What the Numbers Actually Show - Productive Edge",
+    "url": "https://info.productiveedge.com/blog/the-roi-of-ai-in-healthcare-what-the-numbers-actually-show",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-03-30"
+  },
+  "inferscience.com/understanding-the-cost-of-ai-in-healthcare-for-cf-os": {
+    "title": "Understanding the Cost of AI in Healthcare for CFOs - Inferscience",
+    "url": "https://www.inferscience.com/understanding-the-cost-of-ai-in-healthcare-for-cf-os",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2025-09-08"
+  },
+  "varisource.com/blog/saas-spend-optimization-guide": {
+    "title": "SaaS Spend Optimization: 2026 Complete Guide to Cost Savings",
+    "url": "https://www.varisource.com/blog/saas-spend-optimization-guide",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "tezeract.ai/how-fortune-500-companies-using-ai": {
+    "title": "7 Secrets You Know About Fortune 500 Companies Using AI - Tezeract.ai",
+    "url": "https://tezeract.ai/how-fortune-500-companies-using-ai/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "gartner.com/en/documents/enterprise-ai-governance-2026": {
+    "title": "Gartner 2026 AI Governance Survey",
+    "url": "https://www.gartner.com/en/documents/enterprise-ai-governance-2026",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "gartner.com/en/documents/agentic-ai-data-readiness-2026": {
+    "title": "Gartner Research: Agentic AI Project Outcomes 2026",
+    "url": "https://www.gartner.com/en/documents/agentic-ai-data-readiness-2026",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "ciodive.com/news/ceos-cios-clash-ai-value/823823": {
+    "title": "CEOs, CIOs clash over AI's value - CIO Dive",
+    "url": "https://www.ciodive.com/news/ceos-cios-clash-ai-value/823823/",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-26"
+  },
+  "aibusinessweekly.net/p/ai-adoption-statistics": {
+    "title": "AI Adoption Statistics: Business & Enterprise Data 2026 - AI Business Weekly",
+    "url": "https://aibusinessweekly.net/p/ai-adoption-statistics",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ],
+    "publishedAt": "2026-06-09"
+  },
+  "raisesummit.com/post/roi-dilemma-fortune-500-leaders-measuring-ai-value-2026": {
+    "title": "The ROI Dilemma: How Fortune 500 Leaders are Measuring AI Value in 2026.",
+    "url": "https://www.raisesummit.com/post/roi-dilemma-fortune-500-leaders-measuring-ai-value-2026",
+    "campaigns": [
+      "ai-value-finder-campaign"
+    ]
+  },
+  "ibm.com/think/insights/ai-adoption-challenges": {
+    "title": "The Biggest AI Adoption Challenges for 2026 - IBM",
+    "url": "https://www.ibm.com/think/insights/ai-adoption-challenges",
     "campaigns": [
       "ai-value-finder-campaign"
     ]

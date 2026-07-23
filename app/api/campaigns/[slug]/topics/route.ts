@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateTopics } from "@/lib/storyline/topics";
-import { Channel } from "@/lib/storyline/types";
+import { Channel, SELECTABLE_CHANNELS } from "@/lib/storyline/types";
 
 export const maxDuration = 180;
 
-const SELECTABLE: Channel[] = ["blog", "linkedin", "instagram"];
+const SELECTABLE: Channel[] = SELECTABLE_CHANNELS;
 
 export async function POST(
   req: NextRequest,

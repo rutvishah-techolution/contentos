@@ -75,6 +75,40 @@ export interface Campaign extends CampaignBrief {
   createdAt: string;
   updatedAt: string; // latest change to anything in the campaign folder
   status: string;
+  ownerId: string; // "" for legacy/open campaigns
+  members: string[]; // user ids with access (includes owner)
+  joinCode: string; // teammates enter this to join
+}
+
+interface Access {
+  ownerId: string;
+  members: string[];
+  joinCode: string;
+}
+function accessPath(slug: string): string {
+  return path.join(CAMPAIGNS_DIR, slug, "access.json");
+}
+async function readAccess(slug: string): Promise<Access | null> {
+  try {
+    return JSON.parse(await fs.readFile(accessPath(slug), "utf8")) as Access;
+  } catch {
+    return null;
+  }
+}
+async function writeAccess(slug: string, a: Access): Promise<void> {
+  await fs.writeFile(accessPath(slug), JSON.stringify(a, null, 2), "utf8");
+}
+/** Stable, shareable join code derived from the slug. */
+export function joinCodeForSlug(slug: string): string {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  return "C-" + h.toString(36).toUpperCase().slice(0, 5).padStart(5, "X");
+}
+/** Legacy (owner-less) campaigns are open; otherwise owner or member only. */
+export function canAccessCampaign(c: Campaign, userId?: string): boolean {
+  if (!c.ownerId) return true;
+  if (!userId) return false;
+  return c.ownerId === userId || c.members.includes(userId);
 }
 
 export interface PersonaFile {
@@ -127,7 +161,10 @@ async function pathExists(p: string): Promise<boolean> {
  * Phase 0 brief. The folder + research subfolders are created here at run time —
  * nothing is pre-made. Returns the final (collision-safe) slug.
  */
-export async function createCampaign(brief: CampaignBrief): Promise<Campaign> {
+export async function createCampaign(
+  brief: CampaignBrief,
+  ownerId = "",
+): Promise<Campaign> {
   await fs.mkdir(CAMPAIGNS_DIR, { recursive: true });
 
   // collision-safe slug (from the campaign name)
@@ -175,7 +212,48 @@ export async function createCampaign(brief: CampaignBrief): Promise<Campaign> {
 
   await fs.writeFile(briefPath(slug), md, "utf8");
 
-  return { slug, createdAt, updatedAt: createdAt, status, ...brief };
+  const joinCode = joinCodeForSlug(slug);
+  const members = ownerId ? [ownerId] : [];
+  await writeAccess(slug, { ownerId, members, joinCode });
+
+  return {
+    slug,
+    createdAt,
+    updatedAt: createdAt,
+    status,
+    ownerId,
+    members,
+    joinCode,
+    ...brief,
+  };
+}
+
+/** Add a user to a campaign by its join code. Returns the campaign slug. */
+export async function joinCampaign(
+  code: string,
+  userId: string,
+): Promise<string> {
+  const target = code.trim().toUpperCase();
+  if (!target) throw new Error("Enter a code.");
+  if (!(await pathExists(CAMPAIGNS_DIR)))
+    throw new Error("No campaign found for that code.");
+  const entries = await fs.readdir(CAMPAIGNS_DIR, { withFileTypes: true });
+  for (const e of entries) {
+    if (!e.isDirectory()) continue;
+    const c = await getCampaign(e.name);
+    if (!c || c.joinCode.toUpperCase() !== target) continue;
+    const access: Access = (await readAccess(e.name)) || {
+      ownerId: c.ownerId,
+      members: c.members,
+      joinCode: c.joinCode,
+    };
+    if (!access.members.includes(userId)) {
+      access.members.push(userId);
+      await writeAccess(e.name, access);
+    }
+    return c.slug;
+  }
+  throw new Error("No campaign found for that code.");
 }
 
 // ── Campaign reads ───────────────────────────────────────────────────────────
@@ -197,6 +275,7 @@ export async function getCampaign(slug: string): Promise<Campaign | null> {
 
   const latest = await latestMtime(path.join(CAMPAIGNS_DIR, slug));
   const updatedAt = latest || data.createdAt || "";
+  const access = await readAccess(slug);
 
   return {
     slug: data.slug || slug,
@@ -205,6 +284,9 @@ export async function getCampaign(slug: string): Promise<Campaign | null> {
     createdAt: data.createdAt || "",
     updatedAt,
     status: data.status || "brief",
+    ownerId: access?.ownerId || "",
+    members: access?.members || [],
+    joinCode: access?.joinCode || joinCodeForSlug(slug),
     objective,
     icp,
     constraints,
@@ -239,14 +321,17 @@ async function latestMtime(dir: string): Promise<string> {
   return newest ? new Date(newest).toISOString() : "";
 }
 
-export async function listCampaigns(): Promise<Campaign[]> {
+export async function listCampaigns(userId?: string): Promise<Campaign[]> {
   if (!(await pathExists(CAMPAIGNS_DIR))) return [];
   const entries = await fs.readdir(CAMPAIGNS_DIR, { withFileTypes: true });
   const campaigns: Campaign[] = [];
   for (const e of entries) {
     if (!e.isDirectory()) continue;
     const c = await getCampaign(e.name);
-    if (c) campaigns.push(c);
+    if (!c) continue;
+    // when a user is given, only show campaigns they own/joined (legacy = open)
+    if (userId && !canAccessCampaign(c, userId)) continue;
+    campaigns.push(c);
   }
   // newest first
   return campaigns.sort((a, b) => b.createdAt.localeCompare(a.createdAt));

@@ -33,6 +33,32 @@ export default function CampaignsSection({
   const [deleting, setDeleting] = useState<string | null>(null);
   const [list, setList] = useState<Campaign[]>(campaigns);
   const [sort, setSort] = useState<Sort>("recent");
+  const [joinOpen, setJoinOpen] = useState(false);
+  const [joinCode, setJoinCode] = useState("");
+  const [joining, setJoining] = useState(false);
+  const [joinError, setJoinError] = useState<string | null>(null);
+
+  async function join() {
+    if (!joinCode.trim()) return;
+    setJoining(true);
+    setJoinError(null);
+    try {
+      const res = await fetch("/api/campaigns/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: joinCode }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Couldn't join.");
+      setJoinCode("");
+      setJoinOpen(false);
+      router.refresh();
+    } catch (e) {
+      setJoinError(e instanceof Error ? e.message : "Couldn't join.");
+    } finally {
+      setJoining(false);
+    }
+  }
 
   const sorted = useMemo(() => {
     const copy = [...list];
@@ -86,12 +112,46 @@ export default function CampaignsSection({
             </select>
           )}
           {!creating && (
-            <button className="btn-primary" onClick={() => setCreating(true)}>
-              + New campaign
-            </button>
+            <>
+              <button
+                className="btn-ghost"
+                onClick={() => setJoinOpen((v) => !v)}
+              >
+                Join with code
+              </button>
+              <button className="btn-primary" onClick={() => setCreating(true)}>
+                + New campaign
+              </button>
+            </>
           )}
         </div>
       </div>
+
+      {joinOpen && !creating && (
+        <div className="card mb-4">
+          <div className="flex flex-wrap items-end gap-2">
+            <div className="flex-1">
+              <label className="mb-1 block text-sm font-medium text-fg">
+                Join a teammate&rsquo;s campaign
+              </label>
+              <input
+                className="input font-mono"
+                placeholder="Enter code, e.g. C-7QK2A"
+                value={joinCode}
+                onChange={(e) => setJoinCode(e.target.value)}
+              />
+            </div>
+            <button
+              className="btn-primary"
+              onClick={join}
+              disabled={joining || !joinCode.trim()}
+            >
+              {joining ? "Joining…" : "Join"}
+            </button>
+          </div>
+          {joinError && <p className="alert-error mt-2">{joinError}</p>}
+        </div>
+      )}
 
       {creating && (
         <div className="card mb-4">

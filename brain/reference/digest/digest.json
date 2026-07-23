@@ -1,5 +1,21 @@
 [
   {
+    "date": "2026-07-23",
+    "kind": "b2b",
+    "headline": "AI Won’t Save Your Transformation",
+    "summary": "AI won't magically fix a company's big changes, often called \"transformation.\" The article says AI just makes bad plans fail faster, meaning you still need a solid strategy (a clear plan for how your business will compete and grow) first. Even with AI, you still need to clearly define what success looks like and how you'll measure it. The article states that without measurable goals (outcomes), your strategy (your plan) is just a wish, not something you can actually work towards. Despite all the new technology, getting people on board and managing changes is still the hardest part of any big company shift. The article highlights that \"people move slowly\" compared to technology, so managing how employees adapt and learn new skills is critical. AI doesn't make big company changes easier; instead, it makes them less forgiving. The article explains that AI speeds up decisions and execution, meaning mistakes or unclear plans will cause problems much faster and with higher penalties. A major barrier stopping companies from using AI isn't just about data, but about trust. The article's survey found that security, risk, and a lack of trust in these new automated systems are the top three reasons companies hesitate to adopt AI.",
+    "source": "Forrester Blog",
+    "url": "https://www.forrester.com/blogs/ai-wont-save-your-transformation/",
+    "theme": "AI Readiness and Enterprise Transformation",
+    "keyNotes": [
+      "AI won't magically fix a company's big changes, often called \"transformation.\" The article says AI just makes bad plans fail faster, meaning you still need a solid strategy (a clear plan for how your business will compete and grow) first.",
+      "Even with AI, you still need to clearly define what success looks like and how you'll measure it. The article states that without measurable goals (outcomes), your strategy (your plan) is just a wish, not something you can actually work towards.",
+      "Despite all the new technology, getting people on board and managing changes is still the hardest part of any big company shift. The article highlights that \"people move slowly\" compared to technology, so managing how employees adapt and learn new skills is critical.",
+      "AI doesn't make big company changes easier; instead, it makes them less forgiving. The article explains that AI speeds up decisions and execution, meaning mistakes or unclear plans will cause problems much faster and with higher penalties.",
+      "A major barrier stopping companies from using AI isn't just about data, but about trust. The article's survey found that security, risk, and a lack of trust in these new automated systems are the top three reasons companies hesitate to adopt AI."
+    ]
+  },
+  {
     "date": "2026-07-22",
     "kind": "b2b",
     "headline": "Google Puts A Number On AI Search Clicks, Without The Data via @sejournal, @MattGSouthern",

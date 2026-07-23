@@ -27,14 +27,23 @@ structure, never tone.
 - 3 hashtags max, relevant only.
 
 ## LinkedIn carousel (5-8 slides)
-- One thought per line — no paragraphs on any slide.
+- OUTPUT FORMAT IS MANDATORY: write the piece as explicit, numbered slides. Use a
+  `### Slide N` heading for each slide (Slide 1 through Slide 5-8), and put that
+  slide's copy under it. Never write the carousel as flowing paragraphs.
+- 5 slides minimum, 8 maximum. Slide 1 = cover hook, last slide = CTA.
+- One thought per line — no paragraphs on any slide. Keep each slide short enough
+  to fit a card (roughly 1-4 short lines).
 - No numbers on slide 1 — intrigue first, evidence on slides 2-3.
-- Every slide's last line pulls the reader to swipe (SWIPE cue on all but the last).
+- Every slide's last line pulls the reader to swipe (add a "→ swipe" cue on every
+  slide except the last).
 - Define any jargon on the slide that introduces it.
-- No dedicated product/company slides — product appears only in the CTA slide.
+- No dedicated product/company slides — the service appears only on the final CTA
+  slide.
 - Every stat carries a named source. "One of many engagements" framing for any
   client result.
-- 1080×1350px portrait, white minimal design.
+- After the slides, add a one-line `**Caption:**` (the LinkedIn post text that
+  accompanies the carousel).
+- Design note: 1080×1350px portrait, white minimal design.
 
 ## Instagram (single post or short carousel)
 - **Caption:** a punchy hook in the first line (before the "more" cutoff), then a

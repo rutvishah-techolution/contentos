@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCampaign } from "@/lib/brain";
+import { getCampaign, canAccessCampaign } from "@/lib/brain";
+import { auth } from "@/auth";
 import { readDrafts, STAGE_LABEL } from "@/lib/draft/draft";
 import { readStorylines } from "@/lib/storyline/storyline";
 import { readTopicBank } from "@/lib/storyline/topics";
 import { CHANNEL_LABELS } from "@/lib/storyline/types";
+import { KindPill } from "@/components/TopicPlanner";
 
 export const dynamic = "force-dynamic";
 
@@ -14,13 +16,15 @@ export default async function CampaignWorkspace({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [campaign, drafts, storylines, bank] = await Promise.all([
+  const [session, campaign, drafts, storylines, bank] = await Promise.all([
+    auth(),
     getCampaign(slug),
     readDrafts(slug),
     readStorylines(slug),
     readTopicBank(slug),
   ]);
   if (!campaign) notFound();
+  if (!canAccessCampaign(campaign, session?.user?.id)) notFound();
 
   const approved = drafts.filter((d) => d.approved);
   const inProgress = drafts.filter((d) => !d.approved);
@@ -63,7 +67,10 @@ export default async function CampaignWorkspace({
             className="card block transition hover:border-border-strong"
           >
             <div className="flex items-center justify-between">
-              <span className="badge">{CHANNEL_LABELS[d.channel]}</span>
+              <span className="flex items-center gap-2">
+                <span className="badge">{CHANNEL_LABELS[d.channel]}</span>
+                <KindPill kind={d.kind} />
+              </span>
               <span className="text-xs text-ok">✓ approved</span>
             </div>
             <p className="mt-2 line-clamp-2 text-sm text-fg">{firstLine(d.content)}</p>
@@ -105,7 +112,10 @@ export default async function CampaignWorkspace({
               className="card block transition hover:border-border-strong"
             >
               <div className="flex items-center justify-between">
-                <span className="badge">{CHANNEL_LABELS[s.channel]}</span>
+                <span className="flex items-center gap-2">
+                  <span className="badge">{CHANNEL_LABELS[s.channel]}</span>
+                  <KindPill kind={s.kind} />
+                </span>
                 {s.approved && <span className="text-xs text-ok">✓ approved</span>}
               </div>
               <p className="mt-2 line-clamp-2 text-sm text-fg">
@@ -125,7 +135,10 @@ export default async function CampaignWorkspace({
         {shelf.map((t) => (
           <div key={t.id} className="card">
             <div className="flex items-center justify-between">
-              <span className="badge">{CHANNEL_LABELS[t.channel]}</span>
+              <span className="flex items-center gap-2">
+                <span className="badge">{CHANNEL_LABELS[t.channel]}</span>
+                <KindPill kind={t.kind} />
+              </span>
               <span className="text-xs text-faint">{t.personaName}</span>
             </div>
             <p className="mt-2 text-sm font-medium text-fg">{t.headline}</p>

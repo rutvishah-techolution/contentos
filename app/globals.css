@@ -180,6 +180,14 @@ body::after {
       border-color 0.18s ease;
   }
 
+  /* approved card: a soft, rounded "settled" treatment — no hard edge */
+  .approved-card {
+    border-color: var(--border-strong);
+    background:
+      linear-gradient(0deg, rgba(17, 17, 16, 0.02), rgba(17, 17, 16, 0.02)),
+      var(--surface);
+  }
+
   /* stat tiles: a faint vertical fade + a touch more lift */
   .stat-card {
     background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);

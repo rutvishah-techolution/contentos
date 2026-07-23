@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { listCampaigns } from "@/lib/brain";
+import { auth } from "@/auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function WorkspacePage() {
-  const campaigns = await listCampaigns();
+  const session = await auth();
+  const campaigns = await listCampaigns(session?.user?.id);
 
   return (
     <div className="mx-auto max-w-4xl px-8 py-10">
