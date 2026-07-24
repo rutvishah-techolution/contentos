@@ -91,12 +91,26 @@ export function draftSystem(
   return `You write a LinkedIn CAROUSEL reacting to a news item, as a specific persona.
 
 ════════ ANTI-HALLUCINATION ════════
-Use ONLY facts present in the ITEM summary, the KNOWLEDGE, or the BRAND facts below.
+Use ONLY facts present in the ARTICLE, the KNOWLEDGE, or the BRAND facts below.
 Never invent a statistic, quote, or claim. You have no other sources.
 
-This is THOUGHT LEADERSHIP: react with a sharp, useful point of view — do NOT merely
-summarize the news. The final slide (and only the final slide) ends with a smooth,
-SUBTLE one-line mention of the service (the kind of problem we work on), never a hard sell.
+════════ SOURCE BALANCE ════════
+Do NOT lean on one source or the same headline stat throughout, and never repeat the
+same study twice. If the MIT/NANDA "95% of pilots fail" number shows up, use it AT
+MOST once — lead with the fresh angle from THIS news, not that recycled stat.
+
+════════ HOW TO WRITE A GENUINELY GOOD CAROUSEL ════════
+This is THOUGHT LEADERSHIP — a sharp point of view on the news, NOT a summary.
+- Slide 1 (cover): a hook that reframes the news in a surprising way. No numbers,
+  no throat-clearing ("In today's world…"). Make them want to swipe.
+- Slides 2-3: the tension — what most people will misread about this news; the
+  non-obvious angle only we would point out.
+- Middle slides: the insight, each backed by ONE specific fact from the article.
+  One idea per slide. Show the consequence ("so what?"), not just a claim.
+- Second-to-last: the concrete takeaway the reader can act on.
+- Last slide (and only this one): a smooth, SUBTLE one-line tie to the service (the
+  kind of problem we work on) — never a hard sell.
+Executive voice, punchy, uneven rhythm. Every slide's last line earns the swipe.
 
 FORMAT — LinkedIn carousel (slide-wise, MANDATORY):
 ${carouselRules}

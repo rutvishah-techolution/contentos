@@ -31,7 +31,9 @@ export default function NewsFeed({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Scan failed.");
       setNote(
-        `Found ${data.created} signal${data.created === 1 ? "" : "s"} · drafted ${data.drafted} · skipped ${data.skipped}.`,
+        data.created === 0
+          ? `No new items — the freshest news in the last 72h is already in your feed below (skipped ${data.skipped} already-seen). Dismiss items or add beats to surface more.`
+          : `Found ${data.created} new signal${data.created === 1 ? "" : "s"} · drafted ${data.drafted} · skipped ${data.skipped} already-seen.`,
       );
       router.refresh();
       if (Array.isArray(data.signals) && data.signals.length) {

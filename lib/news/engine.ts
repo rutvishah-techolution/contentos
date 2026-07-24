@@ -186,17 +186,30 @@ export async function draftSignal(id: string): Promise<Signal> {
   const pPath = personas.find((p) => p.id === s.personaId)?.path;
   const voice = pPath ? await readPersonaBody(pPath) : "";
 
-  const user = `NEWS ITEM:
+  // pull the real article text so the writer has substance, not just a 1-2 line summary
+  let articleText = s.summary;
+  try {
+    const fetched = await fetchUrl(s.url);
+    if (fetched.ok && !fetched.dead && fetched.snippet && fetched.snippet.length > 120) {
+      articleText = fetched.snippet.slice(0, 6000);
+    }
+  } catch {
+    /* fall back to the summary */
+  }
+
+  const user = `NEWS ITEM
 Headline: ${s.headline}
-Summary: ${s.summary}
+Our angle to take: ${s.suggestedAngle}
 Source: ${s.url}
-Our angle: ${s.suggestedAngle}
+
+WHAT THE ARTICLE ACTUALLY SAYS (your factual grounding — quote only what's here):
+${articleText}
 
 COMPANY KNOWLEDGE (extra facts you may use):
 ${knowledge || "(none)"}
 
-Write the LinkedIn CAROUSEL now — our POV on this news, in your voice, as numbered
-slides (### Slide 1 … up to 8) plus the caption. Output ONLY the carousel.`;
+Write the LinkedIn CAROUSEL now — our sharp POV on this news, in your voice, as
+numbered slides (### Slide 1 … up to 8) plus a one-line caption. Output ONLY the carousel.`;
   const written = (
     await callClaude({
       system: draftSystem(voice, brand, carouselRules(formats)),
@@ -214,7 +227,7 @@ slides (### Slide 1 … up to 8) plus the caption. Output ONLY the carousel.`;
     })
   ).trim();
 
-  const corpus = `${s.summary}\n\n${knowledge}\n\n${brand}`.toLowerCase();
+  const corpus = `${articleText}\n\n${s.summary}\n\n${knowledge}\n\n${brand}`.toLowerCase();
   const figs = extractFigures(finalCopy);
   const untraced = figs
     .filter((f) => !f.variants.some((v) => corpus.includes(v)))
