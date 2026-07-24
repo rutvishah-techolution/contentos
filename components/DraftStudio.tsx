@@ -32,12 +32,17 @@ export default function DraftStudio({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [instructions, setInstructions] = useState("");
 
   async function generate() {
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch(`/api/campaigns/${slug}/drafts`, { method: "POST" });
+      const res = await fetch(`/api/campaigns/${slug}/drafts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ instructions }),
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed.");
       setDrafts(data.drafts);
@@ -66,6 +71,16 @@ export default function DraftStudio({
           it forward: Draft 1 → Draft 2 → Final — approving each stage. Grounded only
           in your research.
         </p>
+        <label className="mt-3 block text-xs font-medium text-muted">
+          Instructions for Draft 1 (optional)
+        </label>
+        <textarea
+          className="input mt-1 resize-none"
+          rows={2}
+          placeholder="e.g. lead with the CFO angle, keep it punchy, avoid the MIT stat"
+          value={instructions}
+          onChange={(e) => setInstructions(e.target.value)}
+        />
         <button className="btn-primary mt-3" onClick={generate} disabled={busy}>
           {busy ? "Writing Draft 1… (takes a minute)" : "Write Draft 1"}
         </button>
@@ -368,6 +383,29 @@ function DraftFullscreen({
                   {shownContent}
                 </ReactMarkdown>
               </article>
+            )}
+
+            {!editing && draft.sources && draft.sources.length > 0 && (
+              <div className="mt-8 border-t border-border pt-4">
+                <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-faint">
+                  Sources
+                </h3>
+                <ul className="flex flex-col gap-1.5">
+                  {draft.sources.map((s, i) => (
+                    <li key={i} className="text-sm">
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:underline"
+                        style={{ color: "var(--link)" }}
+                      >
+                        {s.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         </div>

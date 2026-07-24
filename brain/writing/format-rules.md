@@ -45,13 +45,17 @@ structure, never tone.
   accompanies the carousel).
 - Design note: 1080×1350px portrait, white minimal design.
 
-## Instagram (single post or short carousel)
-- **Caption:** a punchy hook in the first line (before the "more" cutoff), then a
-  short, scannable body — one idea per short line, generous line breaks.
-- Keep it accessible and visual-first: the copy supports a visual, it isn't a
-  wall of text.
-- Plain-language throughout — the least technical of the channels.
-- End with a light, human CTA. 3-5 relevant hashtags.
-- **Visual concept:** include a one-line description of the intended image/graphic
-  (design/image generation is handled separately — V2 auto, manual for now).
-- If a short carousel: same one-thought-per-slide + swipe rules as LinkedIn.
+## Instagram carousel (5-8 slides)
+- OUTPUT FORMAT IS MANDATORY: write it as explicit, numbered slides. Use a
+  `### Slide N` heading for each (Slide 1 through 5-8) with that slide's copy under
+  it. Never write it as flowing paragraphs.
+- 5 slides minimum, 8 maximum. Slide 1 = cover hook, last slide = CTA.
+- One thought per line — no paragraphs on any slide. Keep each slide short enough
+  to fit a card (roughly 1-3 short lines).
+- Plain-language throughout — the least technical of the channels, visual-first.
+- Every slide's last line pulls the reader to swipe (add a "→ swipe" cue on every
+  slide except the last).
+- Define any jargon on the slide that introduces it. The service appears only on
+  the final CTA slide.
+- After the slides, add a one-line `**Caption:**` (the short post text, punchy hook
+  first) with 3-5 relevant hashtags.

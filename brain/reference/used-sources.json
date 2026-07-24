@@ -36,7 +36,8 @@
     "url": "https://techcrunch.com/2026/06/10/ai-pilled-firms-spend-7500-per-employee-each-month-on-ai/",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-11"
   },
@@ -53,7 +54,8 @@
     "url": "https://openai.com/index/introducing-b2b-signals",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-05-07"
   },
@@ -87,7 +89,8 @@
     "url": "https://hbr.org/2026/06/the-strongest-teams-of-ai-agents-will-be-built-using-different-models",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-22"
   },
@@ -120,7 +123,8 @@
     "url": "https://www.technologyreview.com/2026/06/09/1137830/learning-to-lead-in-a-hybrid-human-ai-enterprise/",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-10"
   },
@@ -137,7 +141,8 @@
     "url": "https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-05-24"
   },
@@ -154,7 +159,8 @@
     "url": "https://www.technologyreview.com/2026/05/11/1136967/fostering-breakthrough-ai-innovation-through-customer-back-engineering/",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-05-12"
   },
@@ -163,7 +169,8 @@
     "url": "https://openai.com/index/openai-pwc-finance-collaboration/",
     "campaigns": [
       "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-05-06"
   },
@@ -185,7 +192,8 @@
     "title": "Just a moment... | Gartner",
     "url": "https://www.gartner.com/en/newsroom/press-releases/2026-07-20-gartner-survey-shows-45-percent-of-cfos-say-their-ai-investments-lean-toward-productivity",
     "campaigns": [
-      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign-2"
     ]
   },
   "folio3.ai/blog/ai-project-failure-rate-stats": {
@@ -238,7 +246,8 @@
     "title": "PRC-linked influence operations are targeting AI debates in the US",
     "url": "https://openai.com/index/prc-linked-influence-operations-ai-debates",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-11"
   },
@@ -255,7 +264,8 @@
     "title": "Queen-Bee Agents: Enterprise MCP Orchestration Architecture for Governed Multi-Agent Systems",
     "url": "https://arxiv.org/abs/2606.06545",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-08"
   },
@@ -263,7 +273,8 @@
     "title": "OpenAI Unveils Lockdown Mode to Protect Sensitive Data from Prompt Injection Attacks",
     "url": "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks/",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-06"
   },
@@ -304,7 +315,8 @@
     "url": "https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027",
     "campaigns": [
       "ai-value-finder-campaign",
-      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign-2"
     ]
   },
   "medium.com/@s_v_j/building-an-ai-governance-practice-in-a-fortune-500-healthcare-company-6a4a6e30026e": {
@@ -495,7 +507,8 @@
     "title": "MIT report: 95% of generative AI pilots at companies are failing",
     "url": "https://finance.yahoo.com/news/mit-report-95-generative-ai-105412686.html",
     "campaigns": [
-      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2025-08-18"
   },
@@ -603,7 +616,8 @@
     "title": "Microsoft restricts Claude Fable for employees over data retention concerns",
     "url": "https://www.theverge.com/report/947575/microsoft-claude-fable-5-restricted-internally",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-10"
   },
@@ -619,7 +633,8 @@
     "title": "AI Loss of Control Incident Management: A Framework for Response & Resilience",
     "url": "https://arxiv.org/abs/2605.30406",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-01"
   },
@@ -628,7 +643,8 @@
     "url": "https://techcrunch.com/2026/05/25/what-clickups-mass-layoff-tells-us-about-the-future-of-work/",
     "campaigns": [
       "ai-value-finder-campaign",
-      "enterprise-ai-roi-and-workflow-automation-for-finance-teams"
+      "enterprise-ai-roi-and-workflow-automation-for-finance-teams",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-05-25"
   },
@@ -702,7 +718,8 @@
     "title": "Anthropic's Claude Tag is learning your company, one Slack message at a time",
     "url": "https://techcrunch.com/2026/06/23/anthropics-claude-tag-is-learning-your-company-one-slack-message-at-a-time/",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-23"
   },
@@ -866,7 +883,8 @@
     "title": "Travelers deploys AI-powered claims assistant countrywide with OpenAI",
     "url": "https://openai.com/index/travelers",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-03"
   },
@@ -874,7 +892,8 @@
     "title": "Coralogix raises $200M on bet that someone needs to watch the AI agents",
     "url": "https://techcrunch.com/2026/06/03/coralogix-raises-200m-in-race-to-build-the-monitoring-layer-for-ai-agents/",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-06-03"
   },
@@ -965,7 +984,8 @@
     "title": "AI Costs More Than The People It Replaced",
     "url": "https://www.forbes.com/sites/jemmagreen/2026/07/02/ai-costs-more-than-the-people-it-replaced/",
     "campaigns": [
-      "ai-value-finder-campaign"
+      "ai-value-finder-campaign",
+      "ai-value-finder-campaign-2"
     ],
     "publishedAt": "2026-07-02"
   },
@@ -1041,6 +1061,79 @@
     "url": "https://www.ibm.com/think/insights/ai-adoption-challenges",
     "campaigns": [
       "ai-value-finder-campaign"
+    ]
+  },
+  "tygartmedia.com/microsoft-copilot-license-optimization-unused-seats-2026": {
+    "title": "Microsoft Copilot License Optimization: Stop Paying for Seats Nobody Uses (2026)",
+    "url": "https://tygartmedia.com/microsoft-copilot-license-optimization-unused-seats-2026/",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ],
+    "publishedAt": "2026-06-22"
+  },
+  "aiproductivity.ai/news/microsoft-ai-agents-cost-more-than-human-employees": {
+    "title": "Microsoft: AI Agents Can Cost More Than a Human",
+    "url": "https://aiproductivity.ai/news/microsoft-ai-agents-cost-more-than-human-employees/",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ],
+    "publishedAt": "2026-05-23"
+  },
+  "pr newswire.com/news-releases/cfos-face-pressure-to-deploy-ai-quickly-while-managing-risk-is-a-top-challenge-from-latest-deloitte-q2-2026-cfo-signals-survey-302302772.html": {
+    "title": "CFOs Face Pressure to Deploy AI Quickly While Managing Risk is a Top Challenge from Latest Deloitte Q2 2026 CFO Signals Survey - PR Newswire",
+    "url": "https://www.pr newswire.com/news-releases/cfos-face-pressure-to-deploy-ai-quickly-while-managing-risk-is-a-top-challenge-from-latest-deloitte-q2-2026-cfo-signals-survey-302302772.html",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ]
+  },
+  "businesswire.com/news/home/20260723146440/en/zips-state-of-ai-in-spend-ais-real-payoff-comes-from-depth-not-dollars-%e2%80%94-6x-roi-for-those-who-commit": {
+    "title": "Zip's State of AI in Spend: AI's Real Payoff Comes From Depth, Not Dollars — 6x ROI for Those Who Commit - Business Wire",
+    "url": "https://www.businesswire.com/news/home/20260723146440/en/Zips-State-of-AI-in-Spend-AIs-Real-Payoff-Comes-From-Depth-Not-Dollars-%E2%80%94-6x-ROI-for-Those-Who-Commit",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ]
+  },
+  "pr newswire.com/news-releases/ai-roi-fails-to-outpace-spend-for-57-of-enterprises-unchanged-since-2025-even-as-93-now-report-improved-production-302302061.html": {
+    "title": "AI ROI Fails to Outpace Spend for 57% of Enterprises, Unchanged Since 2025, Even as 93% Now Report Improved Production - PR Newswire",
+    "url": "https://www.pr newswire.com/news-releases/ai-roi-fails-to-outpace-spend-for-57-of-enterprises-unchanged-since-2025-even-as-93-now-report-improved-production-302302061.html",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ]
+  },
+  "tek-leaders.com/blog/top-challenges-in-adopting-agentic-ai-solutions": {
+    "title": "Top Challenges in Adopting Agentic AI & Solutions - Tek Leaders",
+    "url": "https://www.tek-leaders.com/blog/top-challenges-in-adopting-agentic-ai-solutions",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ]
+  },
+  "techcrunch.com/2026/05/04/doordash-adds-ai-tools-to-speed-up-merchant-onboarding-edit-photos-of-dishes": {
+    "title": "DoorDash adds AI tools to speed up merchant onboarding, edit photos of dishes",
+    "url": "https://techcrunch.com/2026/05/04/doordash-adds-ai-tools-to-speed-up-merchant-onboarding-edit-photos-of-dishes/",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ],
+    "publishedAt": "2026-05-04"
+  },
+  "streetinsider.com/news/article/zips-state-of-ai-in-spend-ais-real-payoff-comes-from-depth-not-dollars-6x-roi-for-those-who-commit/22086300.html": {
+    "title": "Zip's State of AI in Spend: AI's Real Payoff Comes From Depth, Not Dollars — 6x ROI for Those Who Commit - StreetInsider",
+    "url": "https://www.streetinsider.com/news/article/zips-state-of-ai-in-spend-ais-real-payoff-comes-from-depth-not-dollars-6x-roi-for-those-who-commit/22086300.html",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ]
+  },
+  "evolvance.com/ai-governance-statistics-2026": {
+    "title": "AI Governance Statistics 2026: Key Data & Insights - Evolvance Market Research",
+    "url": "https://evolvance.com/ai-governance-statistics-2026/",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
+    ]
+  },
+  "chatfin.ai/cfo-ai-strategy-2026-investment-trends-moving-toward-production-deployment": {
+    "title": "CFO AI Strategy 2026: Investment Trends Moving Toward Production Deployment - ChatFin",
+    "url": "https://chatfin.ai/cfo-ai-strategy-2026-investment-trends-moving-toward-production-deployment/",
+    "campaigns": [
+      "ai-value-finder-campaign-2"
     ]
   }
 }

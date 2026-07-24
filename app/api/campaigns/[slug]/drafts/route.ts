@@ -4,12 +4,19 @@ import { generateDrafts } from "@/lib/draft/draft";
 export const maxDuration = 300;
 
 export async function POST(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
   try {
-    const drafts = await generateDrafts(slug);
+    let instructions = "";
+    try {
+      const body = await req.json();
+      if (typeof body?.instructions === "string") instructions = body.instructions;
+    } catch {
+      /* no body → no instructions */
+    }
+    const drafts = await generateDrafts(slug, instructions);
     return NextResponse.json({ drafts });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Draft generation failed.";

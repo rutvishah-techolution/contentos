@@ -51,6 +51,11 @@ export interface FactTrace {
   untraced: string[];
 }
 
+export interface DraftSource {
+  title: string;
+  url: string;
+}
+
 export interface DraftDoc {
   id: string;
   channel: Channel;
@@ -61,6 +66,7 @@ export interface DraftDoc {
   content: string; // the current stage's copy
   drafts: Partial<Record<DraftStage, string>>; // snapshots per stage
   factTrace: FactTrace;
+  sources: DraftSource[]; // the research sources behind this piece
   chat: ChatMsg[]; // the Gemini help-assistant conversation
   approved: boolean; // final approved
   generatedAt: string;
@@ -80,6 +86,10 @@ function draftPath(slug: string, id: string): string {
 const GROUNDING = `Use ONLY facts, figures, and companies present in the VERIFIED
 RESEARCH provided. Never invent a statistic or claim not in it. You have NO web access.`;
 
+const SOURCE_BALANCE = `Do NOT lean on a single source or the same headline stat
+throughout. Vary the evidence — pull from different sources across the piece, and
+never cite the same study more than once.`;
+
 // ── The three passes ─────────────────────────────────────────────────────────
 async function writePass(
   sl: StorylineDoc,
@@ -87,12 +97,15 @@ async function writePass(
   research: string,
   voice: string,
   fw: Record<string, string>,
+  instructions = "",
 ): Promise<string> {
   const chan = CHANNEL_LABELS[sl.channel];
   const s = sl.storyline;
   const system = `You write B2B campaign content as a specific persona.
 
 ${GROUNDING}
+
+${SOURCE_BALANCE}
 
 ${intentGuidance(sl.kind)}
 
@@ -123,7 +136,11 @@ CTA: ${s.cta}
 
 VERIFIED RESEARCH (your only source of facts):
 ${research}
-
+${
+  instructions
+    ? `\nUSER INSTRUCTIONS FOR THIS DRAFT (follow these):\n${instructions}\n`
+    : ""
+}
 Write the full ${chan} piece, following the ${chan} format rules exactly.
 Output ONLY the piece as clean Markdown — no preamble.`;
   return (await callClaude({ system, user, maxTokens: 3000, webSearch: false })).trim();
@@ -167,7 +184,10 @@ async function humanizePass(
 }
 
 // ── Generate Draft 1 for every approved storyline ────────────────────────────
-export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
+export async function generateDrafts(
+  slug: string,
+  instructions = "",
+): Promise<DraftDoc[]> {
   const campaign = await getCampaign(slug);
   if (!campaign) throw new Error(`Campaign not found: ${slug}`);
   const storylines = (await readStorylines(slug)).filter((s) => s.approved);
@@ -181,6 +201,22 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
     kind === "thought-leadership"
       ? [campaignMd, scoutMd, knowledge].filter(Boolean).join("\n\n──────\n\n")
       : campaignMd;
+  // the sources behind each kind (campaign-only, or +scout for thought leadership)
+  const dedupeSources = (entries: { title: string; url: string }[]) => {
+    const seen = new Set<string>();
+    const out: DraftSource[] = [];
+    for (const e of entries) {
+      if (!e.url || seen.has(e.url)) continue;
+      seen.add(e.url);
+      out.push({ title: e.title || e.url, url: e.url });
+    }
+    return out;
+  };
+  const sourcesFor = (kind: PieceKind) =>
+    dedupeSources([
+      ...(bundle.sources?.campaign || []),
+      ...(kind === "thought-leadership" ? bundle.sources?.scout || [] : []),
+    ]);
 
   const fw = {
     structure: await readWriting("storyline-structure.md"),
@@ -205,6 +241,7 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
         research,
         voice,
         fw,
+        instructions,
       );
       const doc: DraftDoc = {
         id: sl.id,
@@ -216,6 +253,7 @@ export async function generateDrafts(slug: string): Promise<DraftDoc[]> {
         content,
         drafts: { draft1: content },
         factTrace: traceFacts(content, `${research}\n\n${brand}`),
+        sources: sourcesFor(sl.kind),
         chat: [],
         approved: false,
         generatedAt: new Date().toISOString(),
